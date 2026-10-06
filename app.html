@@ -1,9 +1,13 @@
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TAWAF SMART | Умра Сафари Дастури</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0b1120">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/html5-qrcode"></script>
@@ -22,11 +26,10 @@
 </head>
 <body class="pb-28 transition-all duration-200">
 
-    <!-- Header (Янги Премиум Логотип билан) -->
+    <!-- Header -->
     <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-amber-500/20 px-4 py-2.5">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2.5">
-                <!-- Вектор Тавоф Травел Логотипи -->
                 <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="50" cy="50" r="46" stroke="#d97706" stroke-width="4" stroke-dasharray="190 60"/>
                     <circle cx="50" cy="50" r="38" stroke="#f59e0b" stroke-width="4" stroke-dasharray="140 70" stroke-dashoffset="40"/>
@@ -61,8 +64,8 @@
                     <span class="inline-block bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase" id="badgeTag">
                         Шахсий Зиёратчи Бейджиги
                     </span>
-                    <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Зиёратчи</h2>
-                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: Аниқланмоқда</p>
+                    <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Ҳурматли Зиёратчи</h2>
+                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: Tawaf Travel</p>
                     <p class="text-xs text-amber-400 font-mono mt-0.5" id="dispPass">Паспорт: -</p>
                 </div>
                 <div class="bg-white p-1.5 rounded-xl shadow-md flex items-center justify-center shrink-0">
@@ -188,7 +191,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسЕНَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
@@ -236,7 +239,7 @@
 
     </main>
 
-    <!-- ҲОЖИБОШИ МОНИТОРИ -->
+    <!-- ҲОЖИБОШИ МОНИТОРИ (ҲИМОЯЛАНГАН) -->
     <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
         <div>
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -297,38 +300,68 @@
                 <i class="fa-solid fa-book-quran text-lg"></i>
                 <span class="text-[10px] mt-0.5">Дуолар</span>
             </button>
-            <button type="button" onclick="openLeaderModal()" class="text-center text-amber-400 flex flex-col items-center">
+            <button type="button" onclick="secureOpenLeader()" class="text-center text-amber-400 flex flex-col items-center">
                 <div class="w-10 h-10 -mt-5 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold shadow-lg">
                     <i class="fa-solid fa-qrcode text-lg"></i>
                 </div>
-                <span class="text-[10px] mt-0.5 font-bold">Ҳожибоши</span>
+                <span class="text-[10px] mt-0.5 font-bold">Ҳожибоши 🔒</span>
             </button>
-            <button type="button" onclick="window.location.href='index.html'" class="text-center text-slate-400 hover:text-amber-400 flex flex-col items-center">
-                <i class="fa-solid fa-chart-pie text-lg"></i>
-                <span class="text-[10px] mt-0.5">Админ ERP</span>
+            <button type="button" onclick="secureOpenAdmin()" class="text-center text-slate-400 hover:text-amber-400 flex flex-col items-center">
+                <i class="fa-solid fa-shield-halved text-lg"></i>
+                <span class="text-[10px] mt-0.5">Админ ERP 🔒</span>
             </button>
         </div>
     </nav>
 
-    <!-- JavaScript & Динамик Ҳаволани Ўқиш -->
+    <!-- JavaScript: Парол ва Хавфсизлик -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
         let html5QrCode = null;
 
+        // ПАРОЛЛАР (ХОҲЛАСАНГИЗ ЎЗГАРТИРАМИЗ)
+        const ADMIN_PIN = "7788";    // Админ ERP учун махфий PIN
+        const LEADER_PIN = "1122";   // Ҳожибоши кабинети учун PIN
+
+        // Админ ERP га киришни ҳимоялаш
+        function secureOpenAdmin() {
+            const pass = prompt("🔐 Админ ERP панелига кириш учун махфий PIN-кодни киритинг:");
+            if (pass === ADMIN_PIN) {
+                window.location.href = "index.html";
+            } else if (pass !== null) {
+                alert("❌ Хато PIN-код! Киришга рухсат берилмади.");
+            }
+        }
+
+        // Ҳожибоши йўқламасига киришни ҳимоялаш
+        function secureOpenLeader() {
+            if (sessionStorage.getItem('leader_auth') === 'true') {
+                document.getElementById('leaderModal').classList.remove('hidden');
+                return;
+            }
+            const pass = prompt("📿 Ҳожибоши кабинетига кириш учун PIN-кодни киритинг:");
+            if (pass === LEADER_PIN) {
+                sessionStorage.setItem('leader_auth', 'true');
+                document.getElementById('leaderModal').classList.remove('hidden');
+            } else if (pass !== null) {
+                alert("❌ Нотўғри PIN-код! Фақат Ҳожибошилар кириши мумкин.");
+            }
+        }
+
+        function closeLeaderModal() {
+            stopQrScan();
+            document.getElementById('leaderModal').classList.add('hidden');
+        }
+
+        // Зиёратчи маълумотлари
         const urlParams = new URLSearchParams(window.location.search);
         const pilgrimData = {
-    id: urlParams.get('pass') || localStorage.getItem('user_pass') || "-",
-    name: urlParams.get('name') || localStorage.getItem('user_name') || "Ҳурматли Зиёратчи",
-    group: urlParams.get('group') || localStorage.getItem('user_group') || "Tawaf Travel",
-    hotel: urlParams.get('hotel') || "Makkah Hotel",
-    leaderPhone: urlParams.get('leader') || "+996551191191"
-};
-
-
-        localStorage.setItem('user_pass', pilgrimData.id);
-        localStorage.setItem('user_name', pilgrimData.name);
-        localStorage.setItem('user_group', pilgrimData.group);
+            id: urlParams.get('pass') || "-",
+            name: urlParams.get('name') || "Ҳурматли Зиёратчи",
+            group: urlParams.get('group') || "Tawaf Travel",
+            hotel: urlParams.get('hotel') || "Makkah Hotel",
+            leaderPhone: urlParams.get('leader') || "+996551191191"
+        };
 
         document.getElementById('dispPilgrimName').innerText = pilgrimData.name;
         document.getElementById('dispGroup').innerText = "Гуруҳ: " + pilgrimData.group;
@@ -341,16 +374,13 @@
             isLargeFont = !isLargeFont;
             document.body.classList.toggle('large-font', isLargeFont);
             const btn = document.getElementById('fontBtn');
-            if (isLargeFont) {
-                btn.className = "bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30";
-            } else {
-                btn.className = "bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30";
-            }
+            btn.className = isLargeFont 
+                ? "bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30" 
+                : "bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30";
         }
 
         const dict = {
             uz: {
-                headerSub: "Smart Pilgrim App",
                 langBtn: "КЫРГЫЗЧА",
                 badgeTag: "Шахсий Зиёратчи Бейджиги",
                 hotelBtn: "Меҳмонхонамга йўл",
@@ -382,7 +412,6 @@
                 dayPlan4: "Савр тоғи, Арофот, Муздалифа, Мино ва Нур тоғи (Ҳиро ғори). Байтуллоҳда кўплаб тавофлар қилиш."
             },
             kg: {
-                headerSub: "Smart Pilgrim App",
                 langBtn: "ЎЗБЕКЧА",
                 badgeTag: "Жеке Зыяратчы Бейджиги",
                 hotelBtn: "Мейманканага жол",
@@ -478,15 +507,6 @@
             window.open("https://maps.google.com/?q=Voco+Makkah", "_blank");
         }
 
-        function openLeaderModal() {
-            document.getElementById('leaderModal').classList.remove('hidden');
-        }
-
-        function closeLeaderModal() {
-            stopQrScan();
-            document.getElementById('leaderModal').classList.add('hidden');
-        }
-
         function startQrScan() {
             html5QrCode = new Html5Qrcode("reader");
             html5QrCode.start(
@@ -522,3 +542,4 @@
     </script>
 </body>
 </html>
+
