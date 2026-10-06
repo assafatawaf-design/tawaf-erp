@@ -43,7 +43,7 @@
 
     <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- 5 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёратлар | Меҳмонхона -->
+        <!-- 5 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёрат | Меҳмонхона -->
         <div class="grid grid-cols-5 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[9px] text-center">
             <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-users block mb-0.5 text-xs"></i> Зиёратчи
@@ -110,7 +110,7 @@
             <div class="space-y-2" id="leadersList"></div>
         </div>
 
-        <!-- 3: УМРА САФАР ПАКЕТЛАРИ БЎЛИМИ (ЯНГИ) -->
+        <!-- 3: УМРА САФАР ПАКЕТЛАРИ БЎЛИМИ -->
         <div id="sectionPackages" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
@@ -134,7 +134,7 @@
             <div class="space-y-2" id="packagesList"></div>
         </div>
 
-        <!-- 4: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
+        <!-- 4: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР (АДМИН ҚЎШСА, ҲАММАГА ДАРҲОЛ БОРАДИ) -->
         <div id="sectionExcursions" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-map-location-dot mr-1"></i> Янги Зиёрат қўшиш</h3>
@@ -144,7 +144,7 @@
                     <input type="text" id="excBus" placeholder="Автобус (№07)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
                 <button type="button" onclick="saveExcursion()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs">
-                    Эълон қилиш
+                    ✅ Барча зиёратчиларга эълон қилиш
                 </button>
             </div>
             <div class="space-y-1.5" id="excursionsList"></div>
@@ -238,7 +238,7 @@
         </div>
     </div>
 
-    <!-- JavaScript: Тўлиқ Синхронизация ва Бошқарув -->
+    <!-- JavaScript: Синхронизация ва Маълумотлар -->
     <script>
         let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
         let leaders = JSON.parse(localStorage.getItem('tawaf_leaders')) || [
@@ -310,7 +310,6 @@
             });
         }
 
-        // ҲОЖИБОШИЛАРНИ ЧИҚАРИШ ВА АВТОМАТИК ҲИСОБИ
         function renderLeaders() {
             const list = document.getElementById('leadersList');
             const select = document.getElementById('mLeaderSelect');
@@ -388,7 +387,6 @@
             }
         }
 
-        // САФАР ПАКЕТЛАРИ
         function renderPackages() {
             const list = document.getElementById('packagesList');
             const select = document.getElementById('mPackageSelect');
@@ -530,10 +528,16 @@
             if (!title) return;
             excursions.unshift({ title, time, bus });
             localStorage.setItem('tawaf_excursions', JSON.stringify(excursions));
+            
+            // Асосий экранга автоматик эълон ҳам қилади
+            const ann = `⚡ ЗИЁРАТ: ${title} (${time}) | Автобус: ${bus}`;
+            localStorage.setItem('tawaf_active_announcement', ann);
+
             renderExcursions();
             document.getElementById('excTitle').value = "";
             document.getElementById('excTime').value = "";
             document.getElementById('excBus').value = "";
+            alert("✅ Зиёрат барча зиёратчилар ва Ҳожибоши экранига узатилди!");
         }
 
         function renderExcursions() {
