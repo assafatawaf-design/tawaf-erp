@@ -11,7 +11,6 @@
         body { background-color: #0b1120; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
         .card-gold { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid rgba(245, 158, 11, 0.2); }
         .gold-gradient-text { background: linear-gradient(to right, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        /* Катта шрифт режими */
         body.large-font { font-size: 1.25rem !important; }
         body.large-font h1 { font-size: 1.7rem !important; }
         body.large-font h2 { font-size: 1.5rem !important; }
@@ -23,7 +22,7 @@
 </head>
 <body class="pb-28 transition-all duration-200">
 
-    <!-- Юқори Сарлавҳа (Header) -->
+    <!-- Header -->
     <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-amber-500/20 px-4 py-3">
         <div class="max-w-md mx-auto flex items-center justify-between">
             <div class="flex items-center gap-2">
@@ -34,7 +33,7 @@
                 </div>
             </div>
 
-            <!-- Тил ва Шрифт Созламалари -->
+            <!-- Шрифт ва Тил тугмалари -->
             <div class="flex items-center gap-1.5">
                 <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
                     A+
@@ -46,27 +45,24 @@
         </div>
     </header>
 
-    <!-- Асосий Контент Контейнери -->
     <main class="max-w-md mx-auto px-4 pt-4 space-y-4">
 
-        <!-- 1. ЗИЁРАТЧИНИНГ ШАХСИЙ БЕЙДЖИГИ ВА QR-КОДИ -->
+        <!-- Зиёратчи Бейджиги -->
         <div id="sectionBadge" class="card-gold p-4 rounded-2xl shadow-xl relative overflow-hidden">
             <div class="flex items-start justify-between gap-2">
                 <div class="flex-1">
                     <span class="inline-block bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase" id="badgeTag">
                         Шахсий Зиёратчи Бейджиги
                     </span>
-                    <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Оллохберди Исманов</h2>
-                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: 15-Ноябрь (14 кунлик)</p>
-                    <p class="text-xs text-amber-400 font-mono mt-0.5" id="dispPass">Паспорт: ID1122166</p>
+                    <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Зиёратчи</h2>
+                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: Аниқланмоқда</p>
+                    <p class="text-xs text-amber-400 font-mono mt-0.5" id="dispPass">Паспорт: -</p>
                 </div>
-                <!-- 100% аниқ чиқадиган онлайн QR код -->
                 <div class="bg-white p-1.5 rounded-xl shadow-md flex items-center justify-center shrink-0">
-                    <img id="qrImage" src="https://api.qrserver.com/v1/create-qr-code/?size=72x72&data=TAWAF_ID1122166_OLLOHBERDI" alt="QR" class="w-[72px] h-[72px] rounded">
+                    <img id="qrImage" src="" alt="QR" class="w-[72px] h-[72px] rounded">
                 </div>
             </div>
 
-            <!-- Шошилинч Меҳмонхона навигатори ва Ҳожибоши тугмаси -->
             <div class="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2">
                 <button type="button" onclick="openHotelLocation()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold p-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
                     <i class="fa-solid fa-hotel"></i>
@@ -79,7 +75,7 @@
             </div>
         </div>
 
-        <!-- 2. ҲОЖИБОШИ ОГОҲЛАНТИРИШЛАРИ (Эълонлар тахтаси) -->
+        <!-- Огоҳлантиришлар -->
         <div class="bg-amber-950/40 border border-amber-500/40 p-3.5 rounded-2xl flex items-start gap-3">
             <div class="w-8 h-8 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-base shrink-0 mt-0.5">
                 <i class="fa-solid fa-bullhorn"></i>
@@ -92,7 +88,7 @@
             </div>
         </div>
 
-        <!-- 3. КАТЕГОРИЯЛАР ТУГМАЛАРИ -->
+        <!-- Меню тугмалари -->
         <div class="grid grid-cols-3 gap-2">
             <button type="button" onclick="switchTab('umrah')" id="tabBtnUmrah" class="p-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs flex flex-col items-center gap-1 shadow">
                 <i class="fa-solid fa-kaaba text-base"></i>
@@ -108,13 +104,12 @@
             </button>
         </div>
 
-        <!-- ТАБ 1: УМРА АМАЛЛАРИ (1-5 БОСҚИЧЛАР) -->
+        <!-- ТАБ 1: УМРА АМАЛЛАРИ -->
         <div id="contentUmrah" class="space-y-3">
             <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1" id="umrahStepsHeader">
                 Умра Сафарининг 5 та Асосий Босқичи:
             </div>
 
-            <!-- 1-Босқич -->
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">1</span>
@@ -130,7 +125,6 @@
                 </div>
             </div>
 
-            <!-- 2-Босқич -->
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">2</span>
@@ -141,7 +135,6 @@
                 </p>
             </div>
 
-            <!-- 3-Босқич -->
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">3</span>
@@ -152,7 +145,6 @@
                 </p>
             </div>
 
-            <!-- 4-Босқич -->
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">4</span>
@@ -163,7 +155,6 @@
                 </p>
             </div>
 
-            <!-- 5-Босқич -->
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">5</span>
@@ -175,10 +166,10 @@
             </div>
         </div>
 
-        <!-- ТАБ 2: САҲИҲ ДУОЛАР БАЗАСИ -->
+        <!-- ТАБ 2: САҲИҲ ДУОЛАР -->
         <div id="contentDuas" class="space-y-3 hidden">
             <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaTalbiyaTitle">Талбия дуоси:</h3>
+                <h3 class="font-bold text-amber-400 text-xs uppercase">Талбия дуоси:</h3>
                 <div class="arabic text-white">
                     لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ
                 </div>
@@ -188,7 +179,7 @@
             </div>
 
             <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaRuknTitle">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
+                <h3 class="font-bold text-amber-400 text-xs uppercase">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
                     رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
                 </div>
@@ -198,9 +189,9 @@
             </div>
 
             <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaZamzamTitle">Зам-зам ичиш дуоси:</h3>
+                <h3 class="font-bold text-amber-400 text-xs uppercase">Зам-зам ичиш дуоси:</h3>
                 <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
+                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِзْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
@@ -208,7 +199,7 @@
             </div>
         </div>
 
-        <!-- ТАБ 3: 14 ва 21 КУНЛИК САФАР ТАРТИБИ -->
+        <!-- ТАБ 3: ТАҚВИМ -->
         <div id="contentDays" class="space-y-3 hidden">
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <span class="text-[11px] font-bold text-amber-400 uppercase" id="dayTitle1">1-3 кунлар: Мадинаи Мунаввара</span>
@@ -238,7 +229,7 @@
 
     </main>
 
-    <!-- ҲОЖИБОШИ (ГИД) МОНИТОРИ ВА ТЕЗКОР QR-ЙЎҚЛАМА МОДАЛИ -->
+    <!-- ҲОЖИБОШИ МОНИТОРИ -->
     <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
         <div>
             <div class="flex justify-between items-center border-b border-slate-800 pb-3">
@@ -249,7 +240,6 @@
                 <button type="button" onclick="closeLeaderModal()" class="text-slate-400 text-2xl">&times;</button>
             </div>
 
-            <!-- Саноқ кўрсаткичи -->
             <div class="grid grid-cols-2 gap-2 my-4">
                 <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center">
                     <div class="text-[11px] text-slate-400">Автобусда / Бор:</div>
@@ -261,7 +251,6 @@
                 </div>
             </div>
 
-            <!-- Камера орқали QR сканерлаш майдони -->
             <div class="bg-slate-950 p-3 rounded-2xl border border-dashed border-amber-500/50">
                 <div id="reader" style="width: 100%;"></div>
                 <div class="flex gap-2 mt-2">
@@ -274,7 +263,6 @@
                 </div>
             </div>
 
-            <!-- Шошилинч Push хабар тарқатиш -->
             <div class="mt-4 bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
                 <label class="text-[11px] font-bold text-amber-400 block">Бутун гуруҳга шошилинч хабар юбориш:</label>
                 <input type="text" id="leaderBroadcastText" placeholder="Масалан: Соат 18:00 да автобус ёнида бўлинг..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
@@ -291,7 +279,7 @@
         </div>
     </div>
 
-    <!-- Пастки Доимий Навигация Менюси -->
+    <!-- Навигация Менюси -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2">
         <div class="max-w-md mx-auto flex justify-around items-center">
             <button type="button" onclick="switchTab('umrah')" class="text-center text-amber-400 flex flex-col items-center">
@@ -315,21 +303,36 @@
         </div>
     </nav>
 
-    <!-- JavaScript Қисми ва Тиллар Луғати -->
+    <!-- JavaScript & Динамик Ҳаволани Ўқиш -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
         let html5QrCode = null;
 
+        // Ҳаволадан (URL) параметрларни олиш: ?name=...&pass=...&group=...&hotel=...&leader=...
+        const urlParams = new URLSearchParams(window.location.search);
         const pilgrimData = {
-            id: "ID1122166",
-            name: "Оллохберди Исманов",
-            group: "15-Ноябрь Ош-Жидда",
-            hotel: "Voco Makkah Hotel",
-            leaderPhone: "+996551191191"
+            id: urlParams.get('pass') || localStorage.getItem('user_pass') || "ID1122166",
+            name: urlParams.get('name') || localStorage.getItem('user_name') || "Оллохберди Исманов",
+            group: urlParams.get('group') || localStorage.getItem('user_group') || "15-Ноябрь (14 кунлик)",
+            hotel: urlParams.get('hotel') || "Voco Makkah Hotel",
+            leaderPhone: urlParams.get('leader') || "+996551191191"
         };
 
-        // Катта шрифт режими
+        // Кейинги сафар линксиз очганда ҳам хотирада қолиши учун:
+        localStorage.setItem('user_pass', pilgrimData.id);
+        localStorage.setItem('user_name', pilgrimData.name);
+        localStorage.setItem('user_group', pilgrimData.group);
+
+        // Экранга чиқариш
+        document.getElementById('dispPilgrimName').innerText = pilgrimData.name;
+        document.getElementById('dispGroup').innerText = "Гуруҳ: " + pilgrimData.group;
+        document.getElementById('dispPass').innerText = "Паспорт: " + pilgrimData.id;
+
+        // QR-код яратиш
+        const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
+        document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
+
         function toggleFontSize() {
             isLargeFont = !isLargeFont;
             document.body.classList.toggle('large-font', isLargeFont);
@@ -341,7 +344,6 @@
             }
         }
 
-        // 100% хатосиз Ўзбекча ва Қирғизча Луғат
         const dict = {
             uz: {
                 headerSub: "Tawaf Travel Зиёратчилар Иловаси",
@@ -417,7 +419,6 @@
         function toggleLang() {
             currentLang = currentLang === 'uz' ? 'kg' : 'uz';
             const t = dict[currentLang];
-
             setLangText('headerSub', t.headerSub);
             setLangText('langBtn', t.langBtn);
             setLangText('badgeTag', t.badgeTag);
@@ -429,7 +430,6 @@
             setLangText('tabDuasText', t.tabDuas);
             setLangText('tabDaysText', t.tabDays);
             setLangText('umrahStepsHeader', t.umrahStepsHeader);
-            
             setLangText('step1Title', t.step1T);
             setLangText('step1Desc', t.step1D);
             setLangText('step1Trans', t.step1Tr);
@@ -441,7 +441,6 @@
             setLangText('step4Desc', t.step4D);
             setLangText('step5Title', t.step5T);
             setLangText('step5Desc', t.step5D);
-
             setLangText('dayTitle1', t.dayTitle1);
             setLangText('dayPlan1', t.dayPlan1);
             setLangText('dayTitle2', t.dayTitle2);
@@ -452,7 +451,6 @@
             setLangText('dayPlan4', t.dayPlan4);
         }
 
-        // Бўлимларни алмаштириш
         function switchTab(tab) {
             ['umrah', 'duas', 'days'].forEach(t => {
                 const el = document.getElementById('content' + t.charAt(0).toUpperCase() + t.slice(1));
@@ -521,4 +519,3 @@
     </script>
 </body>
 </html>
-
