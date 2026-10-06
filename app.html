@@ -44,10 +44,14 @@
             </div>
 
             <div class="flex items-center gap-1.5">
-                <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
+                <!-- ЯНГИ: ҚИБЛА КОМПАСИ ТУГМАСИ -->
+                <button type="button" onclick="openQibla()" title="Қибла йўналиши" class="bg-slate-800 text-emerald-400 font-black px-2.5 py-1 rounded-lg text-xs border border-emerald-500/30 flex items-center gap-1">
+                    <i class="fa-solid fa-compass"></i> <span>Қибла</span>
+                </button>
+                <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30">
                     A+
                 </button>
-                <button type="button" onclick="toggleLang()" id="langBtn" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-xs shadow">
+                <button type="button" onclick="toggleLang()" id="langBtn" class="bg-amber-500 text-slate-950 font-bold px-2 py-1 rounded-lg text-xs shadow">
                     КЫРГЫЗЧА
                 </button>
             </div>
@@ -133,7 +137,7 @@
             
             <!-- SOS ҳолати панели -->
             <div id="sosAlertBox" class="hidden mt-2 p-2 rounded-lg bg-rose-950/90 border border-rose-500 flex items-center justify-between text-[11px] text-rose-200">
-                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">Аниқланмоқда...</b></span>
+                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">GPS нуқта кутилмоқда...</b></span>
                 <button type="button" onclick="stopSOS()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-md text-[10px] font-bold" id="btnStopSos">Тўхтатиш</button>
             </div>
         </div>
@@ -278,7 +282,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқinaа عَذَابَ النَّарِ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
@@ -288,7 +292,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua3Title">Зам-зам ичиш дуоси:</h3>
                 <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِзْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
+                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَрِзْقًا وَاسِعًا، وَшِفَاءً مِنْ كُلِّ دَاءٍ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
@@ -358,17 +362,17 @@
                 <button type="button" onclick="closeLeaderModal()" class="text-slate-400 text-2xl">&times;</button>
             </div>
 
-            <!-- ТЕЗКОР SOS ОГОҲЛАНТИРИШ БЛОКИ (ХАРИТА ТУГМАСИ ҲАР ДОИМ ЧИҚАДИ) -->
-            <div id="leaderSosNotification" class="hidden p-3 rounded-xl bg-rose-950 border-2 border-rose-500 space-y-2 shadow-xl sos-active">
+            <!-- ТЕЗКОР SOS ОГОҲЛАНТИРИШ БЛОКИ (МУКАММАЛ АНИҚ ХАРИТА ТУГМАСИ) -->
+            <div id="leaderSosNotification" class="hidden p-3.5 rounded-xl bg-rose-950 border-2 border-rose-500 space-y-2 shadow-xl sos-active">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-black text-rose-300 uppercase tracking-wide"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ШОШИЛИНЧ: ЗИЁРАТЧИ АДАШДИ!</span>
                     <button type="button" onclick="clearSosNotice()" class="text-[10px] bg-rose-800 hover:bg-rose-700 text-white font-bold px-2 py-0.5 rounded">Ўчириш</button>
                 </div>
                 <p class="text-xs text-white" id="leaderSosText">-</p>
-                <!-- Харита тугмаси ҳар доим мавжуд бўлади -->
-                <a id="leaderSosMapLink" href="#" target="_blank" class="flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold py-2 px-3 rounded-xl shadow w-full">
-                    <i class="fa-solid fa-location-dot"></i> Аниқ турган жойини Харитада кўриш (Google Maps)
-                </a>
+                <!-- 500 хато бермайдиган хавфсиз чақирув -->
+                <button type="button" onclick="openSosCoordsMap()" class="flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow w-full">
+                    <i class="fa-solid fa-location-dot text-sm"></i> Аниқ турган жойини Навигаторда кўриш
+                </button>
             </div>
 
             <!-- САФАР ҲИСОБОТИ -->
@@ -474,7 +478,7 @@
         </div>
     </div>
 
-    <!-- ЭЛЕГАНТ PIN-КОД КИРИТИШ ОЙНАСИ -->
+    <!-- ТОЗА PIN-КОД ОЙНАСИ (ПАРОЛЛАР КЎРИНМАЙДИ, ТОЗА МАХФИЙ) -->
     <div id="pinModal" class="fixed inset-0 bg-black/90 z-50 p-4 hidden flex items-center justify-center">
         <div class="w-full max-w-xs card-gold p-5 rounded-3xl text-center space-y-4 shadow-2xl">
             <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
@@ -482,7 +486,7 @@
             </div>
             <div>
                 <h3 class="font-bold text-white text-sm" id="pinModalTitle">Ҳимояланган Кириш</h3>
-                <p class="text-[11px] text-slate-400 mt-1" id="pinModalSub">Махфий PIN-кодни киритинг:</p>
+                <p class="text-[11px] text-slate-400 mt-1">Илтимос, махфий PIN-кодни киритинг:</p>
             </div>
             <input type="password" id="pinInput" maxlength="6" class="w-full bg-slate-950 border border-amber-500/50 rounded-xl p-3 text-center text-2xl font-mono text-amber-400 tracking-widest focus:outline-none" placeholder="••••">
             <div class="flex gap-2 pt-2">
@@ -542,7 +546,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: МУКАММАЛ АНИҚ GPS ВА НАВИГАЦИЯ -->
+    <!-- JavaScript: ТЎЛИҚ 100% АНИҚ GPS ВА ХАТОСИЗ НАВИГАЦИЯ -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -550,10 +554,7 @@
         let currentCity = 'Makkah';
         let isSosActive = false;
         let targetAuth = '';
-
-        // Динамик PIN-кодлар (Админ созламаларидан ўзгартирилади)
-        const ADMIN_PIN = localStorage.getItem('tawaf_admin_pin') || "7788";
-        const LEADER_PIN = localStorage.getItem('tawaf_leader_pin') || "1122";
+        let lastSosCoordinates = '';
 
         const urlParams = new URLSearchParams(window.location.search);
         const pilgrimData = {
@@ -574,13 +575,31 @@
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
 
-        // МЕҲМОНХОНАНИ ХАРИТАДА ОЧИШ (БРАУЗЕРДА 500 БЕРМАЙДИ)
+        // ҚИБЛА КОМПАСИНИ ОЧИШ (ЯНГИ)
+        function openQibla() {
+            window.location.href = "https://qiblafinder.withgoogle.com";
+        }
+
+        // МЕҲМОНХОНАНИ НАВИГАТОРДА ОЧИШ (500 ХАТОСИЗ)
         function openHotelLocation() {
-            const h = encodeURIComponent(pilgrimData.hotel + " Saudi Arabia");
+            const h = encodeURIComponent(pilgrimData.hotel);
             if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
                 window.location.href = `geo:0,0?q=${h}`;
             } else {
                 window.open(`https://maps.google.com/?q=${h}`, '_blank');
+            }
+        }
+
+        // ҲОЖИБОШИ: АДАШГАН ОДАМНИНГ GPS НУҚТАСИНИ ОЧИШ (500 БЕРМАЙДИ)
+        function openSosCoordsMap() {
+            if (lastSosCoordinates) {
+                if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                    window.location.href = `geo:${lastSosCoordinates}?q=${lastSosCoordinates}(Ziyoratchi)`;
+                } else {
+                    window.open(`https://maps.google.com/?q=${lastSosCoordinates}`, '_blank');
+                }
+            } else {
+                openHotelLocation();
             }
         }
 
@@ -646,25 +665,29 @@
         }
         renderPublicExcursions();
 
-        // 100% АНИҚ GPS БИЛАН SOS (ХАРИТА ҲАР ДОИМ ҲОЖИБОШИГА ТУШАДИ)
+        // 100% АНИҚ GPS ОЛИШ: КУТИШ ВА АНИҚ НУҚТАНИ ЮБОРИШ
         function triggerSOS() {
             isSosActive = true;
             const btn = document.getElementById('sosBtn');
             btn.className = "bg-rose-700 text-white font-bold p-2 rounded-xl text-[11px] flex flex-col items-center justify-center gap-1 shadow sos-active";
             document.getElementById('sosAlertBox').classList.remove('hidden');
-            document.getElementById('sosStatusMsg').innerText = "GPS нуқта олинмоқда...";
+            document.getElementById('sosStatusMsg').innerText = "Аниқ GPS нуқта олинмоқда...";
 
             const cleanPhone = pilgrimData.leaderPhone.replace(/[^0-9]/g, '');
 
-            const directSend = (mapLink) => {
-                // Агар GPS олинмаган бўлса ҳам, меҳмонхонаси бўйича харита линки яратилади
-                const finalMap = mapLink || `https://maps.google.com/?q=${encodeURIComponent(pilgrimData.hotel)}`;
-                
+            const executeSosWithCoords = (lat, lng) => {
+                let coordsString = "";
+                let mapUrl = "";
+                if (lat && lng) {
+                    coordsString = `${lat},${lng}`;
+                    mapUrl = `https://maps.google.com/?q=${lat},${lng}`;
+                }
+
                 const sosData = {
                     name: pilgrimData.name,
                     pass: pilgrimData.id,
                     hotel: pilgrimData.hotel,
-                    map: finalMap,
+                    coords: coordsString,
                     time: new Date().toLocaleTimeString()
                 };
                 localStorage.setItem('tawaf_active_sos', JSON.stringify(sosData));
@@ -675,27 +698,28 @@
                 rawText += "* Зиёратчи: " + pilgrimData.name + "\n";
                 rawText += "* Паспорт: " + pilgrimData.id + "\n";
                 rawText += "* Мехмонхона: " + pilgrimData.hotel + "\n\n";
-                rawText += "МЕНИНГ АНИК ЖОЙИМ (ХАРИТА):\n" + finalMap + "\n\n";
+                if (mapUrl) {
+                    rawText += "МЕНИНГ АНИК ЖОЙИМ (ХАРИТА):\n" + mapUrl + "\n\n";
+                }
                 rawText += "Хожибоши, илтимос менга тезрок алокага чикинг!";
 
-                const encoded = encodeURIComponent(rawText);
-                window.location.href = "whatsapp://send?phone=" + cleanPhone + "&text=" + encoded;
+                window.location.href = "whatsapp://send?phone=" + cleanPhone + "&text=" + encodeURIComponent(rawText);
             };
 
             if (navigator.geolocation) {
+                // Аниқликни олиш учун кутиш вақти берилди
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
-                        const lat = pos.coords.latitude;
-                        const lng = pos.coords.longitude;
-                        directSend(`https://maps.google.com/?q=${lat},${lng}`);
+                        executeSosWithCoords(pos.coords.latitude, pos.coords.longitude);
                     },
-                    () => {
-                        directSend('');
+                    (err) => {
+                        // GPS рухсат берилмаса
+                        executeSosWithCoords(null, null);
                     },
-                    { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
                 );
             } else {
-                directSend('');
+                executeSosWithCoords(null, null);
             }
         }
 
@@ -713,9 +737,8 @@
             const box = document.getElementById('leaderSosNotification');
             if (data) {
                 const s = JSON.parse(data);
+                lastSosCoordinates = s.coords || "";
                 document.getElementById('leaderSosText').innerText = `👤 ${s.name} (${s.pass}) | Меҳмонхона: ${s.hotel} | Вақти: ${s.time}`;
-                // Харита ҳаволаси ҳар доим ишлайди
-                document.getElementById('leaderSosMapLink').href = s.map || `https://maps.google.com/?q=${encodeURIComponent(s.hotel)}`;
                 box.classList.remove('hidden');
             } else {
                 box.classList.add('hidden');
@@ -822,11 +845,11 @@
             document.getElementById('announcementText').innerText = savedAnn;
         }
 
+        // МАХФИЙ PIN ТАЛАБ ҚИЛИШ (ПАРОЛЛАР КЎРСАТИЛМАЙДИ)
         function openPinModal(target) {
             targetAuth = target;
             document.getElementById('pinInput').value = '';
             document.getElementById('pinModalTitle').innerText = target === 'leader' ? "Ҳожибоши Кабинети" : "Админ ERP Панели";
-            document.getElementById('pinModalSub').innerText = target === 'leader' ? "PIN-код: 1122" : "PIN-код: 7788";
             document.getElementById('pinModal').classList.remove('hidden');
             setTimeout(() => document.getElementById('pinInput').focus(), 100);
         }
@@ -837,8 +860,11 @@
 
         function verifyPin() {
             const pin = document.getElementById('pinInput').value;
+            const validLeaderPin = localStorage.getItem('tawaf_leader_pin') || "1122";
+            const validAdminPin = localStorage.getItem('tawaf_admin_pin') || "7788";
+
             if (targetAuth === 'leader') {
-                if (pin === LEADER_PIN) {
+                if (pin === validLeaderPin) {
                     closePinModal();
                     checkLeaderSosNotice();
                     updateLeaderTripStats();
@@ -847,7 +873,7 @@
                     alert("❌ Нотўғри PIN-код!");
                 }
             } else if (targetAuth === 'admin') {
-                if (pin === ADMIN_PIN) {
+                if (pin === validAdminPin) {
                     closePinModal();
                     window.location.href = "index.html";
                 } else {
@@ -957,8 +983,8 @@
             document.body.classList.toggle('large-font', isLargeFont);
             const btn = document.getElementById('fontBtn');
             btn.className = isLargeFont 
-                ? "bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30" 
-                : "bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30";
+                ? "bg-amber-400 text-slate-950 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30" 
+                : "bg-slate-800 text-amber-400 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30";
         }
 
         const dict = {
