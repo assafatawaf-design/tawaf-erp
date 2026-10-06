@@ -318,12 +318,13 @@
 
         const urlParams = new URLSearchParams(window.location.search);
         const pilgrimData = {
-            id: urlParams.get('pass') || localStorage.getItem('user_pass') || "ID1122166",
-            name: urlParams.get('name') || localStorage.getItem('user_name') || "Оллохберди Исманов",
-            group: urlParams.get('group') || localStorage.getItem('user_group') || "15-Ноябрь (14 кунлик)",
-            hotel: urlParams.get('hotel') || "Voco Makkah Hotel",
-            leaderPhone: urlParams.get('leader') || "+996551191191"
-        };
+    id: urlParams.get('pass') || localStorage.getItem('user_pass') || "-",
+    name: urlParams.get('name') || localStorage.getItem('user_name') || "Ҳурматли Зиёратчи",
+    group: urlParams.get('group') || localStorage.getItem('user_group') || "Tawaf Travel",
+    hotel: urlParams.get('hotel') || "Makkah Hotel",
+    leaderPhone: urlParams.get('leader') || "+996551191191"
+};
+
 
         localStorage.setItem('user_pass', pilgrimData.id);
         localStorage.setItem('user_name', pilgrimData.name);
