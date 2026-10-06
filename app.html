@@ -22,6 +22,7 @@
         .arabic { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.45rem; line-height: 2.2; direction: rtl; text-align: right; }
         .sos-active { animation: pulseSos 1s infinite alternate; }
         @keyframes pulseSos { 0% { transform: scale(1); } 100% { transform: scale(1.03); box-shadow: 0 0 20px rgba(225, 29, 72, 0.95); } }
+        .compass-arrow { transition: transform 0.5s ease; }
     </style>
 </head>
 <body class="pb-28 transition-all duration-200">
@@ -44,9 +45,9 @@
             </div>
 
             <div class="flex items-center gap-1.5">
-                <!-- ЯНГИ: ҚИБЛА КОМПАСИ ТУГМАСИ -->
-                <button type="button" onclick="openQibla()" title="Қибла йўналиши" class="bg-slate-800 text-emerald-400 font-black px-2.5 py-1 rounded-lg text-xs border border-emerald-500/30 flex items-center gap-1">
-                    <i class="fa-solid fa-compass"></i> <span>Қибла</span>
+                <!-- 500 хато бермайдиган Ички Қибла Комписи -->
+                <button type="button" onclick="openInternalQibla()" id="btnQiblaHdr" class="bg-slate-800 text-emerald-400 font-black px-2.5 py-1 rounded-lg text-xs border border-emerald-500/30 flex items-center gap-1">
+                    <i class="fa-solid fa-compass"></i> <span id="txtQiblaBtn">Қибла</span>
                 </button>
                 <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30">
                     A+
@@ -184,60 +185,45 @@
             <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1" id="umrahStepsHeader">
                 Умра Сафарининг 5 та Асосий Босқичи:
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">1</span>
                     <h3 class="font-bold text-sm text-white" id="step1Title">Мийқот ва Ихром боғлаш</h3>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed" id="step1Desc">
-                    Ғусл қилиб, ихром либосларини кийилади. Сўнг 2 ракат ихром намозини ўқиб, ният қилинади:
-                </p>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step1Desc">Ғусл қилиб, ихром либосларини кийилади. Сўнг 2 ракат ихром намозини ўқиб, ният қилинади:</p>
                 <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
                     <div class="arabic text-amber-300">لَبَّيْكَ اللَّهُمَّ عُمْرَةً</div>
                     <div class="text-xs text-slate-400 italic mt-1 font-mono">«Лаббайкаллоҳумма ъумратан»</div>
                     <div class="text-xs text-slate-200 mt-1" id="step1Trans">Маъноси: «Аллоҳим, Умра қилиш учун Сенинг буйруғингга ҳозир бўлдим».</div>
                 </div>
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">2</span>
                     <h3 class="font-bold text-sm text-white" id="step2Title">Байтуллоҳда Тавоф қилиш</h3>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed" id="step2Desc">
-                    Ҳажарул Асваддан бошлаб, Каъбани соат стрелкасига тескари 7 марта айланиш. Ҳар айланиш Ҳажарул Асвадда бошланиб шу ерда тугайди.
-                </p>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step2Desc">Ҳажарул Асваддан бошлаб, Каъбани соат стрелкасига тескари 7 марта айланиш.</p>
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">3</span>
                     <h3 class="font-bold text-sm text-white" id="step3Title">Мақоми Иброҳим ва Зам-зам</h3>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed" id="step3Desc">
-                    Тавоф тугагач, Мақоми Иброҳим ортида 2 ракат тавоф намозини ўқилади ва қониб-қониб Зам-зам суви ичилади.
-                </p>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step3Desc">2 ракат тавоф намози ва Зам-зам суви ичиш.</p>
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">4</span>
                     <h3 class="font-bold text-sm text-white" id="step4Title">Сафо ва Марва орасида Саъй</h3>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed" id="step4Desc">
-                    Сафо тепалигидан бошлаб Марвага 7 марта юрилади (Сафодан Марвага 1, Марвадан Сафога 2 ва ҳ.к. 7-чиси Марвада тугайди).
-                </p>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step4Desc">Сафо ва Марва орасида 7 марта юриш.</p>
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <div class="flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">5</span>
-                    <h3 class="font-bold text-sm text-white" id="step5Title">Соч олдириш ва Эҳромдан чиқиш</h3>
+                    <h3 class="font-bold text-sm text-white" id="step5Title">Соч олдириш ва Ихромдан чиқиш</h3>
                 </div>
-                <p class="text-xs text-slate-300 leading-relaxed" id="step5Desc">
-                    Эркаклар сочларини тарошлатади ёки калталатади, аёллар эса сочлари учидан бармоқ учи миқдорида кесадилар. Шу билан Умра амали тамом бўлади!
-                </p>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step5Desc">Соч қисқартириб ихромдан чиқиш. Умра тамом бўлади.</p>
             </div>
         </div>
 
@@ -249,13 +235,11 @@
                     <button type="button" onclick="setCounterMode('say')" id="btnModeSay" class="bg-slate-800 text-slate-300 font-bold px-3 py-1 rounded-lg text-xs">Саъй (7)</button>
                     <button type="button" onclick="setCounterMode('dhikr')" id="btnModeDhikr" class="bg-slate-800 text-slate-300 font-bold px-3 py-1 rounded-lg text-xs">33 Зикр</button>
                 </div>
-
                 <div class="py-4">
                     <div class="text-xs uppercase tracking-widest text-slate-400" id="counterStatusText">Ҳозирги айланиш:</div>
                     <div class="text-6xl font-black text-amber-400 font-mono my-2" id="counterNumber">0</div>
                     <div class="text-xs text-emerald-400 font-bold" id="counterTargetText">Мақсад: 7 та айланиш</div>
                 </div>
-
                 <div class="flex gap-2">
                     <button type="button" onclick="incrementCounter()" class="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-4 rounded-2xl text-lg shadow-lg active:scale-95 transition" id="btnCountClick">
                         + БОСИНГ (САНАШ)
@@ -271,85 +255,61 @@
         <div id="contentDuas" class="space-y-3 hidden">
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua1Title">Талбия дуоси:</h3>
-                <div class="arabic text-white">
-                    لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ
-                </div>
-                <div class="text-xs text-slate-400 italic">
-                    «Лаббайкаллоҳумма лаббайк, лаббайка лаа шарийка лака лаббайк, иннал ҳамда ван-ниъмата лака вал-мулк, лаа шарийка лак».
-                </div>
+                <div class="arabic text-white">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ...</div>
             </div>
-
             <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
-                <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқinaа عَذَابَ النَّарِ
-                </div>
-                <div class="text-xs text-slate-400 italic">
-                    «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
-                </div>
-            </div>
-
-            <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua3Title">Зам-зам ичиш дуоси:</h3>
-                <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَрِзْقًا وَاسِعًا، وَшِفَاءً مِنْ كُلِّ دَاءٍ
-                </div>
-                <div class="text-xs text-slate-400 italic">
-                    «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
-                </div>
+                <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямонийда:</h3>
+                <div class="arabic text-white">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً...</div>
             </div>
         </div>
 
-        <!-- ТАБ 4: ЖОНЛИ ЗИЁРАТЛАР ВА ТАҚВИМ -->
+        <!-- ТАБ 4: ЗИЁРАТЛАР ВА ТАҚВИМ -->
         <div id="contentDays" class="space-y-3 hidden">
-            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1">
-                Гуруҳ Зиёратлари ва Сафар Дастури:
-            </div>
+            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1">Гуруҳ Зиёратлари:</div>
             <div id="publicExcursionsList" class="space-y-2"></div>
-
-            <div class="card-gold p-3.5 rounded-2xl space-y-1.5 opacity-80">
-                <span class="text-[11px] font-bold text-amber-400 uppercase">1-3 кунлар: Мадинаи Мунаввара</span>
-                <p class="text-xs text-slate-300">Масжидун Набавий, Равзаи Мутаҳҳара (Нусук) зиёрати.</p>
-            </div>
-            <div class="card-gold p-3.5 rounded-2xl space-y-1.5 opacity-80">
-                <span class="text-[11px] font-bold text-amber-400 uppercase">4-5 кунлар: Мадина зиёратгоҳлари</span>
-                <p class="text-xs text-slate-300">Қубо масжиди, Уҳуд тоғи, Хурмо боғи.</p>
-            </div>
-            <div class="card-gold p-3.5 rounded-2xl space-y-1.5 opacity-80">
-                <span class="text-[11px] font-bold text-amber-400 uppercase">6-14 кунлар: Маккаи Мукаррама</span>
-                <p class="text-xs text-slate-300">Асосий Умра амали, Савр тоғи, Арофот, Мино ва Нур тоғи.</p>
-            </div>
         </div>
 
-        <!-- ТАБ 5: УМРА ЛУҒАТИ ВА ЗАРУР ИБОРАЛАР -->
+        <!-- ТАБ 5: УМРА ЛУҒАТИ -->
         <div id="contentGuide" class="space-y-3 hidden">
             <div class="card-gold p-4 rounded-2xl space-y-3">
-                <h3 class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-comments mr-1"></i> Арабча Сўзлашув (Саудияда керак бўладиган):</h3>
+                <h3 class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-comments mr-1"></i> Арабча Сўзлашув:</h3>
                 <div class="space-y-2 text-xs">
-                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                        <b class="text-amber-300">Кам ҳаза? (كم هذا؟)</b> — Бу неча пул туради?
-                    </div>
-                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                        <b class="text-amber-300">Айнал фундуқ? (أين الفندق؟)</b> — Меҳмонхона қаерда?
-                    </div>
-                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                        <b class="text-amber-300">Шукран жазийлан (شكراً جزيلاً)</b> — Катта раҳмат!
-                    </div>
-                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800">
-                        <b class="text-amber-300">Суқ / Баққола (سوق / بقالة)</b> — Бозор / Дўкон.
-                    </div>
+                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800"><b class="text-amber-300">Кам ҳаза?</b> — Бу неча пул?</div>
+                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800"><b class="text-amber-300">Айнал фундуқ?</b> — Меҳмонхона қаерда?</div>
+                    <div class="bg-slate-950 p-2.5 rounded-xl border border-slate-800"><b class="text-amber-300">Шукран</b> — Раҳмат!</div>
                 </div>
-            </div>
-
-            <div class="card-gold p-4 rounded-2xl space-y-2">
-                <h3 class="text-xs font-bold text-emerald-400 uppercase"><i class="fa-solid fa-bottle-water mr-1"></i> Зам-зам ва Багаж эслатмаси:</h3>
-                <p class="text-xs text-slate-300 leading-relaxed">
-                    ✈️ Аэропортда ҳар бир зиёратчига расмий <b>5 литрлик Зам-зам суви</b> берилади. Багаж оғирлиги одатда 23 кг ёки 30 кг (авиакомпанияга қараб).
-                </p>
             </div>
         </div>
 
     </main>
+
+    <!-- ИЧКИ ҚИБЛА КОМПАСИ МОДАЛИ (500 ХАТО БЕРМАЙДИ) -->
+    <div id="qiblaModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-center items-center">
+        <div class="card-gold p-6 rounded-3xl max-w-xs w-full text-center space-y-4 shadow-2xl relative">
+            <button type="button" onclick="closeInternalQibla()" class="absolute top-3 right-4 text-slate-400 text-2xl font-bold">&times;</button>
+            <div class="w-12 h-12 mx-auto rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-kaaba"></i>
+            </div>
+            <div>
+                <h3 class="font-bold text-white text-base" id="qiblaTitleDisp">Қибла Йўналиши (Макка)</h3>
+                <p class="text-xs text-slate-400 mt-1" id="qiblaSubDisp">Телефонингизни ерга параллел ушланг</p>
+            </div>
+            <div class="w-48 h-48 mx-auto relative flex items-center justify-center border-4 border-amber-500/30 rounded-full bg-slate-950 shadow-inner">
+                <div class="absolute text-[10px] text-slate-500 font-bold top-2">Ш (N)</div>
+                <div class="absolute text-[10px] text-slate-500 font-bold bottom-2">Ж (S)</div>
+                <div class="w-36 h-36 rounded-full border border-dashed border-emerald-500/40 flex items-center justify-center compass-arrow" id="compassPointer">
+                    <div class="flex flex-col items-center">
+                        <i class="fa-solid fa-location-arrow text-emerald-400 text-4xl -rotate-45"></i>
+                        <span class="text-[10px] font-black text-amber-400 mt-1">КАЪБА</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[11px] text-emerald-400 font-mono font-bold" id="compassHeading">Азимут: 240° (Саудия томон)</p>
+            <button type="button" onclick="closeInternalQibla()" class="w-full bg-slate-800 text-slate-200 font-bold py-2 rounded-xl text-xs">
+                Ёпиш
+            </button>
+        </div>
+    </div>
 
     <!-- ҲОЖИБОШИ МОНИТОРИ -->
     <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
@@ -362,32 +322,35 @@
                 <button type="button" onclick="closeLeaderModal()" class="text-slate-400 text-2xl">&times;</button>
             </div>
 
-            <!-- ТЕЗКОР SOS ОГОҲЛАНТИРИШ БЛОКИ (МУКАММАЛ АНИҚ ХАРИТА ТУГМАСИ) -->
+            <!-- ТЕЗКОР SOS ОГОҲЛАНТИРИШ БЛОКИ -->
             <div id="leaderSosNotification" class="hidden p-3.5 rounded-xl bg-rose-950 border-2 border-rose-500 space-y-2 shadow-xl sos-active">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-black text-rose-300 uppercase tracking-wide"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ШОШИЛИНЧ: ЗИЁРАТЧИ АДАШДИ!</span>
                     <button type="button" onclick="clearSosNotice()" class="text-[10px] bg-rose-800 hover:bg-rose-700 text-white font-bold px-2 py-0.5 rounded">Ўчириш</button>
                 </div>
                 <p class="text-xs text-white" id="leaderSosText">-</p>
-                <!-- 500 хато бермайдиган хавфсиз чақирув -->
+                <!-- 500 хато бермайдиган навигатор чақируви -->
                 <button type="button" onclick="openSosCoordsMap()" class="flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow w-full">
                     <i class="fa-solid fa-location-dot text-sm"></i> Аниқ турган жойини Навигаторда кўриш
                 </button>
             </div>
 
-            <!-- САФАР ҲИСОБОТИ -->
+            <!-- САФАР ҲИСОБОТИ ВА СОЗЛАМАЛАРИ (ИНТЕРАКТИВ КУНЛАР) -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-plane-departure mr-1"></i> Сафар & Гуруҳ Ҳисоботи</span>
-                    <span class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full font-bold" id="leaderTripDays">14 Кунлик</span>
+                    <!-- 14 ёки 21 кунликни шу ернинг ўзида алмаштириш мумкин -->
+                    <button type="button" onclick="toggleLeaderTripDays()" class="text-[10px] bg-amber-500 text-slate-950 px-2.5 py-1 rounded-full font-black shadow" id="leaderTripDays">
+                        14 Кунлик ⇄
+                    </button>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-center pt-1">
                     <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <div class="text-[10px] text-slate-400">Зиёратчилар сони:</div>
+                        <div class="text-[10px] text-slate-400" id="lblLeaderPCount">Зиёратчилар сони:</div>
                         <div class="text-lg font-black text-white" id="leaderTotalPilgrims">0 нафар</div>
                     </div>
                     <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <div class="text-[10px] text-slate-400">Умумий тушган сумма:</div>
+                        <div class="text-[10px] text-slate-400" id="lblLeaderCash">Умумий тушган сумма:</div>
                         <div class="text-lg font-black text-emerald-400" id="leaderTotalCash">$0</div>
                     </div>
                 </div>
@@ -399,34 +362,42 @@
                 </div>
             </div>
 
-            <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ -->
+            <!-- ЯНГИ: ҲОЖИБОШИ ОВОЗЛИ ХАБАР ЮБОРИШ ТУГМАСИ -->
+            <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-300 font-bold"><i class="fa-solid fa-microphone text-amber-400 mr-1.5"></i> Гуруҳга Овозли Хабар:</span>
+                <button type="button" onclick="sendVoiceNoticePrompt()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp'да ёзиш
+                </button>
+            </div>
+
+            <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ (НАЗОРАТ) -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <div class="text-xs font-bold text-amber-400 flex justify-between">
                     <span><i class="fa-solid fa-users mr-1"></i> Менинг Зиёратчиларим (Назорат):</span>
                 </div>
-                <div id="leaderPilgrimList" class="space-y-1.5 max-h-36 overflow-y-auto text-xs"></div>
+                <div id="leaderPilgrimList" class="space-y-1.5 max-h-32 overflow-y-auto text-xs"></div>
             </div>
 
             <!-- Йўқлама статистикаси -->
             <div class="grid grid-cols-2 gap-2">
-                <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center">
+                <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center">
                     <div class="text-[10px] text-slate-400" id="txtPresent">Автобусда / Бор:</div>
-                    <div id="countPresent" class="text-2xl font-bold text-emerald-400">0</div>
+                    <div id="countPresent" class="text-xl font-bold text-emerald-400">0</div>
                 </div>
-                <div class="bg-slate-900 border border-slate-800 p-2.5 rounded-xl text-center">
+                <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-center">
                     <div class="text-[10px] text-slate-400" id="txtMissing">Етиб келмаган:</div>
-                    <div id="countMissing" class="text-2xl font-bold text-rose-400">0</div>
+                    <div id="countMissing" class="text-xl font-bold text-rose-400">0</div>
                 </div>
             </div>
 
-            <!-- QR Йўқлама -->
+            <!-- QR ЙЎҚЛАМА СКАНЕРИ (ХАТОСИЗ ИШЛАШ ҲИМОЯСИ БИЛАН) -->
             <div class="bg-slate-950 p-2.5 rounded-2xl border border-dashed border-amber-500/50">
                 <div id="reader" style="width: 100%;"></div>
                 <div class="flex gap-2 mt-2">
-                    <button type="button" onclick="startQrScan()" class="flex-1 bg-amber-500 text-slate-950 font-bold p-2 rounded-xl text-xs flex items-center justify-center gap-1.5" id="btnScanStart">
+                    <button type="button" onclick="startQrScanSafe()" class="flex-1 bg-amber-500 text-slate-950 font-bold p-2 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow" id="btnScanStart">
                         <i class="fa-solid fa-camera"></i> Сканерни ёқиш
                     </button>
-                    <button type="button" onclick="stopQrScan()" class="bg-slate-800 text-slate-300 font-bold px-3 py-2 rounded-xl text-xs" id="btnScanStop">
+                    <button type="button" onclick="stopQrScanSafe()" class="bg-slate-800 text-slate-300 font-bold px-3 py-2 rounded-xl text-xs" id="btnScanStop">
                         Тўхтатиш
                     </button>
                 </div>
@@ -478,7 +449,7 @@
         </div>
     </div>
 
-    <!-- ТОЗА PIN-КОД ОЙНАСИ (ПАРОЛЛАР КЎРИНМАЙДИ, ТОЗА МАХФИЙ) -->
+    <!-- ТОЗА PIN-КОД ОЙНАСИ (МАХФИЙ) -->
     <div id="pinModal" class="fixed inset-0 bg-black/90 z-50 p-4 hidden flex items-center justify-center">
         <div class="w-full max-w-xs card-gold p-5 rounded-3xl text-center space-y-4 shadow-2xl">
             <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
@@ -546,7 +517,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: ТЎЛИҚ 100% АНИҚ GPS ВА ХАТОСИЗ НАВИГАЦИЯ -->
+    <!-- JavaScript: БАРЧА ФУНКЦИЯЛАР МУКАММАЛ ҲОЛАТДА -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -575,12 +546,48 @@
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
 
-        // ҚИБЛА КОМПАСИНИ ОЧИШ (ЯНГИ)
-        function openQibla() {
-            window.location.href = "https://qiblafinder.withgoogle.com";
+        // Сафар кунларини Ҳожибоши томонидан ўзгартириш (14 / 21 кун)
+        function toggleLeaderTripDays() {
+            let current = localStorage.getItem('tawaf_leader_trip_days') || "14 Кунлик";
+            let next = current === "14 Кунлик" ? "21 Кунлик" : (current === "21 Кунлик" ? "28 Кунлик" : "14 Кунлик");
+            localStorage.setItem('tawaf_leader_trip_days', next);
+            document.getElementById('leaderTripDays').innerText = next + " ⇄";
+        }
+        const savedTripDays = localStorage.getItem('tawaf_leader_trip_days') || "14 Кунлик";
+        document.getElementById('leaderTripDays').innerText = savedTripDays + " ⇄";
+
+        // Ҳожибоши овозли хабар чақируви
+        function sendVoiceNoticePrompt() {
+            const cleanPhone = pilgrimData.leaderPhone.replace(/[^0-9]/g, '');
+            const msg = encodeURIComponent("🎙️ Ҳурматли зиёратчилар! Илтимос, ушбу овозли хабарни диққат билан эшитинг:");
+            window.location.href = `whatsapp://send?phone=${cleanPhone}&text=${msg}`;
         }
 
-        // МЕҲМОНХОНАНИ НАВИГАТОРДА ОЧИШ (500 ХАТОСИЗ)
+        // ИЧКИ ҚИБЛА КОМПАСИ (500 ХАТО БЕРМАЙДИ)
+        function openInternalQibla() {
+            document.getElementById('qiblaModal').classList.remove('hidden');
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', handleOrientation, true);
+            }
+        }
+
+        function handleOrientation(event) {
+            let alpha = event.alpha;
+            if (alpha !== null) {
+                // Қибла йўналиши (Саудия томонга нисбатан)
+                const qiblaAngle = 240; 
+                let rotate = qiblaAngle - alpha;
+                document.getElementById('compassPointer').style.transform = `rotate(${rotate}deg)`;
+                document.getElementById('compassHeading').innerText = `Азимут: ${Math.round(alpha)}° (Каъба: 240°)`;
+            }
+        }
+
+        function closeInternalQibla() {
+            document.getElementById('qiblaModal').classList.add('hidden');
+            window.removeEventListener('deviceorientation', handleOrientation, true);
+        }
+
+        // МЕҲМОНХОНАНИ НАВИГАТОРДА ОЧИШ (500 БЕРМАЙДИ)
         function openHotelLocation() {
             const h = encodeURIComponent(pilgrimData.hotel);
             if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
@@ -707,13 +714,11 @@
             };
 
             if (navigator.geolocation) {
-                // Аниқликни олиш учун кутиш вақти берилди
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
                         executeSosWithCoords(pos.coords.latitude, pos.coords.longitude);
                     },
                     (err) => {
-                        // GPS рухсат берилмаса
                         executeSosWithCoords(null, null);
                     },
                     { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
@@ -845,7 +850,7 @@
             document.getElementById('announcementText').innerText = savedAnn;
         }
 
-        // МАХФИЙ PIN ТАЛАБ ҚИЛИШ (ПАРОЛЛАР КЎРСАТИЛМАЙДИ)
+        // ХАВФСИЗ PIN-ТЕКШИРУВ
         function openPinModal(target) {
             targetAuth = target;
             document.getElementById('pinInput').value = '';
@@ -882,6 +887,44 @@
             }
         }
 
+        // QR СКАНЕРНИ ХАТОСИЗ БОШҚАРИШ
+        function startQrScanSafe() {
+            try {
+                if (html5QrCode) {
+                    html5QrCode.stop().then(() => initCamera()).catch(() => initCamera());
+                } else {
+                    initCamera();
+                }
+            } catch (e) {
+                initCamera();
+            }
+        }
+
+        function initCamera() {
+            html5QrCode = new Html5Qrcode("reader");
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 220, height: 220 } },
+                (decodedText) => {
+                    let count = parseInt(document.getElementById('countPresent').innerText) || 0;
+                    document.getElementById('countPresent').innerText = count + 1;
+                    alert("✅ Зиёратчи рўйхатдан ўтди:\n" + decodedText);
+                },
+                (err) => {}
+            ).catch(err => {
+                alert("Камерага рухсат берилмаган ёки хато: " + err);
+            });
+        }
+
+        function stopQrScanSafe() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
+                }).catch(() => {});
+            }
+        }
+
+        // ТАСБЕҲ
         let counterVal = 0;
         let counterMax = 7;
         let counterMode = 'tawaf';
@@ -950,32 +993,8 @@
         }
 
         function closeLeaderModal() {
-            stopQrScan();
+            stopQrScanSafe();
             document.getElementById('leaderModal').classList.add('hidden');
-        }
-
-        function startQrScan() {
-            html5QrCode = new Html5Qrcode("reader");
-            html5QrCode.start(
-                { facingMode: "environment" },
-                { fps: 10, qrbox: { width: 220, height: 220 } },
-                (decodedText) => {
-                    let count = parseInt(document.getElementById('countPresent').innerText) || 0;
-                    document.getElementById('countPresent').innerText = count + 1;
-                    alert("✅ Зиёратчи рўйхатдан ўтди:\n" + decodedText);
-                },
-                () => {}
-            ).catch(err => {
-                alert("Камера хатоси: " + err);
-            });
-        }
-
-        function stopQrScan() {
-            if (html5QrCode) {
-                html5QrCode.stop().then(() => {
-                    html5QrCode.clear();
-                }).catch(() => {});
-            }
         }
 
         function toggleFontSize() {
@@ -989,17 +1008,19 @@
 
         const dict = {
             uz: {
-                langBtn: "КЫРГЫЗЧА", badgeTag: "Шахсий Зиёратчи Бейджиги", hotelBtn: "Меҳмонхона", leaderBtn: "Ҳожибоши", sosBtn: "SOS Адашдим",
+                langBtn: "КЫРГЫЗЧА", txtQiblaBtn: "Қибла", badgeTag: "Шахсий Зиёратчи Бейджиги", hotelBtn: "Меҳмонхона", leaderBtn: "Ҳожибоши", sosBtn: "SOS Адашдим",
                 tabUmrahText: "Умра", tabCounterText: "Тасбеҳ", tabDuasText: "Дуолар", tabDaysText: "Зиёратлар", tabGuideText: "Луғат",
                 annTitle: "Ҳожибошидан сўнгги эълон:", prFajr: "Бомдод", prDhuhr: "Пешин", prAsr: "Аср", prMaghrib: "Шом", prIsha: "Хуфтон",
                 txtNextLabel: "Кейинги намоз", txtSaudiTimeLabel: "Саудия соати",
+                lblLeaderPCount: "Зиёратчилар сони:", lblLeaderCash: "Умумий тушган сумма:",
                 navUmrah: "Умра", navCounter: "Тасбеҳ", navLeader: "Ҳожибоши 🔒", navAdmin: "Админ ERP 🔒"
             },
             kg: {
-                langBtn: "ЎЗБЕКЧА", badgeTag: "Жеке Зыяратчы Бейджиги", hotelBtn: "Мейманкана", leaderBtn: "Ажыбашчы", sosBtn: "SOS Адаштым",
+                langBtn: "ЎЗБЕКЧА", txtQiblaBtn: "Кыбыла", badgeTag: "Жеке Зыяратчы Бейджиги", hotelBtn: "Мейманкана", leaderBtn: "Ажыбашчы", sosBtn: "SOS Адаштым",
                 tabUmrahText: "Умра", tabCounterText: "Таспих", tabDuasText: "Дубалар", tabDaysText: "Зыяраттар", tabGuideText: "Сөздүк",
                 annTitle: "Ажыбашчыдан акыркы жарыя:", prFajr: "Багымдат", prDhuhr: "Бешим", prAsr: "Асыр", prMaghrib: "Шам", prIsha: "Куптан",
                 txtNextLabel: "Кийинки намаз", txtSaudiTimeLabel: "Сауд сааты",
+                lblLeaderPCount: "Зыяратчылар саны:", lblLeaderCash: "Жалпы түшкөн сумма:",
                 navUmrah: "Умра", navCounter: "Таспих", navLeader: "Ажыбашчы 🔒", navAdmin: "Админ ERP 🔒"
             }
         };
