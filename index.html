@@ -7,6 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Tesseract OCR (Суратдан ёзувларни автоматик ўқиш кутубхонаси) -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
     <style>
         body { background-color: #0b1120; color: #f1f5f9; font-family: sans-serif; }
         .card-dark { background-color: #131c2e; border: 1px solid rgba(255, 255, 255, 0.08); }
@@ -95,28 +97,36 @@
             
             <input type="hidden" id="editId">
 
-            <!-- Паспорт расми ва авто-тўлдириш -->
+            <!-- Паспорт расми ва АВТОМАТИК OCR СКАНЕР -->
             <div class="bg-slate-950 p-2.5 rounded-xl border border-dashed border-amber-500/40">
                 <label class="block text-[11px] font-semibold text-amber-400 mb-1 flex justify-between">
-                    <span><i class="fa-solid fa-camera mr-1"></i> Паспорт сканери / Сурати</span>
-                    <span class="text-[10px] text-slate-400">Авто-аниқлаш</span>
+                    <span><i class="fa-solid fa-camera mr-1"></i> Паспорт сканери (Сурат юклаш)</span>
+                    <span id="ocrStatus" class="text-[10px] text-amber-400 font-normal">Авто-аниқлаш тайёр</span>
                 </label>
                 <input type="file" id="passportFile" accept="image/*" onchange="onPassportChange(event)" 
-                    class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 file:font-bold">
-                <div id="previewArea" class="hidden mt-2 flex items-center gap-2">
-                    <img id="previewImg" src="" class="h-10 w-16 object-cover rounded border border-slate-700">
-                    <span class="text-[11px] text-emerald-400">Расм юкланди</span>
+                    class="w-full text-xs text-slate-400 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:bg-amber-500 file:text-slate-950 file:font-bold cursor-pointer">
+                
+                <div id="previewArea" class="hidden mt-2 flex items-center gap-3">
+                    <img id="previewImg" src="" class="h-12 w-20 object-cover rounded border border-slate-700">
+                    <div id="ocrLoading" class="text-xs text-amber-400 flex items-center gap-1.5 hidden">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span>Паспорт ўқилмоқда, кутинг...</span>
+                    </div>
+                    <div id="ocrDone" class="text-xs text-emerald-400 flex items-center gap-1.5 hidden">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <span>Маълумотлар аниқланди!</span>
+                    </div>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 <div>
                     <label class="text-[11px] text-slate-400 block mb-1">Ф.И.Ш (Тўлиқ исми): *</label>
-                    <input type="text" id="mName" placeholder="Алиев Вали" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                    <input type="text" id="mName" placeholder="Оллохберди Исманов..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
                 <div>
                     <label class="text-[11px] text-slate-400 block mb-1">Паспорт рақами: *</label>
-                    <input type="text" id="mPass" placeholder="AC1234567" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+                    <input type="text" id="mPass" placeholder="AC1234567" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase font-mono">
                 </div>
             </div>
 
@@ -181,7 +191,7 @@
         <div class="bg-slate-900 border border-slate-700 p-5 rounded-2xl w-full max-w-sm space-y-3">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
                 <h3 class="font-bold text-white text-sm">Telegram Бот Созламалари</h3>
-                <button onclick="closeSettings()" class="text-slate-400 hover:text-white text-lg">&times;</button>
+                <button onclick="closeSettings()" class="text-slate-400 hover:text-white text-xl">&times;</button>
             </div>
             <div>
                 <label class="text-[11px] text-slate-400 block mb-1">Bot Token:</label>
@@ -198,28 +208,62 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript & OCR Алгоритми -->
     <script>
         let list = JSON.parse(localStorage.getItem('tawaf_erp_full_db')) || [];
         let photoData = '';
 
-        function onPassportChange(e) {
+        // Паспорт расмини сканер қилиш ва OCR орқали ёзувни автоматик топиш
+        async function onPassportChange(e) {
             const f = e.target.files[0];
-            if (f) {
-                const r = new FileReader();
-                r.onload = function(evt) {
-                    photoData = evt.target.result;
-                    document.getElementById('previewImg').src = photoData;
-                    document.getElementById('previewArea').classList.remove('hidden');
+            if (!f) return;
 
-                    const parts = f.name.replace(/\.[^/.]+$/, "").split('_');
-                    if (parts.length >= 2) {
-                        if (!document.getElementById('mName').value) document.getElementById('mName').value = parts[0];
-                        if (!document.getElementById('mPass').value) document.getElementById('mPass').value = parts[1].toUpperCase();
+            const r = new FileReader();
+            r.onload = async function(evt) {
+                photoData = evt.target.result;
+                document.getElementById('previewImg').src = photoData;
+                document.getElementById('previewArea').classList.remove('hidden');
+                document.getElementById('ocrLoading').classList.remove('hidden');
+                document.getElementById('ocrDone').classList.add('hidden');
+
+                try {
+                    // Tesseract AI орқали расмдаги матнларни ўқиш
+                    const result = await Tesseract.recognize(photoData, 'eng');
+                    const text = result.data.text;
+
+                    // 1. Паспорт рақамини аниқлаш (AC1234567, AN1234567, ID1234567 ёки 2 ҳарф ва 7 рақам)
+                    const passMatch = text.match(/[A-Z]{1,2}[0-9]{7}/i);
+                    if (passMatch) {
+                        document.getElementById('mPass').value = passMatch[0].toUpperCase();
                     }
-                };
-                r.readAsDataURL(f);
-            }
+
+                    // 2. Исм-фамилияни аниқлаш (MRZ зонасидаги P< ёки йирик лотинча сўзлар)
+                    const mrzMatch = text.match(/P<[A-Z]{3}([A-Z<]+)/i);
+                    if (mrzMatch) {
+                        const rawName = mrzMatch[1].replace(/<+/g, ' ').trim();
+                        document.getElementById('mName').value = rawName;
+                    } else {
+                        // Катта ҳарфлар билан ёзилган 2 ёки 3 та сўзни қидириш
+                        const lines = text.split('\n');
+                        for (let line of lines) {
+                            const clean = line.replace(/[^a-zA-Z\s]/g, '').trim();
+                            const words = clean.split(/\s+/).filter(w => w.length > 2);
+                            if (words.length >= 2 && words.length <= 4 && !clean.includes('PASSPORT') && !clean.includes('REPUBLIC')) {
+                                document.getElementById('mName').value = words.join(' ').toUpperCase();
+                                break;
+                            }
+                        }
+                    }
+
+                    document.getElementById('ocrLoading').classList.add('hidden');
+                    document.getElementById('ocrDone').classList.remove('hidden');
+                } catch (err) {
+                    console.log('OCR хатоси:', err);
+                    document.getElementById('ocrLoading').classList.add('hidden');
+                    // Агар таниб ололмаса ҳам расм сақланиб туради
+                }
+            };
+            r.readAsDataURL(f);
         }
 
         function openModal() {
@@ -234,6 +278,8 @@
             document.getElementById('mPaid').value = '0';
             document.getElementById('mDebt').value = '0';
             document.getElementById('previewArea').classList.add('hidden');
+            document.getElementById('ocrLoading').classList.add('hidden');
+            document.getElementById('ocrDone').classList.add('hidden');
             photoData = '';
             document.getElementById('modalHeading').innerText = 'Янги Зиёратчи Қўшиш';
             document.getElementById('modalBox').classList.remove('hidden');
