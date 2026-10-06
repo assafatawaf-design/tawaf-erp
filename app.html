@@ -150,7 +150,7 @@
             </div>
         </div>
 
-        <!-- Меню тугмалари (Янги: Луғат ва Қўлланма) -->
+        <!-- Меню тугмалари -->
         <div class="grid grid-cols-5 gap-1">
             <button type="button" onclick="switchTab('umrah')" id="tabBtnUmrah" class="p-2 rounded-xl bg-amber-500 text-slate-950 font-bold text-[10px] flex flex-col items-center gap-1 shadow">
                 <i class="fa-solid fa-kaaba text-xs"></i>
@@ -277,7 +277,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқِنَا عَذَابَ النَّارِ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
@@ -287,7 +287,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua3Title">Зам-зам ичиш дуоси:</h3>
                 <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَرِзْقًا وَاسِعًا، وَшِفَاءً مِنْ كُلِّ دَاءٍ
+                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَрِзْقًا وَاسِعًا، وَшِفَاءً مِنْ كُلِّ دَاءٍ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
@@ -295,12 +295,11 @@
             </div>
         </div>
 
-        <!-- ТАБ 4: ЖОНЛИ ЗИЁРАТЛАР ВА ТАҚВИМ (ҲОЖИБОШИ ВА АДМИН БИЛАН СИНХРОН) -->
+        <!-- ТАБ 4: ЖОНЛИ ЗИЁРАТЛАР ВА ТАҚВИМ -->
         <div id="contentDays" class="space-y-3 hidden">
             <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1">
                 Гуруҳ Зиёратлари ва Сафар Дастури:
             </div>
-            <!-- Ҳожибоши ва Админ қўшган барча янги экскурсиялар шу ерга автоматик тушади -->
             <div id="publicExcursionsList" class="space-y-2"></div>
 
             <div class="card-gold p-3.5 rounded-2xl space-y-1.5 opacity-80">
@@ -317,7 +316,7 @@
             </div>
         </div>
 
-        <!-- ТАБ 5: УМРА ЛУҒАТИ ВА ЗАРУР ИБОРАЛАР (ЯНГИ КЕРАКЛИ МОДУЛЬ) -->
+        <!-- ТАБ 5: УМРА ЛУҒАТИ ВА ЗАРУР ИБОРАЛАР -->
         <div id="contentGuide" class="space-y-3 hidden">
             <div class="card-gold p-4 rounded-2xl space-y-3">
                 <h3 class="text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-comments mr-1"></i> Арабча Сўзлашув (Саудияда керак бўладиган):</h3>
@@ -347,7 +346,7 @@
 
     </main>
 
-    <!-- ҲОЖИБОШИ МОНИТОРИ (1122 ҲИМОЯЛАНГАН) -->
+    <!-- ҲОЖИБОШИ МОНИТОРИ -->
     <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
         <div class="space-y-3">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -370,7 +369,7 @@
                 </a>
             </div>
 
-            <!-- САФАР МАЪЛУМОТЛАРИ ВА АВТОМАТИК ҲИСОБ-КИТОБ -->
+            <!-- САФАР ҲИСОБОТИ -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-plane-departure mr-1"></i> Сафар & Гуруҳ Ҳисоботи</span>
@@ -394,7 +393,7 @@
                 </div>
             </div>
 
-            <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ ВА ПУЛ НАЗОРАТИ -->
+            <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <div class="text-xs font-bold text-amber-400 flex justify-between">
                     <span><i class="fa-solid fa-users mr-1"></i> Менинг Зиёратчиларим (Назорат):</span>
@@ -452,12 +451,12 @@
                 </button>
             </div>
 
-            <!-- ҲОЖИБОШИ: КУТИЛМАГАН ЗИЁРАТ ҚЎШИШ (АСОСИЙ САҲИФАГА АВТОМАТИК ТУШАДИ) -->
+            <!-- ҲОЖИБОШИ: КУТИЛМАГАН ЗИЁРАТ ҚЎШИШ -->
             <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
                 <label class="text-[11px] font-bold text-amber-400 block" id="lblAddExc">⚡ Янги Зиёрат / Экскурсия белгилаш:</label>
-                <input type="text" id="leaderExcTitle" placeholder="Зиёрат номи (Масалан: Савр тоғи ва Қизил денгиз)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <input type="text" id="leaderExcTitle" placeholder="Зиёрат номи (Савр тоғи)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 <div class="grid grid-cols-2 gap-1.5">
-                    <input type="text" id="leaderExcTime" placeholder="Вақти (Масалан: Эртага 06:30)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                    <input type="text" id="leaderExcTime" placeholder="Вақти (Эртага 06:30)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                     <input type="text" id="leaderExcBus" placeholder="Автобус (№07)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
                 <button type="button" onclick="leaderAddExcursion()" class="w-full bg-amber-500 text-slate-950 font-bold p-2 rounded-lg text-xs" id="btnLeaderAddExc">
@@ -473,7 +472,7 @@
         </div>
     </div>
 
-    <!-- ЭЛЕГАНТ PIN-КОД КИРИТИШ ОЙНАСИ (ПРОМПТ ЎРНИГА ПРЕМИУМ ДИЗАЙН) -->
+    <!-- ЭЛЕГАНТ PIN-КОД КИРИТИШ ОЙНАСИ -->
     <div id="pinModal" class="fixed inset-0 bg-black/90 z-50 p-4 hidden flex items-center justify-center">
         <div class="w-full max-w-xs card-gold p-5 rounded-3xl text-center space-y-4 shadow-2xl">
             <div class="w-12 h-12 mx-auto rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
@@ -541,7 +540,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: Жонли Синхрон Зиёратлар ва Элегант PIN -->
+    <!-- JavaScript: Хавфсиз Меҳмонхона йўли ва барча функциялар -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -569,6 +568,12 @@
 
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
+
+        // МЕҲМОНХОНАНИ 500 ХАТОСИЗ ОЧИШ (МУКАММАЛ ТУЗАТИЛГАН)
+        function openHotelLocation() {
+            const cleanHotel = encodeURIComponent(pilgrimData.hotel);
+            window.location.href = `https://www.google.com/maps/search/?api=1&query=${cleanHotel}`;
+        }
 
         // Саудия намоз вақтлари
         const prayerTimes = {
@@ -609,7 +614,7 @@
             updatePrayerTimes();
         }
 
-        // ЖОНЛИ СИНХРОН: АДМИН ВА ҲОЖИБОШИ ҚЎШГАН ЭКСКУРСИЯЛАРНИ ЧИҚАРИШ
+        // ЖОНЛИ СИНХРОН: ЭКСКУРСИЯЛАРНИ ЧИҚАРИШ
         function renderPublicExcursions() {
             const excs = JSON.parse(localStorage.getItem('tawaf_excursions')) || [];
             const container = document.getElementById('publicExcursionsList');
@@ -633,7 +638,7 @@
         }
         renderPublicExcursions();
 
-        // 100% АНИҚ GPS МЕСТОПОЛОЖЕНИЕ БИЛАН SOS ТУГМАСИ
+        // SOS ТУГМАСИ
         function triggerSOS() {
             isSosActive = true;
             const btn = document.getElementById('sosBtn');
@@ -763,15 +768,10 @@
             alert(currentLang === 'kg' ? "Мейманкана сакталды!" : "Меҳмонхона янгиланди ва сақланди!");
         }
 
-        function openHotelLocation() {
-            window.open(`https://maps.google.com/?q=${encodeURIComponent(pilgrimData.hotel)}`, '_blank');
-        }
-
         function callLeader() {
             window.location.href = "tel:" + pilgrimData.leaderPhone;
         }
 
-        // ҲОЖИБОШИ: ЗИЁРАТ ҚЎШИШ ВА БАРЧА САҲИФАЛАРДА КЎРСАТИШ
         function leaderAddExcursion() {
             const title = document.getElementById('leaderExcTitle').value.trim();
             const time = document.getElementById('leaderExcTime').value.trim();
@@ -782,7 +782,6 @@
             excs.unshift({ title, time, bus });
             localStorage.setItem('tawaf_excursions', JSON.stringify(excs));
 
-            // Асосий экран эълонига ҳам чиқариш
             const announcement = `⚡ ЯНГИ ЗИЁРАТ: ${title} (${time}) | Автобус: ${bus}`;
             localStorage.setItem('tawaf_active_announcement', announcement);
             document.getElementById('announcementText').innerText = announcement;
@@ -802,13 +801,12 @@
             }
         }
 
-        // Саҳифа очилганда сақланган эълонни чиқариш
         const savedAnn = localStorage.getItem('tawaf_active_announcement');
         if (savedAnn) {
             document.getElementById('announcementText').innerText = savedAnn;
         }
 
-        // ЭЛЕГАНТ PIN-МОДАЛНИ БОШҚАРИШ
+        // PIN-МОДАЛ БОШҚАРУВИ
         function openPinModal(target) {
             targetAuth = target;
             document.getElementById('pinInput').value = '';
