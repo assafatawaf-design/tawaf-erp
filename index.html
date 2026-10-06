@@ -31,7 +31,7 @@
                     <rect x="40" y="40" width="20" height="20" rx="2" transform="rotate(45 50 50)" fill="#f59e0b"/>
                 </svg>
                 <div>
-                    <h1 class="font-black text-xs sm:text-sm tracking-wider gold-gradient-text">TAWAF ERP</h1>
+                    <h1 class="font-black text-xs sm:text-sm tracking-wider gold-gradient-text" id="adminHeaderTitle">TAWAF ERP</h1>
                     <p class="text-[8px] font-bold text-amber-500/80 uppercase">Бошқарув Пульти</p>
                 </div>
             </div>
@@ -43,8 +43,8 @@
 
     <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- 5 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёрат | Меҳмонхона -->
-        <div class="grid grid-cols-5 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[9px] text-center">
+        <!-- 6 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёрат | Меҳмонхона | Созламалар -->
+        <div class="grid grid-cols-6 gap-0.5 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[8px] text-center">
             <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-users block mb-0.5 text-xs"></i> Зиёратчи
             </button>
@@ -52,13 +52,16 @@
                 <i class="fa-solid fa-user-tie block mb-0.5 text-xs"></i> Ҳожибоши
             </button>
             <button type="button" onclick="switchAdminTab('packages')" id="tabPackages" class="text-slate-400 py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-cube block mb-0.5 text-xs"></i> Пакетлар
+                <i class="fa-solid fa-cube block mb-0.5 text-xs"></i> Пакет
             </button>
             <button type="button" onclick="switchAdminTab('excursions')" id="tabExcursions" class="text-slate-400 py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-route block mb-0.5 text-xs"></i> Зиёрат
             </button>
             <button type="button" onclick="switchAdminTab('hotels')" id="tabHotels" class="text-slate-400 py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-hotel block mb-0.5 text-xs"></i> Меҳмонхона
+                <i class="fa-solid fa-hotel block mb-0.5 text-xs"></i> Меҳмон
+            </button>
+            <button type="button" onclick="switchAdminTab('settings')" id="tabSettings" class="text-slate-400 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-gear block mb-0.5 text-xs text-amber-400"></i> Созлаш
             </button>
         </div>
 
@@ -134,7 +137,7 @@
             <div class="space-y-2" id="packagesList"></div>
         </div>
 
-        <!-- 4: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР (АДМИН ҚЎШСА, ҲАММАГА ДАРҲОЛ БОРАДИ) -->
+        <!-- 4: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
         <div id="sectionExcursions" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-map-location-dot mr-1"></i> Янги Зиёрат қўшиш</h3>
@@ -167,6 +170,62 @@
                 </button>
             </div>
             <div class="space-y-1.5" id="hotelsList"></div>
+        </div>
+
+        <!-- 6: ТИЗИМ СОЗЛАМАЛАРИ (НАСТРОЙКАЛАР - ЯНГИ БЎЛИМ) -->
+        <div id="sectionSettings" class="space-y-3 hidden">
+            <div class="card-gold p-3.5 rounded-2xl space-y-3">
+                <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-sliders"></i> Агентлик ва Сафар Параметрлари
+                </h3>
+                
+                <div>
+                    <label class="text-[10px] text-slate-400 block mb-0.5">Агентлик / Компания номи:</label>
+                    <input type="text" id="setAgency" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                </div>
+                
+                <div class="grid grid-cols-2 gap-1.5">
+                    <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Рейс / Йўналиш:</label>
+                        <input type="text" id="setRoute" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Ҳожибоши WhatsApp номери:</label>
+                        <input type="text" id="setLeaderPhone" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-[10px] text-slate-400 block mb-0.5">Бош саҳифадаги Шошилинч Эълон:</label>
+                    <textarea id="setAnnouncement" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-1.5 pt-1 border-t border-slate-800">
+                    <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Ҳожибоши PIN-коди:</label>
+                        <input type="text" id="setLeaderPin" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-amber-400 font-mono font-bold">
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Админ PIN-коди:</label>
+                        <input type="text" id="setAdminPin" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-rose-400 font-mono font-bold">
+                    </div>
+                </div>
+
+                <button type="button" onclick="saveSystemSettings()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-xs shadow-lg">
+                    💾 Созламаларни Сақлаш (Ҳаммасига Таъсир қилади)
+                </button>
+            </div>
+
+            <!-- Базани назорат қилиш ва тозалаш -->
+            <div class="card-gold p-3 rounded-2xl space-y-2 border-rose-500/30">
+                <h4 class="text-xs font-bold text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Тизим Базасини Бошқариш</h4>
+                <p class="text-[10px] text-slate-400 leading-relaxed">
+                    Янги сафар бошланганда барча зиёратчилар ва ҳисоб-китобларни тозалаб янгидан бошлаш:
+                </p>
+                <button type="button" onclick="clearAllData()" class="w-full bg-slate-800 hover:bg-rose-900/60 text-rose-400 border border-rose-500/40 font-bold py-2 rounded-xl text-xs">
+                    🗑️ Барча Зиёратчилар Базасини Ноллаш
+                </button>
+            </div>
         </div>
 
     </main>
@@ -238,7 +297,7 @@
         </div>
     </div>
 
-    <!-- JavaScript: Синхронизация ва Маълумотлар -->
+    <!-- JavaScript: Бошқарув ва Созламалар -->
     <script>
         let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
         let leaders = JSON.parse(localStorage.getItem('tawaf_leaders')) || [
@@ -261,6 +320,7 @@
             renderPackages();
             renderExcursions();
             renderHotels();
+            loadSettings();
             updateStats();
         }
 
@@ -507,7 +567,7 @@
                 return;
             }
 
-            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, leader, group: "15-Ноябрь Ош-Жидда" });
+            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, leader, group: localStorage.getItem('tawaf_setting_route') || "15-Ноябрь Ош-Жидда" });
             localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
             renderAll();
             closeAddModal();
@@ -529,7 +589,6 @@
             excursions.unshift({ title, time, bus });
             localStorage.setItem('tawaf_excursions', JSON.stringify(excursions));
             
-            // Асосий экранга автоматик эълон ҳам қилади
             const ann = `⚡ ЗИЁРАТ: ${title} (${time}) | Автобус: ${bus}`;
             localStorage.setItem('tawaf_active_announcement', ann);
 
@@ -588,6 +647,44 @@
             });
         }
 
+        // СОЗЛАМАЛАРНИ ЮКЛАШ ВА САҚЛАШ (ЯНГИ ФУНКЦИЯ)
+        function loadSettings() {
+            document.getElementById('setAgency').value = localStorage.getItem('tawaf_setting_agency') || "TAWAF TRAVEL";
+            document.getElementById('setRoute').value = localStorage.getItem('tawaf_setting_route') || "15-Ноябрь Ош-Жидда";
+            document.getElementById('setLeaderPhone').value = localStorage.getItem('tawaf_setting_leader_phone') || "+996551191191";
+            document.getElementById('setAnnouncement').value = localStorage.getItem('tawaf_active_announcement') || "Ҳурматли зиёратчилар! Бугун шом намозидан сўнг фойеда йиғиламиз.";
+            document.getElementById('setLeaderPin').value = localStorage.getItem('tawaf_leader_pin') || "1122";
+            document.getElementById('setAdminPin').value = localStorage.getItem('tawaf_admin_pin') || "7788";
+        }
+
+        function saveSystemSettings() {
+            const agency = document.getElementById('setAgency').value.trim();
+            const route = document.getElementById('setRoute').value.trim();
+            const phone = document.getElementById('setLeaderPhone').value.trim();
+            const ann = document.getElementById('setAnnouncement').value.trim();
+            const lPin = document.getElementById('setLeaderPin').value.trim();
+            const aPin = document.getElementById('setAdminPin').value.trim();
+
+            if (agency) localStorage.setItem('tawaf_setting_agency', agency);
+            if (route) localStorage.setItem('tawaf_setting_route', route);
+            if (phone) localStorage.setItem('tawaf_setting_leader_phone', phone);
+            if (ann) localStorage.setItem('tawaf_active_announcement', ann);
+            if (lPin) localStorage.setItem('tawaf_leader_pin', lPin);
+            if (aPin) localStorage.setItem('tawaf_admin_pin', aPin);
+
+            alert("✅ Барча тизим созламалари муваффақиятли сақланди! Улар илова ва Ҳожибоши кабинетида дарҳол янгиланди.");
+            window.location.reload();
+        }
+
+        function clearAllData() {
+            if (confirm("⚠️️ ДИҚҚАТ: Барча зиёратчилар ва ҳисоб-китоблар ўчирилади. Тасдиқлайсизми?")) {
+                localStorage.removeItem('tawaf_pilgrims');
+                localStorage.removeItem('tawaf_active_sos');
+                alert("База тозаланди!");
+                window.location.reload();
+            }
+        }
+
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -601,7 +698,7 @@
         }
 
         function switchAdminTab(tab) {
-            ['pilgrims', 'leaders', 'packages', 'excursions', 'hotels'].forEach(t => {
+            ['pilgrims', 'leaders', 'packages', 'excursions', 'hotels', 'settings'].forEach(t => {
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
                 if (t === tab) {
