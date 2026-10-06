@@ -676,6 +676,18 @@
             setLangText('tabDaysText', t.tabDays);
             setLangText('announcementTitle', t.annTitle);
         }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch((err) => {
+                    console.log('SW xatosi:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
     </script>
 </body>
 </html>
