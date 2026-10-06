@@ -1,5 +1,4 @@
-
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
@@ -17,7 +16,7 @@
 </head>
 <body class="p-3 sm:p-6 pb-24">
 
-    <!-- Header -->
+    <!-- Header (Созламалар олиб ташланди, интерфейс тозаланди) -->
     <header class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-3 mb-6">
         <div class="flex items-center gap-2">
             <span class="text-2xl">🕋</span>
@@ -29,9 +28,6 @@
         <div class="flex items-center gap-2">
             <button onclick="window.open('app.html', '_blank')" class="bg-amber-500/20 text-amber-400 border border-amber-500/40 px-3 py-2 rounded-lg text-xs font-bold hover:bg-amber-500/30">
                 <i class="fa-solid fa-mobile-screen mr-1"></i> Зиёратчи Иловаси
-            </button>
-            <button onclick="openSettings()" title="Созламалар" class="bg-slate-800 text-slate-300 px-3 py-2 rounded-lg text-xs hover:bg-slate-700">
-                <i class="fa-solid fa-gear"></i>
             </button>
             <button onclick="exportExcel()" class="bg-emerald-600 text-white px-3 py-2 rounded-lg text-xs font-bold hover:bg-emerald-500">
                 <i class="fa-solid fa-file-excel mr-1"></i> Excel
@@ -313,7 +309,6 @@
             window.open(`https://wa.me/${cl}?text=${msg}`, '_blank');
         }
 
-        // WhatsApp орқали Зиёратчининг Шахсий Иловаси ва Қўлланма Линкни юбориш
         function sendAppWA(id) {
             const p = list.find(x => x.id === id);
             if (!p) return;
@@ -329,7 +324,7 @@
             const w = window.open('', '_blank');
             w.document.write(`
                 <html><head><title>Badge</title>
-                <style>body{font-family:sans-serif;display:flex;justify-content:center;padding:20px;}.b{width:280px;border:3px solid #d97706;border-radius:15px;padding:15px;text-align:center;}</style></head>
+                <style>body{font-family:sans-serif;display:flex;justify-content:center;padding:20px;}.b{width:280px;border:3px solid #d97706;border-radius:15px;padding:15px;text-align:center;}.p{width:80px;height:80px;border-radius:50%;object-fit:cover;margin:10px auto;border:2px solid #f59e0b;}</style></head>
                 <body><div class="b"><h3>🕋 TAWAF TRAVEL</h3><p style="font-size:11px;color:#666">Умра Зиёратчиси</p>
                 <h4>${p.name}</h4><p style="font-size:12px;color:#777">Рейс: ${p.group || 'Tawaf Group'}</p>
                 <div style="font-size:12px;text-align:left;background:#f1f5f9;padding:8px;border-radius:8px;"><div><b>Паспорт:</b> ${p.pass}</div><div><b>Тел:</b> ${p.phone}</div></div></div>
@@ -428,4 +423,5 @@
     </script>
 </body>
 </html>
-    
+
+        
