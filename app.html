@@ -133,7 +133,7 @@
             
             <!-- SOS ҳолати панели -->
             <div id="sosAlertBox" class="hidden mt-2 p-2 rounded-lg bg-rose-950/90 border border-rose-500 flex items-center justify-between text-[11px] text-rose-200">
-                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">Локация аниқланмоқда...</b></span>
+                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">Аниқланмоқда...</b></span>
                 <button type="button" onclick="stopSOS()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-md text-[10px] font-bold" id="btnStopSos">Тўхтатиш</button>
             </div>
         </div>
@@ -278,7 +278,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқinaа عَذَابَ النَّارِ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
@@ -288,7 +288,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua3Title">Зам-зам ичиш дуоси:</h3>
                 <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
+                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَрِзْقًا وَاسِعًا، وَшِفَاءً مِنْ كُلِّ دَاءٍ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
@@ -541,7 +541,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: Харита ва SOS бенуқсон ишлаши учун -->
+    <!-- JavaScript: ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИ ВА АНИҚ GPS -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -570,16 +570,10 @@
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
 
-        // 1. МЕҲМОНХОНАНИ 100% ХАТОСИЗ ОЧИШ (Браузер хато бермайди, навигатор очилади)
+        // МЕҲМОНХОНАНИ ХАРИТАДА ОЧИШ (ТЕЛЕФОН НАВИГАТОРИДА)
         function openHotelLocation() {
             const h = encodeURIComponent(pilgrimData.hotel);
-            // geo: навигатори телефоннинг харита иловасини бевосита ишга туширади
-            const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-            if (isMobile) {
-                window.location.href = `geo:0,0?q=${h}`;
-            } else {
-                window.open(`https://maps.google.com/?q=${h}`, '_blank');
-            }
+            window.location.href = `https://maps.google.com/?q=${h}`;
         }
 
         // Саудия намоз вақтлари
@@ -644,20 +638,17 @@
         }
         renderPublicExcursions();
 
-        // 2. SOS: 100% АНИҚ GPS ВА ТОЗА МАТНЛИ WHATSAPP ХАБАРИ
+        // МУКАММАЛ SOS: САЙТСИЗ, ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИНИ ОЧИШ ВА АНИҚ GPS
         function triggerSOS() {
             isSosActive = true;
             const btn = document.getElementById('sosBtn');
             btn.className = "bg-rose-700 text-white font-bold p-2 rounded-xl text-[11px] flex flex-col items-center justify-center gap-1 shadow sos-active";
             document.getElementById('sosAlertBox').classList.remove('hidden');
-            document.getElementById('sosStatusMsg').innerText = "GPS координата аниқланмоқда...";
+            document.getElementById('sosStatusMsg').innerText = "GPS нуқта аниқланмоқда...";
 
             const cleanPhone = pilgrimData.leaderPhone.replace(/[^0-9]/g, '');
 
-            const sendWhatsAppWithCoords = (lat, lng) => {
-                const mapLink = lat ? `https://maps.google.com/?q=${lat},${lng}` : '';
-                
-                // Ҳожибошига ёзиш
+            const directAppSend = (mapLink) => {
                 const sosData = {
                     name: pilgrimData.name,
                     pass: pilgrimData.id,
@@ -666,35 +657,39 @@
                     time: new Date().toLocaleTimeString()
                 };
                 localStorage.setItem('tawaf_active_sos', JSON.stringify(sosData));
-                document.getElementById('sosStatusMsg').innerText = "SOS фаол (WhatsApp очилди)";
+                document.getElementById('sosStatusMsg').innerText = "SOS фаол (WhatsApp юборилди)";
 
-                // Чиройли, савол белгиларсиз UTF-8 хабари
-                let text = "🚨 ШОШИЛИНЧ ЁРДАМ (SOS)!\n\n";
-                text += "Мен адашиб қолдим:\n";
-                text += "👤 Зиёратчи: " + pilgrimData.name + "\n";
-                text += "🛂 Паспорт: " + pilgrimData.id + "\n";
-                text += "🏨 Меҳмонхона: " + pilgrimData.hotel + "\n\n";
+                // Савол белгиларисиз тоза, профессионал матн
+                let rawText = "[SOS] ШОШИЛИНЧ ЕРДАМ!\n\n";
+                rawText += "Мен адашиб колдим:\n";
+                rawText += "* Зиёратчи: " + pilgrimData.name + "\n";
+                rawText += "* Паспорт: " + pilgrimData.id + "\n";
+                rawText += "* Мехмонхона: " + pilgrimData.hotel + "\n\n";
                 if (mapLink) {
-                    text += "📍 Менинг аниқ турган жойим (Google Харита):\n" + mapLink + "\n\n";
+                    rawText += "МЕНИНГ АНИК ЖОЙИМ (ХАРИТА):\n" + mapLink + "\n\n";
                 }
-                text += "Ҳожибоши, илтимос менга тезроқ алоқага чиқинг!";
+                rawText += "Хожибоши, илтимос менга тезрок алокага чикинг!";
 
-                window.location.href = "https://wa.me/" + cleanPhone + "?text=" + encodeURIComponent(text);
+                const encoded = encodeURIComponent(rawText);
+
+                // ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИНИ ЧАҚИРИШ (САЙТГА КИРМАЙДИ!)
+                window.location.href = "whatsapp://send?phone=" + cleanPhone + "&text=" + encoded;
             };
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (pos) => {
-                        sendWhatsAppWithCoords(pos.coords.latitude, pos.coords.longitude);
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        directAppSend(`https://maps.google.com/?q=${lat},${lng}`);
                     },
-                    (err) => {
-                        // Агар GPS хато берса ёки рухсат олинмаса ҳам тоза хабар чиқади
-                        sendWhatsAppWithCoords(null, null);
+                    () => {
+                        directAppSend('');
                     },
-                    { enableHighAccuracy: true, timeout: 7000, maximumAge: 0 }
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                 );
             } else {
-                sendWhatsAppWithCoords(null, null);
+                directAppSend('');
             }
         }
 
