@@ -21,7 +21,7 @@
         body.large-font .arabic { font-size: 2rem !important; }
         .arabic { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.45rem; line-height: 2.2; direction: rtl; text-align: right; }
         .sos-active { animation: pulseSos 1s infinite alternate; }
-        @keyframes pulseSos { 0% { transform: scale(1); } 100% { transform: scale(1.04); box-shadow: 0 0 18px rgba(225, 29, 72, 0.9); } }
+        @keyframes pulseSos { 0% { transform: scale(1); } 100% { transform: scale(1.03); box-shadow: 0 0 20px rgba(225, 29, 72, 0.95); } }
     </style>
 </head>
 <body class="pb-28 transition-all duration-200">
@@ -106,16 +106,16 @@
                         Шахсий Зиёратчи Бейджиги
                     </span>
                     <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Ҳурматли Зиёратчи</h2>
-                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: Tawaf Travel</p>
+                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: 15-Ноябрь Ош-Жидда</p>
                     <p class="text-xs text-amber-400 font-mono mt-0.5" id="dispPass">Паспорт: -</p>
-                    <p class="text-xs text-sky-400 mt-0.5" id="dispHotelName"><i class="fa-solid fa-hotel text-[10px] mr-1"></i>Voco Makkah Hotel</p>
+                    <p class="text-xs text-sky-400 mt-0.5" id="dispHotelName"><i class="fa-solid fa-hotel text-[10px] mr-1"></i>Pullman Zamzam Madinah</p>
                 </div>
                 <div class="bg-white p-1.5 rounded-xl shadow-md flex items-center justify-center shrink-0">
                     <img id="qrImage" src="" alt="QR" class="w-[72px] h-[72px] rounded">
                 </div>
             </div>
 
-            <!-- Тезкор тугмалар (Меҳмонхона + Қўнғироқ + SOS) -->
+            <!-- Тезкор тугмалар -->
             <div class="mt-3.5 pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-1.5">
                 <button type="button" onclick="openHotelLocation()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold p-2 rounded-xl text-[11px] flex flex-col items-center justify-center gap-1 shadow">
                     <i class="fa-solid fa-hotel text-sm"></i>
@@ -132,7 +132,7 @@
             </div>
             <!-- SOS тўхтатиш панели -->
             <div id="sosAlertBox" class="hidden mt-2 p-2 rounded-lg bg-rose-950/90 border border-rose-500 flex items-center justify-between text-[11px] text-rose-200">
-                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">SOS сигнали юборилди!</b></span>
+                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">SOS сигнали фаол!</b></span>
                 <button type="button" onclick="stopSOS()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-md text-[10px] font-bold" id="btnStopSos">Тўхтатиш</button>
             </div>
         </div>
@@ -283,7 +283,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua3Title">Зам-зам ичиш дуоси:</h3>
                 <div class="arabic text-white">
-                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
+                    اللَّهُمَّ إِنِّي أَسْأЕЛُكَ عِلْمًا نَافِعًا، وَرِзْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
@@ -321,7 +321,7 @@
 
     </main>
 
-    <!-- ҲОЖИБОШИ МОНИТОРИ ВА САФАРНИ БОШҚАРИШ ПУЛЬТИ (1122 ҲИМОЯЛАНГАН) -->
+    <!-- ҲОЖИБОШИ МОНИТОРИ ВА БОШҚАРУВ ПУЛЬТИ (1122 ҲИМОЯЛАНГАН) -->
     <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
         <div class="space-y-3">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
@@ -333,7 +333,7 @@
             </div>
 
             <!-- ТЕЗКОР SOS ОГОҲЛАНТИРИШ БЛОКИ (АНИҚ ХАРИТА БИЛАН) -->
-            <div id="leaderSosNotification" class="hidden p-3 rounded-xl bg-rose-950 border border-rose-500 space-y-1.5 shadow-lg sos-active">
+            <div id="leaderSosNotification" class="hidden p-3 rounded-xl bg-rose-950 border-2 border-rose-500 space-y-1.5 shadow-xl sos-active">
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-black text-rose-300 uppercase tracking-wide"><i class="fa-solid fa-triangle-exclamation mr-1"></i> ШОШИЛИНЧ: ЗИЁРАТЧИ АДАШДИ!</span>
                     <button type="button" onclick="clearSosNotice()" class="text-[10px] bg-rose-800 hover:bg-rose-700 text-white font-bold px-2 py-0.5 rounded">Ўчириш</button>
@@ -356,12 +356,25 @@
                         <div class="text-lg font-black text-white" id="leaderTotalPilgrims">0 нафар</div>
                     </div>
                     <div class="bg-slate-950 p-2 rounded-xl border border-slate-800">
-                        <div class="text-[10px] text-slate-400">Умумий қиймати:</div>
+                        <div class="text-[10px] text-slate-400">Умумий тушган сумма:</div>
                         <div class="text-lg font-black text-emerald-400" id="leaderTotalCash">$0</div>
                     </div>
                 </div>
-                <div class="text-[11px] text-slate-300 pt-1">
+                <div class="text-[11px] text-slate-300 pt-1 flex justify-between items-center">
                     <span>Рейс: <b id="leaderRouteDisp">15-Ноябрь Ош-Жидда</b></span>
+                    <button type="button" onclick="openLeaderAddPilgrimModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[10px]">
+                        + Зиёратчи қўшиш
+                    </button>
+                </div>
+            </div>
+
+            <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ ВА ПУЛ НАЗОРАТИ -->
+            <div class="card-gold p-3 rounded-2xl space-y-2">
+                <div class="text-xs font-bold text-amber-400 flex justify-between">
+                    <span><i class="fa-solid fa-users mr-1"></i> Менинг Зиёратчиларим (Назорат):</span>
+                </div>
+                <div id="leaderPilgrimList" class="space-y-1.5 max-h-40 overflow-y-auto text-xs">
+                    <!-- Динамик чиқади -->
                 </div>
             </div>
 
@@ -395,8 +408,8 @@
                 <label class="text-[11px] font-bold text-amber-400 block" id="lblLeaderHotel">🏨 Ҳозирги Меҳмонхонани белгилаш:</label>
                 <div class="flex gap-1.5">
                     <select id="leaderHotelSelect" class="flex-1 bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
-                        <option value="Voco Makkah Hotel">Voco Makkah (Макка)</option>
                         <option value="Pullman Zamzam Madinah">Pullman Zamzam (Мадина)</option>
+                        <option value="Voco Makkah Hotel">Voco Makkah (Макка)</option>
                         <option value="Swissotel Makkah">Swissotel Makkah</option>
                         <option value="Anwar Al Madinah">Anwar Al Madinah</option>
                     </select>
@@ -433,6 +446,28 @@
         </div>
     </div>
 
+    <!-- ҲОЖИБОШИ УЧУН ТЕЗКОР ЗИЁРАТЧИ ҚЎШИШ МОДАЛИ -->
+    <div id="leaderAddPilgrimModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-center">
+        <div class="max-w-md mx-auto w-full card-gold p-4 rounded-2xl space-y-2.5">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                <h3 class="font-bold text-amber-400 text-xs">Ҳожибоши: Гуруҳга Зиёратчи Қўшиш</h3>
+                <button type="button" onclick="closeLeaderAddPilgrimModal()" class="text-slate-400 text-xl">&times;</button>
+            </div>
+            <input type="text" id="lpName" placeholder="Ф.И.Ш (Тўлиқ исми)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+            <input type="text" id="lpPass" placeholder="Паспорт рақами (AC1234567)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase font-mono">
+            <input type="text" id="lpPhone" placeholder="Телефон (WhatsApp)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+            <input type="number" id="lpPaid" placeholder="Тўланган сумма ($)" value="1200" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-emerald-400 font-bold">
+            <div class="pt-2 flex gap-2">
+                <button type="button" onclick="leaderSavePilgrim()" class="flex-1 bg-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs">
+                    💾 Сақлаш (Админга автоматик тушади)
+                </button>
+                <button type="button" onclick="closeLeaderAddPilgrimModal()" class="bg-slate-800 text-slate-300 font-bold px-3 py-2.5 rounded-xl text-xs">
+                    Бекор
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Навигация Менюси -->
     <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-4 py-2">
         <div class="max-w-md mx-auto flex justify-around items-center">
@@ -457,7 +492,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: Ишончли SOS (GPS), Ҳожибоши Сафар Ҳисоблагичи ва 100% Тиллар -->
+    <!-- JavaScript: Ишончли SOS (GPS), Ҳожибоши Сафар Ҳисоблагичи ва Зиёратчилар -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -555,8 +590,7 @@
                         const lng = pos.coords.longitude;
                         executeSend(`https://maps.google.com/?q=${lat},${lng}`);
                     },
-                    (err) => {
-                        // Агар хатолик берса, бўш қолдирмай стандарт хабар юбориш
+                    () => {
                         executeSend('');
                     },
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
@@ -598,12 +632,63 @@
             document.getElementById('leaderSosNotification').classList.add('hidden');
         }
 
-        // Ҳожибоши Сафар Ҳисоблагичи (Зиёратчилар ва умумий сумма)
+        // Ҳожибоши Сафар Ҳисоблагичи ва Зиёратчилар рўйхати
         function updateLeaderTripStats() {
             const pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
             document.getElementById('leaderTotalPilgrims').innerText = pilgrims.length + " нафар";
             const totalCash = pilgrims.reduce((sum, p) => sum + (Number(p.paid) || 0), 0);
             document.getElementById('leaderTotalCash').innerText = "$" + totalCash;
+
+            // Зиёратчиларни чиқариш
+            const pList = document.getElementById('leaderPilgrimList');
+            pList.innerHTML = "";
+            if (pilgrims.length === 0) {
+                pList.innerHTML = `<div class="text-slate-500 text-[11px]">Гуруҳда ҳозирча зиёратчи йўқ.</div>`;
+            } else {
+                pilgrims.forEach((p, idx) => {
+                    const row = document.createElement('div');
+                    row.className = "flex justify-between items-center bg-slate-950 p-2 rounded-lg border border-slate-800";
+                    row.innerHTML = `
+                        <div>
+                            <span class="font-bold text-white">${idx + 1}. ${p.name}</span>
+                            <span class="text-[10px] text-slate-400 block font-mono">${p.id}</span>
+                        </div>
+                        <span class="text-emerald-400 font-bold">$${p.paid} (Тўланган)</span>
+                    `;
+                    pList.appendChild(row);
+                });
+            }
+        }
+
+        function openLeaderAddPilgrimModal() {
+            document.getElementById('leaderAddPilgrimModal').classList.remove('hidden');
+        }
+
+        function closeLeaderAddPilgrimModal() {
+            document.getElementById('leaderAddPilgrimModal').classList.add('hidden');
+        }
+
+        function leaderSavePilgrim() {
+            const name = document.getElementById('lpName').value.trim();
+            const pass = document.getElementById('lpPass').value.trim();
+            const phone = document.getElementById('lpPhone').value.trim();
+            const paid = document.getElementById('lpPaid').value;
+
+            if (!name || !pass) {
+                alert("Исм ва Паспортни киритинг!");
+                return;
+            }
+
+            let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
+            pilgrims.unshift({ id: pass, name, phone, hotel: pilgrimData.hotel, paid: paid || 1200, debt: 0, group: "15-Ноябрь Ош-Жидда" });
+            localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
+            
+            updateLeaderTripStats();
+            closeLeaderAddPilgrimModal();
+            document.getElementById('lpName').value = "";
+            document.getElementById('lpPass').value = "";
+            document.getElementById('lpPhone').value = "";
+            alert("✅ Зиёратчи гуруҳга қўшилди ва Админ базасида ҳам акс этди!");
         }
 
         function setGroupHotel() {
