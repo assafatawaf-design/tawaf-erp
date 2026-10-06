@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TAWAF SMART | Умра Сафари Дастури</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR код яратиш ва камерадан сканер қилиш кутубхоналари -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body { background-color: #0b1120; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
+        .card-gold { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid rgba(245, 158, 11, 0.2); }
+        .gold-gradient-text { background: linear-gradient(to right, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* Катта шрифт режими */
+        body.large-font { font-size: 1.25rem !important; }
+        body.large-font h1 { font-size: 1.7rem !important; }
+        body.large-font h2 { font-size: 1.5rem !important; }
+        body.large-font h3 { font-size: 1.35rem !important; }
+        body.large-font p, body.large-font span, body.large-font button { font-size: 1.15rem !important; line-height: 1.6 !important; }
+        body.large-font .arabic { font-size: 2rem !important; }
+        .arabic { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.45rem; line-height: 2.2; direction: rtl; text-align: right; }
+    </style>
+</head>
+<body class="pb-28 transition-all duration-200">
+
+    <!-- Юқори Сарлавҳа (Header) -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-amber-500/20 px-4 py-3">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🕋</span>
+                <div>
+                    <h1 class="font-extrabold text-sm gold-gradient-text tracking-wide">TAWAF SMART</h1>
+                    <p class="text-[10px] text-slate-400" id="headerSub">Tawaf Travel Зиёратчилар Иловаси</p>
+                </div>
+            </div>
+
+            <!-- Тил ва Шрифт Созламалари -->
+            <div class="flex items-center gap-1.5">
+                <button onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
+                    A+
+                </button>
+                <button onclick="toggleLang()" id="langBtn" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-xs">
+                    КЫРГЫЗЧА
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Асосий Контент Контейнери -->
+    <main class="max-w-md mx-auto px-4 pt-4 space-y-4">
+
+        <!-- 1. ЗИЁРАТЧИНИНГ ШАХСИЙ БЕЙДЖИГИ ВА QR-КОДИ -->
+        <div id="sectionBadge" class="card-gold p-4 rounded-2xl shadow-xl relative overflow-hidden">
+            <div class="flex items-start justify-between">
+                <div>
+                    <span class="inline-block bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase" id="badgeTag">
+                        Шахсий Зиёратчи Бейджиги
+                    </span>
+                    <h2 class="text-lg font-bold text-white mt-1" id="dispPilgrimName">Оллохберди Исманов</h2>
+                    <p class="text-xs text-slate-400" id="dispGroup">Гуруҳ: 15-Ноябрь (14 кунлик)</p>
+                    <p class="text-xs text-amber-400/90 font-mono mt-0.5" id="dispPass">Паспорт: ID1122166</p>
+                </div>
+                <div class="bg-white p-2 rounded-xl shadow-md flex items-center justify-center">
+                    <div id="qrcodeCanvas"></div>
+                </div>
+            </div>
+
+            <!-- Шошилинч Меҳмонхона навигатори ва Ҳожибоши тугмаси -->
+            <div class="mt-4 pt-3 border-t border-slate-800/80 grid grid-cols-2 gap-2">
+                <button onclick="openHotelLocation()" class="bg-sky-600 hover:bg-sky-500 text-white font-bold p-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-hotel"></i>
+                    <span id="btnHotelText">Меҳмонхонамга йўл</span>
+                </button>
+                <button onclick="callLeader()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold p-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-phone"></i>
+                    <span id="btnLeaderText">Ҳожибошига қўнғироқ</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. ҲОЖИБОШИ ОГОҲЛАНТИРИШЛАРИ (Шошилинч эълонлар тахтаси) -->
+        <div class="bg-amber-950/40 border border-amber-500/40 p-3.5 rounded-2xl flex items-start gap-3">
+            <div class="w-8 h-8 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold text-base shrink-0 mt-0.5">
+                <i class="fa-solid fa-bullhorn"></i>
+            </div>
+            <div class="flex-1">
+                <div class="text-[11px] font-bold text-amber-400 uppercase tracking-wide" id="announcementTitle">Ҳожибошидан сўнгги хабар:</div>
+                <p class="text-xs text-slate-200 mt-1 leading-relaxed" id="announcementText">
+                    «Ҳурматли зиёратчилар! Бугун шом намозидан сўнг соат 19:30 да меҳмонхона фойесида йиғиламиз. Равзаи Мутаҳҳара зиёратига борамиз!»
+                </p>
+            </div>
+        </div>
+
+        <!-- 3. КАТЕГОРИЯЛАР: УМРА АМАЛЛАРИ, ДУОЛАР ВА САФАР КУНЛАРИ -->
+        <div class="grid grid-cols-3 gap-2">
+            <button onclick="switchTab('umrah')" id="tabBtnUmrah" class="p-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs flex flex-col items-center gap-1 shadow">
+                <i class="fa-solid fa-kaaba text-base"></i>
+                <span id="tabUmrahText">Умра Амаллари</span>
+            </button>
+            <button onclick="switchTab('duas')" id="tabBtnDuas" class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs flex flex-col items-center gap-1">
+                <i class="fa-solid fa-hands-praying text-base text-amber-400"></i>
+                <span id="tabDuasText">Саҳиҳ Дуолар</span>
+            </button>
+            <button onclick="switchTab('days')" id="tabBtnDays" class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs flex flex-col items-center gap-1">
+                <i class="fa-solid fa-calendar-days text-base text-sky-400"></i>
+                <span id="tabDaysText">14 / 21 Кунлик</span>
+            </button>
+        </div>
+
+        <!-- ТАБ 1: УМРА АМАЛЛАРИ (1, 2, 3, 4, 5 БОСҚИЧМАР-БОСҚИЧ) -->
+        <div id="contentUmrah" class="space-y-3">
+            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider px-1" id="umrahStepsHeader">
+                Умра Сафарининг 5 та Асосий Босқичи:
+            </div>
+
+            <!-- 1-Босқич -->
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">1</span>
+                    <h3 class="font-bold text-sm text-white" id="step1Title">Мийқот ва Ихром боғлаш</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step1Desc">
+                    Ғусл қилиб, ихром либосларини кийилади. Сўнг 2 ракат ихром намозини ўқиб, ният қилинади:
+                </p>
+                <div class="bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <div class="arabic text-amber-300">لَبَّيْكَ اللَّهُمَّ عُمْرَةً</div>
+                    <div class="text-xs text-slate-400 italic mt-1 font-mono">«Лаббайкаллоҳумма ъумратан»</div>
+                    <div class="text-xs text-slate-200 mt-1" id="step1Trans">Маъноси: «Аллоҳим, Умра қилиш учун Сенинг буйруғингга ҳозир бўлдим».</div>
+                </div>
+            </div>
+
+            <!-- 2-Босқич -->
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">2</span>
+                    <h3 class="font-bold text-sm text-white" id="step2Title">Байтуллоҳда Тавоф қилиш</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step2Desc">
+                    Ҳажарул Асваддан бошлаб, Каъбани соат стрелкасига тескари 7 марта айланиш. Ҳар айланиш Ҳажарул Асвадда бошланиб шу ерда тугайди.
+                </p>
+            </div>
+
+            <!-- 3-Босқич -->
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">3</span>
+                    <h3 class="font-bold text-sm text-white" id="step3Title">Мақоми Иброҳим ва Зам-зам</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step3Desc">
+                    Тавоф тугагач, Мақоми Иброҳим ортида 2 ракат тавоф намозини ўқилади ва қониб-қониб Зам-зам суви ичилади.
+                </p>
+            </div>
+
+            <!-- 4-Босқич -->
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">4</span>
+                    <h3 class="font-bold text-sm text-white" id="step4Title">Сафо ва Марва орасида Саъй</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step4Desc">
+                    Сафо тепалигидан бошлаб Марвага 7 марта юрилади (Сафодан Марвага 1, Марвадан Сафога 2 ва ҳ.к. 7-чиси Марвада тугайди).
+                </p>
+            </div>
+
+            <!-- 5-Босқич -->
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <div class="flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-amber-500 text-slate-950 font-bold text-xs flex items-center justify-center">5</span>
+                    <h3 class="font-bold text-sm text-white" id="step5Title">Соч олдириш ва Эҳромдан чиқиш</h3>
+                </div>
+                <p class="text-xs text-slate-300 leading-relaxed" id="step5Desc">
+                    Эркаклар сочларини тарошлатади ёки калталатади, аёллар эса сочлари учидан бармоқ учи миқдорида кесадилар. Шу билан Умра амали тамом бўлади!
+                </p>
+            </div>
+        </div>
+
+        <!-- ТАБ 2: САҲИҲ ДУОЛАР БАЗАСИ -->
+        <div id="contentDuas" class="space-y-3 hidden">
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaTalbiyaTitle">Талбия дуоси:</h3>
+                <div class="arabic text-white">
+                    لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ، لَبَّيْكَ لاَ شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لاَ شَرِيكَ لَكَ
+                </div>
+                <div class="text-xs text-slate-400 italic">
+                    «Лаббайкаллоҳумма лаббайк, лаббайка лаа шарийка лака лаббайк, иннал ҳамда ван-ниъмата лака вал-мулк, лаа шарийка лак».
+                </div>
+            </div>
+
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaRuknTitle">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
+                <div class="arabic text-white">
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+                </div>
+                <div class="text-xs text-slate-400 italic">
+                    «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
+                </div>
+            </div>
+
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <h3 class="font-bold text-amber-400 text-xs uppercase" id="duaZamzamTitle">Зам-зам ичиш дуоси:</h3>
+                <div class="arabic text-white">
+                    اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا وَاسِعًا، وَشِفَاءً مِنْ كُلِّ دَاءٍ
+                </div>
+                <div class="text-xs text-slate-400 italic">
+                    «Аллоҳумма инний ас-алука ъилман наафиъан, ва ризқон ваасиъан, ва шифаа-ам мин кулли даа'».
+                </div>
+            </div>
+        </div>
+
+        <!-- ТАБ 3: 14 ва 21 КУНЛИК САФАР ТАРТИБИ (ТАҚВИМ) -->
+        <div id="contentDays" class="space-y-3 hidden">
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <span class="text-[11px] font-bold text-amber-400 uppercase">1-3 кунлар: Мадинаи Мунаввара</span>
+                <p class="text-xs text-slate-300 leading-relaxed" id="dayPlan1">
+                    Масжидун Набавийда намозлар, Пайғамбаримиз соллаллоҳу алайҳи васалламга салом бериш ва Равзаи Мутаҳҳара (Нусук) зиёрати.
+                </p>
+            </div>
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <span class="text-[11px] font-bold text-amber-400 uppercase">4-5 кунлар: Мадина зиёратгоҳлари</span>
+                <p class="text-xs text-slate-300 leading-relaxed" id="dayPlan2">
+                    Қубо масжиди (2 ракат намоз умра савобига тенг), Уҳуд тоғи ва шаҳидлар мозори, Хурмо боғи ва Икки қиблали масжид.
+                </p>
+            </div>
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <span class="text-[11px] font-bold text-amber-400 uppercase">6-кун: Маккага йўл ва Умра</span>
+                <p class="text-xs text-slate-300 leading-relaxed" id="dayPlan3">
+                    Зулҳулайфа (Абёр Али) масжидида ихромга кириб, Маккаи Мукаррамага йўл олиш ва асосий Умра амалларини адо этиш.
+                </p>
+            </div>
+            <div class="card-gold p-4 rounded-2xl space-y-2">
+                <span class="text-[11px] font-bold text-amber-400 uppercase">7-14/21 кунлар: Макка зиёратлари</span>
+                <p class="text-xs text-slate-300 leading-relaxed" id="dayPlan4">
+                    Савр тоғи, Арофот, Муздалифа, Мино ва Нур тоғи (Ҳиро ғори). Байтуллоҳда кўплаб тавофлар қилиш.
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ҲОЖИБОШИ (ГИД) МОДИТОРИ ВА ТЕЗКОР QR-ЙЎҚЛАМА МОДАЛИ -->
+    <div id="leaderModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
+        <div>
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-xl">📿</span>
+                    <h3 class="font-bold text-amber-400 text-sm">Ҳожибоши Кабинети: Тезкор QR-Йўқлама</h3>
+                </div>
+                <button onclick="closeLeaderModal()" class="text-slate-400 text-2xl">&times;</button>
+            </div>
+
+            <!-- Саноқ кўрсаткичи -->
+            <div class="grid grid-cols-2 gap-2 my-4">
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center">
+                    <div class="text-[11px] text-slate-400">Автобусда / Бор:</div>
+                    <div id="countPresent" class="text-2xl font-bold text-emerald-400">0</div>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-3 rounded-xl text-center">
+                    <div class="text-[11px] text-slate-400">Етиб келмаган:</div>
+                    <div id="countMissing" class="text-2xl font-bold text-rose-400">0</div>
+                </div>
+            </div>
+
+            <!-- Камера орқали QR сканерлаш майдони -->
+            <div class="bg-slate-950 p-3 rounded-2xl border border-dashed border-amber-500/50">
+                <div id="reader" style="width: 100%;"></div>
+                <div class="flex gap-2 mt-2">
+                    <button onclick="startQrScan()" class="flex-1 bg-amber-500 text-slate-950 font-bold p-2.5 rounded-xl text-xs flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-camera"></i> Сканерни ёқиш
+                    </button>
+                    <button onclick="stopQrScan()" class="bg-slate-800 text-slate-300 font-bold px-4 py-2.5 rounded-xl text-xs">
+                        Тўхтатиш
+                    </button>
+                </div>
+            </div>
+
+            <!-- Шошилинч Push хабар тарқатиш -->
+            <div class="mt-4 bg-slate-900 p-3 rounded-xl border border-slate-800 space-y-2">
+                <label class="text-[11px] font-bold text-amber-400 block">Бутун гуруҳга шошилинч хабар юбориш:</label>
+                <input type="text" id="leaderBroadcastText" placeholder="Масалан: Соат 18:00 да автобус ёнида бўлинг..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <button onclick="broadcastAlert()" class="w-full bg-sky-600 text-white font-bold p-2 rounded-lg text-xs">
+                    Хабарни экранга чиқариш
+                </button>
+            </div>
+        </div>
+
+        <div class="pt-4">
+            <button onclick="closeLeaderModal()" class="w-full bg-slate-800 text-slate-300 font-bold p-3 rounded-xl text-xs">
+                Ойнани ёпиш
+            </button>
+        </div>
+    </div>
+
+    <!-- Пастки Доимий Навигация Менюси -->
+    <nav class="fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur border-t border-slate-800 px-6 py-2">
+        <div class="max-w-md mx-auto flex justify-around items-center">
+            <button onclick="switchTab('umrah')" class="text-center text-amber-400 flex flex-col items-center">
+                <i class="fa-solid fa-kaaba text-lg"></i>
+                <span class="text-[10px] mt-0.5">Умра</span>
+            </button>
+            <button onclick="switchTab('duas')" class="text-center text-slate-400 hover:text-amber-400 flex flex-col items-center">
+                <i class="fa-solid fa-book-quran text-lg"></i>
+                <span class="text-[10px] mt-0.5">Дуолар</span>
+            </button>
+            <button onclick="openLeaderModal()" class="text-center text-amber-400 flex flex-col items-center">
+                <div class="w-10 h-10 -mt-5 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center font-bold shadow-lg">
+                    <i class="fa-solid fa-qrcode text-lg"></i>
+                </div>
+                <span class="text-[10px] mt-0.5 font-bold">Ҳожибоши</span>
+            </button>
+            <button onclick="window.location.href='index.html'" class="text-center text-slate-400 hover:text-amber-400 flex flex-col items-center">
+                <i class="fa-solid fa-chart-pie text-lg"></i>
+                <span class="text-[10px] mt-0.5">Админ ERP</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- JavaScript Қисми ва Тиллар Луғати -->
+    <script>
+        let currentLang = 'uz';
+        let isLargeFont = false;
+        let html5QrCode = null;
+
+        // QR кодни яратиш (Зиёратчининг бейджики учун)
+        const pilgrimData = {
+            id: "ID1122166",
+            name: "Оллохберди Исманов",
+            group: "15-Ноябрь Ош-Жидда",
+            hotel: "Voco Makkah Hotel",
+            leaderPhone: "+996551191191"
+        };
+
+        const qrGen = new QRCode(document.getElementById("qrcodeCanvas"), {
+            text: JSON.stringify({ id: pilgrimData.id, name: pilgrimData.name, p: pilgrimData.leaderPhone }),
+            width: 72,
+            height: 72,
+            colorDark : "#0f172a",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.M
+        });
+
+        // Катта шрифт режими
+        function toggleFontSize() {
+            isLargeFont = !isLargeFont;
+            document.body.classList.toggle('large-font', isLargeFont);
+            document.getElementById('fontBtn').classList.toggle('bg-amber-400', isLargeFont);
+            document.getElementById('fontBtn').classList.toggle('text-slate-950', isLargeFont);
+        }
+
+        // Тилни алмаштириш (Ўзбекча <-> Кыргызча)
+        const dict = {
+            uz: {
+                headerSub: "Tawaf Travel Зиёратчилар Иловаси",
+                langBtn: "КЫРГЫЗЧА",
+                badgeTag: "Шахсий Зиёратчи Бейджиги",
+                hotelBtn: "Меҳмонхонамга йўл",
+                leaderBtn: "Ҳожибошига қўнғироқ",
+                annTitle: "Ҳожибошидан сўнгги хабар:",
+                tabUmrah: "Умра Амаллари",
+                tabDuas: "Саҳиҳ Дуолар",
+                tabDays: "14 / 21 Кунлик",
+                step1T: "1. Мийқот ва Ихром боғлаш",
+                step1D: "Ғусл қилиб, ихром либосларини кийилади. Сўнг 2 ракат ихром намозини ўқиб, ният қилинади:"
+            },
+            kg: {
+                headerSub: "Tawaf Travel Зыяратчылар Тиркемеси",
+                langBtn: "O'ZBEKCHA",
+                badgeTag: "Жеке Зыяратчы Бейджиги",
+                hotelBtn: "Мейманканага жол",
+                leaderBtn: "Ажыбашчыга чалуу",
+                annTitle: "Ажыбашчыдан акыркы кабар:",
+                tabUmrah: "Умра Амалдары",
+                tabDuas: "Сахих Дубалар",
+                tabDays: "14 / 21 Күндүк",
+                step1T: "1. Мийкот жана Ихром кийүү",
+                step1D: "Гусл дааратын алып, ихром кийимин кийет. Андан соң 2 рекет ихром намазын окуп, ниет кылат:"
+            }
+        };
+
+        function toggleLang() {
+            currentLang = currentLang === 'uz' ? 'kg' : 'uz';
+            const t = dict[currentLang];
+            document.getElementById('headerSub').innerText = t.headerSub;
+            document.getElementById('langBtn').innerText = t.langBtn;
+            document.getElementById('badgeTag').innerText = t.badgeTag;
+            document.getElementById('btnHotelText').innerText = t.hotelBtn;
+            document.getElementById('btnLeaderText').innerText = t.leaderBtn;
+            document.getElementById('announcementTitle').innerText = t.annTitle;
+            document.getElementById('tabUmrahText').innerText = t.tabUmrah;
+            document.getElementById('tabDuasText').innerText = t.tabDuas;
+            document.getElementById('tabDaysText').innerText = t.tabDays;
+            document.getElementById('step1Title').innerText = t.step1T;
+            document.getElementById('step1Desc').innerText = t.step1D;
+        }
+
+        // Бўлимларни алмаштириш
+        function switchTab(tab) {
+            ['umrah', 'duas', 'days'].forEach(t => {
+                const el = document.getElementById('content' + t.charAt(0).toUpperCase() + t.slice(1));
+                const btn = document.getElementById('tabBtn' + t.charAt(0).toUpperCase() + t.slice(1));
+                if (t === tab) {
+                    el.classList.remove('hidden');
+                    btn.className = "p-3 rounded-xl bg-amber-500 text-slate-950 font-bold text-xs flex flex-col items-center gap-1 shadow";
+                } else {
+                    el.classList.add('hidden');
+                    btn.className = "p-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 font-bold text-xs flex flex-col items-center gap-1";
+                }
+            });
+        }
+
+        // Шошилинч қўнғироқ ва меҳмонхона навигатори
+        function callLeader() {
+            window.location.href = "tel:" + pilgrimData.leaderPhone;
+        }
+
+        function openHotelLocation() {
+            // Google Maps бўйича Voco Makkah / Pullman Zamzam манзили очилади
+            window.open("https://maps.google.com/?q=Voco+Makkah", "_blank");
+        }
+
+        // Ҳожибоши Кабинети ва QR Сканер
+        function openLeaderModal() {
+            document.getElementById('leaderModal').classList.remove('hidden');
+        }
+
+        function closeLeaderModal() {
+            stopQrScan();
+            document.getElementById('leaderModal').classList.add('hidden');
+        }
+
+        function startQrScan() {
+            html5QrCode = new Html5Qrcode("reader");
+            html5QrCode.start(
+                { facingMode: "environment" },
+                { fps: 10, qrbox: { width: 220, height: 220 } },
+                (decodedText, decodedResult) => {
+                    let count = parseInt(document.getElementById('countPresent').innerText);
+                    document.getElementById('countPresent').innerText = count + 1;
+                    alert("✅ Зиёратчи рўйхатдан ўтди:\n" + decodedText);
+                },
+                (errorMessage) => {
+                    // қидирув жараёни
+                }
+            ).catch(err => {
+                alert("Камерага рухсат берилмади ёки хатолик: " + err);
+            });
+        }
+
+        function stopQrScan() {
+            if (html5QrCode) {
+                html5QrCode.stop().then(() => {
+                    html5QrCode.clear();
+                }).catch(err => {});
+            }
+        }
+
+        function broadcastAlert() {
+            const val = document.getElementById('leaderBroadcastText').value.trim();
+            if (val) {
+                document.getElementById('announcementText').innerText = val;
+                alert("Хабар барча зиёратчилар экранига етказилди!");
+                closeLeaderModal();
+            }
+        }
+    </script>
+</body>
+</html>
