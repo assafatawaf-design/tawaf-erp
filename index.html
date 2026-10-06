@@ -3,263 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TAWAF TRAVEL ERP | Professional Бошқарув Тизими</title>
+    <title>TAWAF ERP | Бошқарув Тизими</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0b1120">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tesseract OCR & PDF -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-
     <style>
         body { background-color: #0b1120; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; -webkit-tap-highlight-color: transparent; }
         .card-gold { background: linear-gradient(145deg, #1e293b, #0f172a); border: 1px solid rgba(245, 158, 11, 0.25); }
         .gold-gradient-text { background: linear-gradient(to right, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .tab-active { background-color: #f59e0b; color: #020617; font-weight: 800; }
+        .truncate-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     </style>
 </head>
 <body class="pb-24">
 
-    <!-- Админ Header -->
-    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-amber-500/20 px-4 py-3">
-        <div class="max-w-4xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <svg class="w-9 h-9 shrink-0" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="46" stroke="#d97706" stroke-width="4" stroke-dasharray="190 60"/>
-                    <circle cx="50" cy="50" r="38" stroke="#f59e0b" stroke-width="4" stroke-dasharray="140 70" stroke-dashoffset="40"/>
-                    <circle cx="50" cy="50" r="30" stroke="#fcd34d" stroke-width="3" stroke-dasharray="110 50" stroke-dashoffset="80"/>
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 backdrop-blur border-b border-amber-500/20 px-3 py-2.5">
+        <div class="max-w-md mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="w-8 h-8 shrink-0" viewBox="0 0 100 100" fill="none">
+                    <circle cx="50" cy="50" r="46" stroke="#d97706" stroke-width="4"/>
                     <rect x="35" y="35" width="30" height="30" rx="4" transform="rotate(45 50 50)" fill="#0f172a" stroke="#f59e0b" stroke-width="3.5"/>
                     <rect x="40" y="40" width="20" height="20" rx="2" transform="rotate(45 50 50)" fill="#f59e0b"/>
                 </svg>
                 <div>
-                    <h1 class="font-black text-sm md:text-base tracking-wider gold-gradient-text leading-tight">TAWAF TRAVEL ERP</h1>
-                    <p class="text-[9px] font-bold text-amber-500/80 tracking-widest uppercase">Бошқарув Пульти</p>
+                    <h1 class="font-black text-xs sm:text-sm tracking-wider gold-gradient-text">TAWAF ERP</h1>
+                    <p class="text-[8px] font-bold text-amber-500/80 uppercase">Бошқарув Пульти</p>
                 </div>
             </div>
-
-            <div class="flex items-center gap-2">
-                <button type="button" onclick="window.location.href='app.html'" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-3 py-1.5 rounded-xl text-xs border border-amber-500/30 flex items-center gap-1.5 shadow">
-                    <i class="fa-solid fa-mobile-screen"></i>
-                    <span>Зиёратчи Иловаси</span>
-                </button>
-            </div>
+            <button type="button" onclick="window.location.href='app.html'" class="bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold px-2.5 py-1 rounded-xl text-[11px] border border-amber-500/30">
+                <i class="fa-solid fa-mobile-screen mr-1"></i> Зиёратчи
+            </button>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 pt-4 space-y-4">
+    <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- Таблар Менюси -->
-        <div class="grid grid-cols-3 gap-2 bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 text-xs">
-            <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-users"></i> Зиёратчилар
+        <!-- Таблар -->
+        <div class="grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[11px]">
+            <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-users"></i> Зиёратчи
             </button>
-            <button type="button" onclick="switchAdminTab('excursions')" id="tabExcursions" class="text-slate-400 py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-route text-amber-400"></i> Экскурсиялар
+            <button type="button" onclick="switchAdminTab('excursions')" id="tabExcursions" class="text-slate-400 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-route"></i> Зиёратлар
             </button>
-            <button type="button" onclick="switchAdminTab('hotels')" id="tabHotels" class="text-slate-400 py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5">
-                <i class="fa-solid fa-hotel text-sky-400"></i> Меҳмонхоналар
+            <button type="button" onclick="switchAdminTab('hotels')" id="tabHotels" class="text-slate-400 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-hotel"></i> Меҳмонхона
             </button>
         </div>
 
-        <!-- 1-БЎЛИМ: ЗИЁРАТЧИЛАР БОШҚАРУВИ -->
-        <div id="sectionPilgrims" class="space-y-4">
-            
-            <!-- Статистика карточкалари -->
-            <div class="grid grid-cols-3 gap-2">
-                <div class="card-gold p-3 rounded-2xl text-center">
-                    <div class="text-[10px] text-slate-400 font-bold uppercase">Жами Зиёратчи</div>
-                    <div id="statTotal" class="text-xl font-black text-amber-400 mt-0.5">0</div>
+        <!-- 1: ЗИЁРАТЧИЛАР -->
+        <div id="sectionPilgrims" class="space-y-3">
+            <div class="grid grid-cols-3 gap-1.5 text-center">
+                <div class="card-gold p-2 rounded-xl">
+                    <div class="text-[9px] text-slate-400 font-bold">ЖАМИ</div>
+                    <div id="statTotal" class="text-lg font-black text-amber-400">0</div>
                 </div>
-                <div class="card-gold p-3 rounded-2xl text-center">
-                    <div class="text-[10px] text-slate-400 font-bold uppercase">Тўланган ($)</div>
-                    <div id="statPaid" class="text-xl font-black text-emerald-400 mt-0.5">0</div>
+                <div class="card-gold p-2 rounded-xl">
+                    <div class="text-[9px] text-slate-400 font-bold">ТЎЛАНГАН</div>
+                    <div id="statPaid" class="text-lg font-black text-emerald-400">$0</div>
                 </div>
-                <div class="card-gold p-3 rounded-2xl text-center">
-                    <div class="text-[10px] text-slate-400 font-bold uppercase">Қарз ($)</div>
-                    <div id="statDebt" class="text-xl font-black text-rose-400 mt-0.5">0</div>
+                <div class="card-gold p-2 rounded-xl">
+                    <div class="text-[9px] text-slate-400 font-bold">ҚАРЗ</div>
+                    <div id="statDebt" class="text-lg font-black text-rose-400">$0</div>
                 </div>
             </div>
 
-            <!-- Тугмалар: Янги қўшиш ва Экспорт -->
             <div class="flex gap-2">
-                <button type="button" onclick="openAddModal()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-xs flex items-center justify-center gap-2 shadow-lg">
-                    <i class="fa-solid fa-user-plus"></i> Янги Зиёратчи Қўшиш
+                <button type="button" onclick="openAddModal()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow">
+                    <i class="fa-solid fa-user-plus"></i> Зиёратчи Қўшиш
                 </button>
-                <button type="button" onclick="exportToPDF()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-4 py-3 rounded-xl text-xs flex items-center gap-1.5 border border-slate-700">
-                    <i class="fa-solid fa-file-pdf text-rose-400"></i> PDF Рўйхат
+                <button type="button" onclick="exportToPDF()" class="bg-slate-800 text-slate-200 font-bold px-3 py-2.5 rounded-xl text-xs flex items-center gap-1 border border-slate-700">
+                    <i class="fa-solid fa-file-pdf text-rose-400"></i> PDF
                 </button>
             </div>
 
-            <!-- Зиёратчилар Рўйхати -->
-            <div class="space-y-2.5" id="pilgrimsList">
-                <!-- Динамик юкланади -->
-            </div>
+            <div class="space-y-2" id="pilgrimsList"></div>
         </div>
 
-        <!-- 2-БЎЛИМ: КУТИЛМАГАН ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
-        <div id="sectionExcursions" class="space-y-4 hidden">
-            <div class="card-gold p-4 rounded-2xl space-y-3">
-                <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-map-location-dot"></i> Янги Экскурсия / Кутилмаган Зиёрат қўшиш
-                </h3>
-                <p class="text-xs text-slate-300">
-                    Бу ерда қўшилган зиёратлар автоматик равишда гуруҳдаги барча зиёратчилар иловасида эълон сифатида чиқади.
-                </p>
-
-                <div class="space-y-2">
-                    <input type="text" id="excTitle" placeholder="Зиёрат номи (Масалан: Савр тоғи ва Қизил денгиз)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                    <div class="grid grid-cols-2 gap-2">
-                        <input type="text" id="excTime" placeholder="Вақти (Масалан: Эртага 15:30)" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                        <input type="text" id="excBus" placeholder="Автобус рақами (Масалан: №07)" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                    </div>
-                    <textarea id="excDesc" rows="2" placeholder="Қўшимча кўрсатмалар (Масалан: Эҳромсиз, кроссовка кийиб олиш тавсия этилади)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white"></textarea>
-                    
-                    <button type="button" onclick="saveExcursion()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-2.5 rounded-xl text-xs shadow">
-                        ✅ Барча Зиёратчилар Иловасига Юбориш
-                    </button>
+        <!-- 2: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
+        <div id="sectionExcursions" class="space-y-3 hidden">
+            <div class="card-gold p-3 rounded-2xl space-y-2">
+                <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-map-location-dot mr-1"></i> Янги Зиёрат қўшиш</h3>
+                <input type="text" id="excTitle" placeholder="Зиёрат номи (Масалан: Савр тоғи)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <div class="grid grid-cols-2 gap-1.5">
+                    <input type="text" id="excTime" placeholder="Вақти (Эртага 07:00)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                    <input type="text" id="excBus" placeholder="Автобус (№07)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
+                <button type="button" onclick="saveExcursion()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs">
+                    Эълон қилиш
+                </button>
             </div>
-
-            <div class="space-y-2" id="excursionsList">
-                <!-- Тарих -->
-            </div>
+            <div class="space-y-1.5" id="excursionsList"></div>
         </div>
 
-        <!-- 3-БЎЛИМ: МЕҲМОНХОНАЛАР БОШҚАРУВИ -->
-        <div id="sectionHotels" class="space-y-4 hidden">
-            <div class="card-gold p-4 rounded-2xl space-y-3">
-                <h3 class="text-sm font-bold text-amber-400 flex items-center gap-2">
-                    <i class="fa-solid fa-hotel"></i> Меҳмонхоналар ва Харита Локацияси
-                </h3>
-                <p class="text-xs text-slate-300">
-                    Бу меҳмонхоналар зиёратчилар иловасидаги «Меҳмонхонамга йўл» тугмаси босилганда Google Maps орқали очилади.
-                </p>
-
-                <div class="space-y-2">
-                    <input type="text" id="hotelName" placeholder="Меҳмонхона номи (Масалан: Voco Makkah Hotel)" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                    <div class="grid grid-cols-2 gap-2">
-                        <select id="hotelCity" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                            <option value="Макка">Маккаи Мукаррама</option>
-                            <option value="Мадина">Мадинаи Мунаввара</option>
-                        </select>
-                        <input type="text" id="hotelPhone" placeholder="Ресепшн / Ҳожибоши тел" class="bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                    </div>
-                    <input type="text" id="hotelMaps" placeholder="Google Maps координатаси ёки номи" value="Voco Makkah" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-
-                    <button type="button" onclick="saveHotel()" class="w-full bg-sky-600 hover:bg-sky-500 text-white font-bold py-2.5 rounded-xl text-xs shadow">
-                        💾 Меҳмонхонани Сақлаш
-                    </button>
+        <!-- 3: МЕҲМОНХОНАЛАР -->
+        <div id="sectionHotels" class="space-y-3 hidden">
+            <div class="card-gold p-3 rounded-2xl space-y-2">
+                <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-hotel mr-1"></i> Меҳмонхона қўшиш</h3>
+                <input type="text" id="hotelName" placeholder="Меҳмонхона номи (Voco Makkah)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <div class="grid grid-cols-2 gap-1.5">
+                    <select id="hotelCity" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                        <option value="Макка">Макка</option>
+                        <option value="Мадина">Мадина</option>
+                    </select>
+                    <input type="text" id="hotelPhone" placeholder="Тел рақам" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
+                <button type="button" onclick="saveHotel()" class="w-full bg-sky-600 text-white font-bold py-2 rounded-lg text-xs">
+                    Сақлаш
+                </button>
             </div>
-
-            <div class="space-y-2" id="hotelsList">
-                <!-- Сақланган меҳмонхоналар -->
-            </div>
+            <div class="space-y-1.5" id="hotelsList"></div>
         </div>
 
     </main>
 
-    <!-- МОДАЛ ОЙНА: ЯНГИ ЗИЁРАТЧИ ҚЎШИШ + КУЧАЙТИРИЛГАН OCR СКАНЕР -->
+    <!-- МОДАЛ ОЙНА: ҚЎШИШ + OCR -->
     <div id="addModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-between overflow-y-auto">
-        <div class="max-w-md mx-auto w-full space-y-3">
+        <div class="max-w-md mx-auto w-full space-y-2.5">
             <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-                <h3 class="font-bold text-amber-400 text-sm flex items-center gap-2">
-                    <i class="fa-solid fa-id-card"></i> Зиёратчи Қўшиш
-                </h3>
-                <button type="button" onclick="closeAddModal()" class="text-slate-400 text-2xl">&times;</button>
+                <h3 class="font-bold text-amber-400 text-xs">Янги Зиёратчи Қўшиш</h3>
+                <button type="button" onclick="closeAddModal()" class="text-slate-400 text-xl">&times;</button>
             </div>
 
-            <!-- OCR ПАСПОРТ СКАНЕРИ -->
-            <div class="card-gold p-3.5 rounded-2xl border-dashed border-2 border-amber-500/40 text-center space-y-2">
-                <div class="text-xs font-bold text-amber-300">📸 Паспорт / ID-картани сканерлаш (OCR)</div>
-                <p class="text-[11px] text-slate-400">Галереядан фото танланг — Ф.И.Ш ва Паспорт номери автоматик тўлади:</p>
-
+            <!-- OCR -->
+            <div class="card-gold p-3 rounded-xl border-dashed border border-amber-500/40 text-center space-y-1.5">
+                <div class="text-[11px] font-bold text-amber-300">📸 Паспорт / ID расмини юклаш (OCR):</div>
                 <input type="file" id="passportFile" accept="image/*" class="hidden" onchange="processPassportOCR(event)">
-                <button type="button" onclick="document.getElementById('passportFile').click()" class="bg-amber-500 text-slate-950 font-black px-4 py-2 rounded-xl text-xs inline-flex items-center gap-2 shadow">
-                    <i class="fa-solid fa-camera"></i> Фото танлаш
+                <button type="button" onclick="document.getElementById('passportFile').click()" class="bg-amber-500 text-slate-950 font-black px-3 py-1.5 rounded-lg text-xs shadow">
+                    Галереядан танлаш
                 </button>
-
-                <!-- Сканер ҳолати -->
-                <div id="ocrLoader" class="hidden text-xs text-amber-400 animate-pulse pt-1">
-                    <i class="fa-solid fa-spinner fa-spin"></i> Маълумотлар аниқланмоқда...
-                </div>
-                <div id="ocrSuccess" class="hidden text-xs text-emerald-400 font-bold pt-1">
-                    <i class="fa-solid fa-circle-check"></i> Маълумотлар муваффақиятли олинди!
-                </div>
+                <div id="ocrLoader" class="hidden text-[11px] text-amber-400 animate-pulse">Аниқланмоқда...</div>
+                <div id="ocrSuccess" class="hidden text-[11px] text-emerald-400 font-bold">Тайёр!</div>
             </div>
 
-            <!-- МАЪЛУМОТЛАР КАТАКЛАРИ -->
-            <div class="space-y-2">
+            <div class="space-y-2 text-xs">
                 <div>
-                    <label class="text-[11px] font-bold text-slate-300">Ф.И.Ш (Тўлиқ исми): *</label>
-                    <input type="text" id="mName" placeholder="Масалан: ABDULLOH ALIEV" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white uppercase">
+                    <label class="text-[10px] text-slate-400 block mb-0.5">Ф.И.Ш: *</label>
+                    <input type="text" id="mName" placeholder="ABDULLOH ALIEV" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
                 </div>
-
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-1.5">
                     <div>
-                        <label class="text-[11px] font-bold text-slate-300">Паспорт рақами: *</label>
-                        <input type="text" id="mPass" placeholder="AC1234567" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white uppercase font-mono">
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Паспорт: *</label>
+                        <input type="text" id="mPass" placeholder="AC1234567" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase font-mono">
                     </div>
                     <div>
-                        <label class="text-[11px] font-bold text-slate-300">Телефон (WhatsApp): *</label>
-                        <input type="text" id="mPhone" placeholder="+996..." class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white font-mono">
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-300">Рейс / Гуруҳ:</label>
-                        <input type="text" id="mGroup" value="15-Ноябрь Ош-Жидда" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                    </div>
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-300">Меҳмонхона:</label>
-                        <select id="mHotel" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-white">
-                            <option value="Voco Makkah Hotel">Voco Makkah</option>
-                            <option value="Pullman Zamzam Madinah">Pullman Zamzam</option>
-                        </select>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Телефон (WhatsApp): *</label>
+                        <input type="text" id="mPhone" placeholder="+996..." class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
                     </div>
                 </div>
-
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-2 gap-1.5">
                     <div>
-                        <label class="text-[11px] font-bold text-slate-300">Тўланган ($):</label>
-                        <input type="number" id="mPaid" value="1200" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-emerald-400 font-bold">
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Меҳмонхона:</label>
+                        <select id="mHotel" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white"></select>
                     </div>
                     <div>
-                        <label class="text-[11px] font-bold text-slate-300">Қарз ($):</label>
-                        <input type="number" id="mDebt" value="0" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-2.5 text-xs text-rose-400 font-bold">
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Тўланган ($):</label>
+                        <input type="number" id="mPaid" value="1200" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-emerald-400 font-bold">
                     </div>
                 </div>
             </div>
 
             <div class="pt-2 flex gap-2">
-                <button type="button" onclick="savePilgrim()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg">
-                    💾 Сақлаш ва Бейджик Яратиш
+                <button type="button" onclick="savePilgrim()" class="flex-1 bg-amber-500 text-slate-950 font-black py-2.5 rounded-xl text-xs">
+                    Сақлаш ва Бейджик Яратиш
                 </button>
-                <button type="button" onclick="closeAddModal()" class="bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl text-xs">
-                    Бекор қилиш
+                <button type="button" onclick="closeAddModal()" class="bg-slate-800 text-slate-300 font-bold px-3 py-2.5 rounded-xl text-xs">
+                    Ёпиш
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript: OCR, LocalStorage ва Логика -->
+    <!-- JavaScript -->
     <script>
-        // Стандарт маълумотлар базаси
-        let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [
-            { id: "AC1234567", name: "Алиев Валижон", phone: "+996555123456", group: "15-Ноябрь Ош-Жидда", hotel: "Voco Makkah Hotel", paid: 1350, debt: 0 }
-        ];
-
-        let excursions = JSON.parse(localStorage.getItem('tawaf_excursions')) || [
-            { title: "Савр тоғи ва Арофот зиёрати", time: "Эртага 06:00", bus: "№05", desc: "Эрталаб нонуштадан сўнг фойеда йиғиламиз." }
-        ];
-
+        let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
+        let excursions = JSON.parse(localStorage.getItem('tawaf_excursions')) || [];
         let hotels = JSON.parse(localStorage.getItem('tawaf_hotels')) || [
-            { name: "Voco Makkah Hotel", city: "Макка", phone: "+966123456789", maps: "Voco Makkah" },
-            { name: "Pullman Zamzam Madinah", city: "Мадина", phone: "+966987654321", maps: "Pullman Zamzam Madina" }
+            { name: "Voco Makkah Hotel", city: "Макка", phone: "+966123456789" },
+            { name: "Pullman Zamzam Madinah", city: "Мадина", phone: "+966987654321" }
         ];
 
         function renderAll() {
@@ -286,28 +212,27 @@
             }
 
             pilgrims.forEach((p, idx) => {
-                const pilgrimAppUrl = `https://tawaf-erp.vercel.app/app.html?pass=${encodeURIComponent(p.id)}&name=${encodeURIComponent(p.name)}&group=${encodeURIComponent(p.group)}&hotel=${encodeURIComponent(p.hotel)}`;
-                const waMessage = encodeURIComponent(`Ассалому алайкум, ҳурматли ${p.name}!\n\nСизнинг шахсий Tawaf Smart электрон бейджигингиз ва Умра дастурингиз тайёр бўлди.\n\nШахсий иловангизни очиш учун қуйидаги ҳаволани босинг:\n👉 ${pilgrimAppUrl}`);
-                const cleanPhone = p.phone.replace(/[^0-9]/g, '');
+                const pilgrimAppUrl = `https://tawaf-erp.vercel.app/app.html?pass=${encodeURIComponent(p.id)}&name=${encodeURIComponent(p.name)}&group=${encodeURIComponent(p.group || 'Tawaf')}&hotel=${encodeURIComponent(p.hotel)}`;
+                const waMessage = encodeURIComponent(`Ассалому алайкум, ҳурматли ${p.name}!\n\nСизнинг шахсий Tawaf Smart электрон бейджигингиз ва Умра дастурингиз тайёр бўлди:\n👉 ${pilgrimAppUrl}`);
+                const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
 
                 const card = document.createElement('div');
-                card.className = "card-gold p-3.5 rounded-2xl flex items-center justify-between gap-2 shadow";
+                card.className = "card-gold p-2.5 rounded-xl flex items-center justify-between gap-2 shadow";
                 card.innerHTML = `
-                    <div class="flex-1">
-                        <div class="flex items-center gap-2">
-                            <h4 class="font-bold text-white text-xs uppercase">${p.name}</h4>
-                            <span class="text-[10px] font-mono text-amber-400 bg-amber-500/10 px-1.5 py-0.5 rounded">${p.id}</span>
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-1.5">
+                            <h4 class="font-bold text-white text-xs truncate-text uppercase">${p.name}</h4>
+                            <span class="text-[9px] font-mono text-amber-400 bg-amber-500/10 px-1 py-0.5 rounded shrink-0">${p.id}</span>
                         </div>
-                        <div class="text-[11px] text-slate-400 mt-0.5">
-                            <span><i class="fa-solid fa-hotel text-[9px] mr-1"></i>${p.hotel}</span> | 
-                            <span class="text-emerald-400 font-bold">$${p.paid}</span>
+                        <div class="text-[10px] text-slate-400 mt-0.5 truncate-text">
+                            <span>${p.hotel}</span> | <span class="text-emerald-400 font-bold">$${p.paid}</span>
                         </div>
                     </div>
-                    <div class="flex items-center gap-1.5">
-                        <a href="https://wa.me/${cleanPhone}?text=${waMessage}" target="_blank" class="w-8 h-8 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center text-xs shadow" title="WhatsApp орқали бейджик юбориш">
+                    <div class="flex items-center gap-1 shrink-0">
+                        <a href="https://wa.me/${cleanPhone}?text=${waMessage}" target="_blank" class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center text-xs shadow">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
-                        <button type="button" onclick="deletePilgrim(${idx})" class="w-8 h-8 rounded-xl bg-slate-800 hover:bg-rose-900/60 text-slate-400 hover:text-rose-400 flex items-center justify-center text-xs border border-slate-700">
+                        <button type="button" onclick="deletePilgrim(${idx})" class="w-7 h-7 rounded-lg bg-slate-800 text-slate-400 hover:text-rose-400 flex items-center justify-center text-xs border border-slate-700">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
                     </div>
@@ -316,15 +241,12 @@
             });
         }
 
-        // КУЧАЙТИРИЛГАН OCR: Қирғизистон ва Ўзбекистон паспортлари/ID-карталари учун
         async function processPassportOCR(e) {
             const file = e.target.files[0];
             if (!file) return;
 
-            const loader = document.getElementById('ocrLoader');
-            const success = document.getElementById('ocrSuccess');
-            loader.classList.remove('hidden');
-            success.classList.add('hidden');
+            document.getElementById('ocrLoader').classList.remove('hidden');
+            document.getElementById('ocrSuccess').classList.add('hidden');
 
             const reader = new FileReader();
             reader.onload = async function(evt) {
@@ -332,24 +254,17 @@
                     const result = await Tesseract.recognize(evt.target.result, 'eng');
                     const text = result.data.text.toUpperCase();
 
-                    // 1. Паспорт номери: AC, AN, ID, AB ёки 9 та сон
                     const passRegex = /\b(ID|AN|AC|AB|FA|KA|AA)[\s-]?[0-9]{7}\b/i;
                     const passMatch = text.match(passRegex) || text.match(/[A-Z]{1,2}[0-9]{7}/i) || text.match(/\b[0-9]{9}\b/);
                     if (passMatch) {
                         document.getElementById('mPass').value = passMatch[0].replace(/[\s-]/g, '').toUpperCase();
                     }
 
-                    // 2. Исм-фамилия: MRZ қатори ёки катта матнлардан
                     const mrzMatch = text.match(/P<[A-Z]{3}([A-Z<]+)/i) || text.match(/I<[A-Z]{3}([A-Z<]+)/i);
                     if (mrzMatch) {
-                        const rawName = mrzMatch[1].replace(/<+/g, ' ').trim();
-                        document.getElementById('mName').value = rawName;
+                        document.getElementById('mName').value = mrzMatch[1].replace(/<+/g, ' ').trim();
                     } else {
-                        // Агар MRZ бўлмаса, тўғридан-тўғри исм сўзларини олиш
-                        const lines = result.data.lines
-                            .map(l => l.text.trim())
-                            .filter(l => l.length > 3 && !l.includes("PASSPORT") && !l.includes("REPUBLIC") && !l.includes("KYRGYZ") && !l.includes("UZBEKISTAN"));
-                        
+                        const lines = result.data.lines.map(l => l.text.trim()).filter(l => l.length > 3 && !l.includes("PASSPORT") && !l.includes("REPUBLIC"));
                         for (let line of lines) {
                             const words = line.split(/\s+/).filter(w => w.length > 2 && /^[A-Z]+$/.test(w));
                             if (words.length >= 2) {
@@ -358,12 +273,11 @@
                             }
                         }
                     }
-
-                    loader.classList.add('hidden');
-                    success.classList.remove('hidden');
+                    document.getElementById('ocrLoader').classList.add('hidden');
+                    document.getElementById('ocrSuccess').classList.remove('hidden');
                 } catch (err) {
-                    loader.classList.add('hidden');
-                    alert("OCR хатолиги: " + err);
+                    document.getElementById('ocrLoader').classList.add('hidden');
+                    alert("Хатолик: " + err);
                 }
             };
             reader.readAsDataURL(file);
@@ -373,50 +287,39 @@
             const name = document.getElementById('mName').value.trim();
             const pass = document.getElementById('mPass').value.trim();
             const phone = document.getElementById('mPhone').value.trim();
-            const group = document.getElementById('mGroup').value.trim();
             const hotel = document.getElementById('mHotel').value;
             const paid = document.getElementById('mPaid').value;
-            const debt = document.getElementById('mDebt').value;
 
             if (!name || !pass) {
-                alert("Илтимос, Исм ва Паспорт рақамини киритинг!");
+                alert("Исм ва Паспортни тўлдиринг!");
                 return;
             }
 
-            pilgrims.unshift({ id: pass, name, phone, group, hotel, paid, debt });
+            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, group: "Tawaf Travel" });
             localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
             renderAll();
             closeAddModal();
-            alert("✅ Зиёратчи муваффақиятли қўшилди!");
         }
 
         function deletePilgrim(idx) {
-            if (confirm("Зиёратчини рўйхатдан ўчиришни тасдиқлайсизми?")) {
+            if (confirm("Ўчиришни тасдиқлайсизми?")) {
                 pilgrims.splice(idx, 1);
                 localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
                 renderAll();
             }
         }
 
-        // Экскурсияларни сақлаш
         function saveExcursion() {
             const title = document.getElementById('excTitle').value.trim();
             const time = document.getElementById('excTime').value.trim();
             const bus = document.getElementById('excBus').value.trim();
-            const desc = document.getElementById('excDesc').value.trim();
-
-            if (!title) {
-                alert("Зиёрат номини ёзинг!");
-                return;
-            }
-
-            excursions.unshift({ title, time, bus, desc });
+            if (!title) return;
+            excursions.unshift({ title, time, bus });
             localStorage.setItem('tawaf_excursions', JSON.stringify(excursions));
             renderExcursions();
-            alert("✅ Экскурсия эълон қилинди ва сақланди!");
             document.getElementById('excTitle').value = "";
             document.getElementById('excTime').value = "";
-            document.getElementById('excDesc').value = "";
+            document.getElementById('excBus').value = "";
         }
 
         function renderExcursions() {
@@ -424,14 +327,9 @@
             list.innerHTML = "";
             excursions.forEach((e, i) => {
                 const item = document.createElement('div');
-                item.className = "card-gold p-3 rounded-xl flex justify-between items-center text-xs";
-                item.innerHTML = `
-                    <div>
-                        <div class="font-bold text-amber-300">${e.title}</div>
-                        <div class="text-slate-400 mt-0.5">${e.time} | Автобус: ${e.bus}</div>
-                    </div>
-                    <button type="button" onclick="deleteExcursion(${i})" class="text-slate-500 hover:text-rose-400 p-2"><i class="fa-solid fa-trash"></i></button>
-                `;
+                item.className = "card-gold p-2 rounded-lg flex justify-between items-center text-xs";
+                item.innerHTML = `<div><b class="text-amber-300">${e.title}</b> <span class="text-slate-400">(${e.time})</span></div>
+                <button type="button" onclick="deleteExcursion(${i})" class="text-slate-500 hover:text-rose-400 p-1"><i class="fa-solid fa-trash"></i></button>`;
                 list.appendChild(item);
             });
         }
@@ -442,22 +340,16 @@
             renderExcursions();
         }
 
-        // Меҳмонхоналарни сақлаш
         function saveHotel() {
             const name = document.getElementById('hotelName').value.trim();
             const city = document.getElementById('hotelCity').value;
             const phone = document.getElementById('hotelPhone').value.trim();
-            const maps = document.getElementById('hotelMaps').value.trim();
-
-            if (!name) {
-                alert("Меҳмонхона номини киритинг!");
-                return;
-            }
-
-            hotels.push({ name, city, phone, maps });
+            if (!name) return;
+            hotels.push({ name, city, phone });
             localStorage.setItem('tawaf_hotels', JSON.stringify(hotels));
             renderHotels();
-            alert("✅ Меҳмонхона қўшилди!");
+            document.getElementById('hotelName').value = "";
+            document.getElementById('hotelPhone').value = "";
         }
 
         function renderHotels() {
@@ -465,66 +357,48 @@
             const select = document.getElementById('mHotel');
             list.innerHTML = "";
             select.innerHTML = "";
-
-            hotels.forEach((h, i) => {
+            hotels.forEach(h => {
                 const opt = document.createElement('option');
                 opt.value = h.name;
                 opt.innerText = `${h.city} - ${h.name}`;
                 select.appendChild(opt);
 
                 const item = document.createElement('div');
-                item.className = "card-gold p-3 rounded-xl flex justify-between items-center text-xs";
-                item.innerHTML = `
-                    <div>
-                        <div class="font-bold text-white">${h.name} (${h.city})</div>
-                        <div class="text-slate-400 mt-0.5">Локация: ${h.maps}</div>
-                    </div>
-                    <a href="https://maps.google.com/?q=${encodeURIComponent(h.maps)}" target="_blank" class="bg-sky-600/30 text-sky-400 px-2 py-1 rounded border border-sky-500/30">Харита</a>
-                `;
+                item.className = "card-gold p-2 rounded-lg text-xs flex justify-between";
+                item.innerHTML = `<span>${h.name} (${h.city})</span><span class="text-slate-400">${h.phone}</span>`;
                 list.appendChild(item);
             });
         }
 
-        // PDF Экспорт
         function exportToPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.text("TAWAF TRAVEL - Ziyoratchilar Ro'yxati", 14, 15);
-            const tableData = pilgrims.map((p, i) => [i + 1, p.name, p.id, p.phone, p.hotel, "$" + p.paid]);
+            doc.text("TAWAF TRAVEL - Ro'yxat", 14, 15);
             doc.autoTable({
-                head: [["#", "F.I.SH", "Pasport", "Telefon", "Mehmonxona", "To'landi"]],
-                body: tableData,
+                head: [["#", "F.I.SH", "Pasport", "Telefon", "Mehmonxona"]],
+                body: pilgrims.map((p, i) => [i + 1, p.name, p.id, p.phone, p.hotel]),
                 startY: 20
             });
-            doc.save("Tawaf_Ziyoratchilar_Royxati.pdf");
+            doc.save("Ziyoratchilar.pdf");
         }
 
-        // Табларни бошқариш
         function switchAdminTab(tab) {
             ['pilgrims', 'excursions', 'hotels'].forEach(t => {
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
                 if (t === tab) {
                     sec.classList.remove('hidden');
-                    btn.className = "tab-active py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5 shadow";
+                    btn.className = "tab-active py-2 rounded-lg font-bold";
                 } else {
                     sec.classList.add('hidden');
-                    btn.className = "text-slate-400 py-2.5 rounded-xl font-bold transition flex items-center justify-center gap-1.5";
+                    btn.className = "text-slate-400 py-2 rounded-lg font-bold";
                 }
             });
         }
 
-        function openAddModal() {
-            document.getElementById('addModal').classList.remove('hidden');
-            document.getElementById('ocrSuccess').classList.add('hidden');
-            document.getElementById('ocrLoader').classList.add('hidden');
-        }
+        function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
+        function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
 
-        function closeAddModal() {
-            document.getElementById('addModal').classList.add('hidden');
-        }
-
-        // Дастурни ишга тушириш
         renderAll();
     </script>
 </body>
