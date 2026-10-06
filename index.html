@@ -43,19 +43,22 @@
 
     <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- 4 та Таблар: Зиёратчи | Ҳожибоши | Зиёратлар | Меҳмонхона -->
-        <div class="grid grid-cols-4 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[10px]">
+        <!-- 5 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёратлар | Меҳмонхона -->
+        <div class="grid grid-cols-5 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[9px] text-center">
             <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-users"></i> Зиёратчи
+                <i class="fa-solid fa-users block mb-0.5 text-xs"></i> Зиёратчи
             </button>
             <button type="button" onclick="switchAdminTab('leaders')" id="tabLeaders" class="text-slate-400 py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-user-tie"></i> Ҳожибоши
+                <i class="fa-solid fa-user-tie block mb-0.5 text-xs"></i> Ҳожибоши
+            </button>
+            <button type="button" onclick="switchAdminTab('packages')" id="tabPackages" class="text-slate-400 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-cube block mb-0.5 text-xs"></i> Пакетлар
             </button>
             <button type="button" onclick="switchAdminTab('excursions')" id="tabExcursions" class="text-slate-400 py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-route"></i> Зиёратлар
+                <i class="fa-solid fa-route block mb-0.5 text-xs"></i> Зиёрат
             </button>
             <button type="button" onclick="switchAdminTab('hotels')" id="tabHotels" class="text-slate-400 py-2 rounded-lg font-bold">
-                <i class="fa-solid fa-hotel"></i> Меҳмонхона
+                <i class="fa-solid fa-hotel block mb-0.5 text-xs"></i> Меҳмонхона
             </button>
         </div>
 
@@ -88,31 +91,54 @@
             <div class="space-y-2" id="pilgrimsList"></div>
         </div>
 
-        <!-- 2: ҲОЖИБОШИЛАР ВА САФАРЛАР БЎЛИМИ (ЯНГИ ФУНКЦИЯ) -->
+        <!-- 2: ҲОЖИБОШИЛАР ВА САФАРЛАР БЎЛИМИ -->
         <div id="sectionLeaders" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                     <i class="fa-solid fa-user-tie"></i> Янги Ҳожибоши / Етакчи Бириктириш
                 </h3>
-                <input type="text" id="lName" placeholder="Ҳожибоши Ф.И.Ш (Масалан: Абдуллоҳ домла)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+                <input type="text" id="lName" placeholder="Ҳожибоши Ф.И.Ш (Масалан: Абдуллоҳ Домла)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
                 <div class="grid grid-cols-2 gap-1.5">
-                    <input type="text" id="lPhone" placeholder="WhatsApp тел (+996...)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
-                    <input type="text" id="lGroup" placeholder="Рейс / Сафар (15-Ноябрь)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                    <input type="text" id="lPhone" placeholder="WhatsApp (+996551191191)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+                    <input type="text" id="lGroup" placeholder="Рейс (15-Ноябрь Ош-Жидда)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
                 <button type="button" onclick="saveLeader()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs shadow">
                     💾 Ҳожибошини Сақлаш
                 </button>
             </div>
 
-            <!-- Сафар жадвали ва автоматик ҳисоби -->
             <div class="space-y-2" id="leadersList"></div>
         </div>
 
-        <!-- 3: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
+        <!-- 3: УМРА САФАР ПАКЕТЛАРИ БЎЛИМИ (ЯНГИ) -->
+        <div id="sectionPackages" class="space-y-3 hidden">
+            <div class="card-gold p-3 rounded-2xl space-y-2">
+                <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-cube"></i> Янги Сафар Пакетини Қўшиш
+                </h3>
+                <input type="text" id="pkgName" placeholder="Пакет номи (Масалан: Эконом, Стандарт, Комфорт)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <div class="grid grid-cols-2 gap-1.5">
+                    <select id="pkgDays" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                        <option value="14 Кунлик">14 Кунлик</option>
+                        <option value="21 Кунлик">21 Кунлик</option>
+                        <option value="28 Кунлик">28 Кунлик</option>
+                    </select>
+                    <input type="number" id="pkgPrice" placeholder="Нархи ($1200)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-emerald-400 font-bold">
+                </div>
+                <input type="text" id="pkgService" placeholder="Сервис: 4 кишилик хона, 2 маҳал таом, виза, трансфер" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <button type="button" onclick="savePackage()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs shadow">
+                    💾 Пакетни Сақлаш
+                </button>
+            </div>
+
+            <div class="space-y-2" id="packagesList"></div>
+        </div>
+
+        <!-- 4: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
         <div id="sectionExcursions" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-map-location-dot mr-1"></i> Янги Зиёрат қўшиш</h3>
-                <input type="text" id="excTitle" placeholder="Зиёрат номи (Масалан: Савр тоғи)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <input type="text" id="excTitle" placeholder="Зиёрат номи (Савр тоғи)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 <div class="grid grid-cols-2 gap-1.5">
                     <input type="text" id="excTime" placeholder="Вақти (Эртага 07:00)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                     <input type="text" id="excBus" placeholder="Автобус (№07)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
@@ -124,15 +150,15 @@
             <div class="space-y-1.5" id="excursionsList"></div>
         </div>
 
-        <!-- 4: МЕҲМОНХОНАЛАР -->
+        <!-- 5: МЕҲМОНХОНАЛАР -->
         <div id="sectionHotels" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-hotel mr-1"></i> Меҳмонхона қўшиш</h3>
-                <input type="text" id="hotelName" placeholder="Меҳмонхона номи (Voco Makkah)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                <input type="text" id="hotelName" placeholder="Меҳмонхона номи (Pullman Zamzam)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 <div class="grid grid-cols-2 gap-1.5">
                     <select id="hotelCity" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
-                        <option value="Макка">Макка</option>
                         <option value="Мадина">Мадина</option>
+                        <option value="Макка">Макка</option>
                     </select>
                     <input type="text" id="hotelPhone" placeholder="Тел рақам" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
@@ -181,6 +207,16 @@
                 </div>
                 <div class="grid grid-cols-2 gap-1.5">
                     <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Ҳожибоши / Гуруҳ:</label>
+                        <select id="mLeaderSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white"></select>
+                    </div>
+                    <div>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Сафар Пакети:</label>
+                        <select id="mPackageSelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white" onchange="onPackageSelectChange()"></select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-1.5">
+                    <div>
                         <label class="text-[10px] text-slate-400 block mb-0.5">Меҳмонхона:</label>
                         <select id="mHotel" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white"></select>
                     </div>
@@ -202,21 +238,27 @@
         </div>
     </div>
 
-    <!-- JavaScript: Зиёратчилар, Ҳожибошилар ва Ҳисоб-китоб -->
+    <!-- JavaScript: Тўлиқ Синхронизация ва Бошқарув -->
     <script>
         let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
         let leaders = JSON.parse(localStorage.getItem('tawaf_leaders')) || [
             { name: "Абдуллоҳ Домла", phone: "+996551191191", group: "15-Ноябрь Ош-Жидда" }
         ];
+        let packages = JSON.parse(localStorage.getItem('tawaf_packages')) || [
+            { name: "14 кунлик Эконом", days: "14 Кунлик", price: 1200, service: "4 кишилик хона, трансфер, виза" },
+            { name: "14 кунлик Стандарт", days: "14 Кунлик", price: 1450, service: "3 кишилик хона, 2 маҳал таом, трансфер" },
+            { name: "21 кунлик Комфорт", days: "21 Кунлик", price: 1800, service: "2 кишилик хона, 3 маҳал таом, тўлиқ сервис" }
+        ];
         let excursions = JSON.parse(localStorage.getItem('tawaf_excursions')) || [];
         let hotels = JSON.parse(localStorage.getItem('tawaf_hotels')) || [
-            { name: "Voco Makkah Hotel", city: "Макка", phone: "+966123456789" },
-            { name: "Pullman Zamzam Madinah", city: "Мадина", phone: "+966987654321" }
+            { name: "Pullman Zamzam Madinah", city: "Мадина", phone: "+966987654321" },
+            { name: "Voco Makkah Hotel", city: "Макка", phone: "+966123456789" }
         ];
 
         function renderAll() {
             renderPilgrims();
             renderLeaders();
+            renderPackages();
             renderExcursions();
             renderHotels();
             updateStats();
@@ -268,14 +310,22 @@
             });
         }
 
-        // ҲОЖИБОШИЛАР ЖАДВАЛИ ВА АВТОМАТИК САФАР ҲИСОБОТИ
+        // ҲОЖИБОШИЛАРНИ ЧИҚАРИШ ВА АВТОМАТИК ҲИСОБИ
         function renderLeaders() {
             const list = document.getElementById('leadersList');
+            const select = document.getElementById('mLeaderSelect');
             list.innerHTML = "";
+            if (select) select.innerHTML = "";
 
             leaders.forEach((l, idx) => {
-                // Ушбу Ҳожибошига қарашли зиёратчиларни автоматик санаш
-                const groupPilgrims = pilgrims.filter(p => (p.group || '').toLowerCase().includes(l.group.toLowerCase()) || pilgrims.length > 0);
+                if (select) {
+                    const opt = document.createElement('option');
+                    opt.value = l.name;
+                    opt.innerText = `${l.name} (${l.group})`;
+                    select.appendChild(opt);
+                }
+
+                const groupPilgrims = pilgrims.filter(p => (p.leader === l.name) || (pilgrims.length > 0 && !p.leader));
                 const count = groupPilgrims.length;
                 const totalSum = groupPilgrims.reduce((sum, p) => sum + (Number(p.paid) || 0), 0);
 
@@ -317,7 +367,7 @@
             const group = document.getElementById('lGroup').value.trim();
 
             if (!name || !phone) {
-                alert("Илтимос, Ҳожибоши исми ва телефонини киритинг!");
+                alert("Исм ва телефонни киритинг!");
                 return;
             }
 
@@ -327,7 +377,7 @@
             document.getElementById('lName').value = "";
             document.getElementById('lPhone').value = "";
             document.getElementById('lGroup').value = "";
-            alert("✅ Ҳожибоши муваффақиятли қўшилди!");
+            alert("✅ Ҳожибоши сақланди!");
         }
 
         function deleteLeader(idx) {
@@ -335,6 +385,72 @@
                 leaders.splice(idx, 1);
                 localStorage.setItem('tawaf_leaders', JSON.stringify(leaders));
                 renderLeaders();
+            }
+        }
+
+        // САФАР ПАКЕТЛАРИ
+        function renderPackages() {
+            const list = document.getElementById('packagesList');
+            const select = document.getElementById('mPackageSelect');
+            list.innerHTML = "";
+            if (select) select.innerHTML = "";
+
+            packages.forEach((pkg, idx) => {
+                if (select) {
+                    const opt = document.createElement('option');
+                    opt.value = pkg.name;
+                    opt.innerText = `${pkg.name} ($${pkg.price})`;
+                    select.appendChild(opt);
+                }
+
+                const card = document.createElement('div');
+                card.className = "card-gold p-3 rounded-2xl flex justify-between items-center text-xs";
+                card.innerHTML = `
+                    <div>
+                        <div class="font-bold text-amber-300">${pkg.name} - <span class="text-emerald-400">$${pkg.price}</span></div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">${pkg.days} | ${pkg.service}</div>
+                    </div>
+                    <button type="button" onclick="deletePackage(${idx})" class="text-slate-500 hover:text-rose-400 p-1">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function savePackage() {
+            const name = document.getElementById('pkgName').value.trim();
+            const days = document.getElementById('pkgDays').value;
+            const price = document.getElementById('pkgPrice').value;
+            const service = document.getElementById('pkgService').value.trim();
+
+            if (!name || !price) {
+                alert("Пакет номи ва нархини киритинг!");
+                return;
+            }
+
+            packages.push({ name, days, price: Number(price), service });
+            localStorage.setItem('tawaf_packages', JSON.stringify(packages));
+            renderPackages();
+            document.getElementById('pkgName').value = "";
+            document.getElementById('pkgPrice').value = "";
+            document.getElementById('pkgService').value = "";
+            alert("✅ Янги Сафар Пакети сақланди!");
+        }
+
+        function deletePackage(idx) {
+            if (confirm("Пакетни ўчиришни тасдиқлайсизми?")) {
+                packages.splice(idx, 1);
+                localStorage.setItem('tawaf_packages', JSON.stringify(packages));
+                renderPackages();
+            }
+        }
+
+        function onPackageSelectChange() {
+            const selName = document.getElementById('mPackageSelect').value;
+            const pkg = packages.find(p => p.name === selName);
+            if (pkg) {
+                document.getElementById('mPaid').value = pkg.price;
             }
         }
 
@@ -384,6 +500,7 @@
             const name = document.getElementById('mName').value.trim();
             const pass = document.getElementById('mPass').value.trim();
             const phone = document.getElementById('mPhone').value.trim();
+            const leader = document.getElementById('mLeaderSelect').value;
             const hotel = document.getElementById('mHotel').value;
             const paid = document.getElementById('mPaid').value;
 
@@ -392,7 +509,7 @@
                 return;
             }
 
-            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, group: "15-Ноябрь Ош-Жидда" });
+            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, leader, group: "15-Ноябрь Ош-Жидда" });
             localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
             renderAll();
             closeAddModal();
@@ -480,7 +597,7 @@
         }
 
         function switchAdminTab(tab) {
-            ['pilgrims', 'leaders', 'excursions', 'hotels'].forEach(t => {
+            ['pilgrims', 'leaders', 'packages', 'excursions', 'hotels'].forEach(t => {
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
                 if (t === tab) {
@@ -493,7 +610,11 @@
             });
         }
 
-        function openAddModal() { document.getElementById('addModal').classList.remove('hidden'); }
+        function openAddModal() { 
+            renderLeaders();
+            renderPackages();
+            document.getElementById('addModal').classList.remove('hidden'); 
+        }
         function closeAddModal() { document.getElementById('addModal').classList.add('hidden'); }
 
         renderAll();
