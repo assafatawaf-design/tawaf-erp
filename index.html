@@ -43,10 +43,13 @@
 
     <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- Таблар -->
-        <div class="grid grid-cols-3 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[11px]">
+        <!-- 4 та Таблар: Зиёратчи | Ҳожибоши | Зиёратлар | Меҳмонхона -->
+        <div class="grid grid-cols-4 gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[10px]">
             <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-users"></i> Зиёратчи
+            </button>
+            <button type="button" onclick="switchAdminTab('leaders')" id="tabLeaders" class="text-slate-400 py-2 rounded-lg font-bold">
+                <i class="fa-solid fa-user-tie"></i> Ҳожибоши
             </button>
             <button type="button" onclick="switchAdminTab('excursions')" id="tabExcursions" class="text-slate-400 py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-route"></i> Зиёратлар
@@ -56,7 +59,7 @@
             </button>
         </div>
 
-        <!-- 1: ЗИЁРАТЧИЛАР -->
+        <!-- 1: ЗИЁРАТЧИЛАР БЎЛИМИ -->
         <div id="sectionPilgrims" class="space-y-3">
             <div class="grid grid-cols-3 gap-1.5 text-center">
                 <div class="card-gold p-2 rounded-xl">
@@ -85,7 +88,27 @@
             <div class="space-y-2" id="pilgrimsList"></div>
         </div>
 
-        <!-- 2: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
+        <!-- 2: ҲОЖИБОШИЛАР ВА САФАРЛАР БЎЛИМИ (ЯНГИ ФУНКЦИЯ) -->
+        <div id="sectionLeaders" class="space-y-3 hidden">
+            <div class="card-gold p-3 rounded-2xl space-y-2">
+                <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-user-tie"></i> Янги Ҳожибоши / Етакчи Бириктириш
+                </h3>
+                <input type="text" id="lName" placeholder="Ҳожибоши Ф.И.Ш (Масалан: Абдуллоҳ домла)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+                <div class="grid grid-cols-2 gap-1.5">
+                    <input type="text" id="lPhone" placeholder="WhatsApp тел (+996...)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+                    <input type="text" id="lGroup" placeholder="Рейс / Сафар (15-Ноябрь)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                </div>
+                <button type="button" onclick="saveLeader()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs shadow">
+                    💾 Ҳожибошини Сақлаш
+                </button>
+            </div>
+
+            <!-- Сафар жадвали ва автоматик ҳисоби -->
+            <div class="space-y-2" id="leadersList"></div>
+        </div>
+
+        <!-- 3: ЗИЁРАТЛАР / ЭКСКУРСИЯЛАР -->
         <div id="sectionExcursions" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-map-location-dot mr-1"></i> Янги Зиёрат қўшиш</h3>
@@ -101,7 +124,7 @@
             <div class="space-y-1.5" id="excursionsList"></div>
         </div>
 
-        <!-- 3: МЕҲМОНХОНАЛАР -->
+        <!-- 4: МЕҲМОНХОНАЛАР -->
         <div id="sectionHotels" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400"><i class="fa-solid fa-hotel mr-1"></i> Меҳмонхона қўшиш</h3>
@@ -144,12 +167,12 @@
             <div class="space-y-2 text-xs">
                 <div>
                     <label class="text-[10px] text-slate-400 block mb-0.5">Ф.И.Ш: *</label>
-                    <input type="text" id="mName" placeholder="ABDULLOH ALIEV" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+                    <input type="text" id="mName" placeholder="ROZIEV ROZUVAI" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
                 </div>
                 <div class="grid grid-cols-2 gap-1.5">
                     <div>
                         <label class="text-[10px] text-slate-400 block mb-0.5">Паспорт: *</label>
-                        <input type="text" id="mPass" placeholder="AC1234567" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase font-mono">
+                        <input type="text" id="mPass" placeholder="PE1081624" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase font-mono">
                     </div>
                     <div>
                         <label class="text-[10px] text-slate-400 block mb-0.5">Телефон (WhatsApp): *</label>
@@ -179,9 +202,12 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript: Зиёратчилар, Ҳожибошилар ва Ҳисоб-китоб -->
     <script>
         let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
+        let leaders = JSON.parse(localStorage.getItem('tawaf_leaders')) || [
+            { name: "Абдуллоҳ Домла", phone: "+996551191191", group: "15-Ноябрь Ош-Жидда" }
+        ];
         let excursions = JSON.parse(localStorage.getItem('tawaf_excursions')) || [];
         let hotels = JSON.parse(localStorage.getItem('tawaf_hotels')) || [
             { name: "Voco Makkah Hotel", city: "Макка", phone: "+966123456789" },
@@ -190,6 +216,7 @@
 
         function renderAll() {
             renderPilgrims();
+            renderLeaders();
             renderExcursions();
             renderHotels();
             updateStats();
@@ -212,7 +239,7 @@
             }
 
             pilgrims.forEach((p, idx) => {
-                const pilgrimAppUrl = `https://tawaf-erp.vercel.app/app.html?pass=${encodeURIComponent(p.id)}&name=${encodeURIComponent(p.name)}&group=${encodeURIComponent(p.group || 'Tawaf')}&hotel=${encodeURIComponent(p.hotel)}`;
+                const pilgrimAppUrl = `https://tawaf-erp.vercel.app/app.html?pass=${encodeURIComponent(p.id)}&name=${encodeURIComponent(p.name)}&group=${encodeURIComponent(p.group || '15-Ноябрь Ош-Жидда')}&hotel=${encodeURIComponent(p.hotel)}`;
                 const waMessage = encodeURIComponent(`Ассалому алайкум, ҳурматли ${p.name}!\n\nСизнинг шахсий Tawaf Smart электрон бейджигингиз ва Умра дастурингиз тайёр бўлди:\n👉 ${pilgrimAppUrl}`);
                 const cleanPhone = (p.phone || '').replace(/[^0-9]/g, '');
 
@@ -241,6 +268,76 @@
             });
         }
 
+        // ҲОЖИБОШИЛАР ЖАДВАЛИ ВА АВТОМАТИК САФАР ҲИСОБОТИ
+        function renderLeaders() {
+            const list = document.getElementById('leadersList');
+            list.innerHTML = "";
+
+            leaders.forEach((l, idx) => {
+                // Ушбу Ҳожибошига қарашли зиёратчиларни автоматик санаш
+                const groupPilgrims = pilgrims.filter(p => (p.group || '').toLowerCase().includes(l.group.toLowerCase()) || pilgrims.length > 0);
+                const count = groupPilgrims.length;
+                const totalSum = groupPilgrims.reduce((sum, p) => sum + (Number(p.paid) || 0), 0);
+
+                const card = document.createElement('div');
+                card.className = "card-gold p-3 rounded-2xl space-y-1.5 shadow";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="font-bold text-white text-xs uppercase flex items-center gap-1">
+                                <i class="fa-solid fa-user-tie text-amber-400"></i> ${l.name}
+                            </h4>
+                            <div class="text-[10px] text-slate-400 font-mono mt-0.5">${l.phone}</div>
+                        </div>
+                        <button type="button" onclick="deleteLeader(${idx})" class="text-slate-500 hover:text-rose-400 text-xs p-1">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-1.5 pt-1 text-[11px]">
+                        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                            <div class="text-[9px] text-slate-400">Бириктирилган:</div>
+                            <div class="font-black text-amber-400">${count} нафар зиёратчи</div>
+                        </div>
+                        <div class="bg-slate-950 p-2 rounded-lg border border-slate-800">
+                            <div class="text-[9px] text-slate-400">Умумий қиймати:</div>
+                            <div class="font-black text-emerald-400">$${totalSum}</div>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-slate-400">
+                        Рейс / Сафар: <span class="text-slate-200 font-bold">${l.group}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function saveLeader() {
+            const name = document.getElementById('lName').value.trim();
+            const phone = document.getElementById('lPhone').value.trim();
+            const group = document.getElementById('lGroup').value.trim();
+
+            if (!name || !phone) {
+                alert("Илтимос, Ҳожибоши исми ва телефонини киритинг!");
+                return;
+            }
+
+            leaders.push({ name, phone, group: group || "15-Ноябрь Ош-Жидда" });
+            localStorage.setItem('tawaf_leaders', JSON.stringify(leaders));
+            renderLeaders();
+            document.getElementById('lName').value = "";
+            document.getElementById('lPhone').value = "";
+            document.getElementById('lGroup').value = "";
+            alert("✅ Ҳожибоши муваффақиятли қўшилди!");
+        }
+
+        function deleteLeader(idx) {
+            if (confirm("Ҳожибошини ўчиришни тасдиқлайсизми?")) {
+                leaders.splice(idx, 1);
+                localStorage.setItem('tawaf_leaders', JSON.stringify(leaders));
+                renderLeaders();
+            }
+        }
+
         async function processPassportOCR(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -254,7 +351,7 @@
                     const result = await Tesseract.recognize(evt.target.result, 'eng');
                     const text = result.data.text.toUpperCase();
 
-                    const passRegex = /\b(ID|AN|AC|AB|FA|KA|AA)[\s-]?[0-9]{7}\b/i;
+                    const passRegex = /\b(ID|AN|AC|AB|FA|KA|AA|PE)[\s-]?[0-9]{7}\b/i;
                     const passMatch = text.match(passRegex) || text.match(/[A-Z]{1,2}[0-9]{7}/i) || text.match(/\b[0-9]{9}\b/);
                     if (passMatch) {
                         document.getElementById('mPass').value = passMatch[0].replace(/[\s-]/g, '').toUpperCase();
@@ -295,7 +392,7 @@
                 return;
             }
 
-            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, group: "Tawaf Travel" });
+            pilgrims.unshift({ id: pass, name, phone, hotel, paid, debt: 0, group: "15-Ноябрь Ош-Жидда" });
             localStorage.setItem('tawaf_pilgrims', JSON.stringify(pilgrims));
             renderAll();
             closeAddModal();
@@ -383,12 +480,12 @@
         }
 
         function switchAdminTab(tab) {
-            ['pilgrims', 'excursions', 'hotels'].forEach(t => {
+            ['pilgrims', 'leaders', 'excursions', 'hotels'].forEach(t => {
                 const sec = document.getElementById('section' + t.charAt(0).toUpperCase() + t.slice(1));
                 const btn = document.getElementById('tab' + t.charAt(0).toUpperCase() + t.slice(1));
                 if (t === tab) {
                     sec.classList.remove('hidden');
-                    btn.className = "tab-active py-2 rounded-lg font-bold";
+                    btn.className = "tab-active py-2 rounded-lg font-bold shadow";
                 } else {
                     sec.classList.add('hidden');
                     btn.className = "text-slate-400 py-2 rounded-lg font-bold";
