@@ -278,7 +278,7 @@
             <div class="card-gold p-4 rounded-2xl space-y-2">
                 <h3 class="font-bold text-amber-400 text-xs uppercase" id="dua2Title">Рукни Ямоний ва Ҳажарул Асвад орасида:</h3>
                 <div class="arabic text-white">
-                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқinaа عَذَابَ النَّارِ
+                    رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَқinaа عَذَابَ النَّарِ
                 </div>
                 <div class="text-xs text-slate-400 italic">
                     «Роббанаа аатинаа фид-дунйа ҳасанатан ва фил-аахироти ҳасанатан ва қинаа ъазаабан-наар».
@@ -541,7 +541,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИ ВА АНИҚ GPS -->
+    <!-- JavaScript: МУКАММАЛ ҲАЛ ҚИЛИНГАН ҚИСМ -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -570,10 +570,14 @@
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
 
-        // МЕҲМОНХОНАНИ ХАРИТАДА ОЧИШ (ТЕЛЕФОН НАВИГАТОРИДА)
+        // 1. МЕҲМОНХОНАНИ 100% ХАТОСИЗ ОЧИШ (Браузерда 500 хато чиқмайди!)
         function openHotelLocation() {
             const h = encodeURIComponent(pilgrimData.hotel);
-            window.location.href = `https://maps.google.com/?q=${h}`;
+            if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                window.location.href = `geo:0,0?q=${h}`;
+            } else {
+                window.open(`https://maps.google.com/?q=${h}`, '_blank');
+            }
         }
 
         // Саудия намоз вақтлари
@@ -638,17 +642,17 @@
         }
         renderPublicExcursions();
 
-        // МУКАММАЛ SOS: САЙТСИЗ, ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИНИ ОЧИШ ВА АНИҚ GPS
+        // 2. SOS: ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИ (Сайтга кирмайди!) ВА АНИҚ GPS ХАРИТАСИ
         function triggerSOS() {
             isSosActive = true;
             const btn = document.getElementById('sosBtn');
             btn.className = "bg-rose-700 text-white font-bold p-2 rounded-xl text-[11px] flex flex-col items-center justify-center gap-1 shadow sos-active";
             document.getElementById('sosAlertBox').classList.remove('hidden');
-            document.getElementById('sosStatusMsg').innerText = "GPS нуқта аниқланмоқда...";
+            document.getElementById('sosStatusMsg').innerText = "GPS нуқта олинмоқда...";
 
             const cleanPhone = pilgrimData.leaderPhone.replace(/[^0-9]/g, '');
 
-            const directAppSend = (mapLink) => {
+            const directSend = (mapLink) => {
                 const sosData = {
                     name: pilgrimData.name,
                     pass: pilgrimData.id,
@@ -657,9 +661,8 @@
                     time: new Date().toLocaleTimeString()
                 };
                 localStorage.setItem('tawaf_active_sos', JSON.stringify(sosData));
-                document.getElementById('sosStatusMsg').innerText = "SOS фаол (WhatsApp юборилди)";
+                document.getElementById('sosStatusMsg').innerText = "SOS фаол (WhatsApp очилди)";
 
-                // Савол белгиларисиз тоза, профессионал матн
                 let rawText = "[SOS] ШОШИЛИНЧ ЕРДАМ!\n\n";
                 rawText += "Мен адашиб колдим:\n";
                 rawText += "* Зиёратчи: " + pilgrimData.name + "\n";
@@ -671,8 +674,6 @@
                 rawText += "Хожибоши, илтимос менга тезрок алокага чикинг!";
 
                 const encoded = encodeURIComponent(rawText);
-
-                // ТЎҒРИДАН-ТЎҒРИ WHATSAPP ИЛОВАСИНИ ЧАҚИРИШ (САЙТГА КИРМАЙДИ!)
                 window.location.href = "whatsapp://send?phone=" + cleanPhone + "&text=" + encoded;
             };
 
@@ -681,15 +682,15 @@
                     (pos) => {
                         const lat = pos.coords.latitude;
                         const lng = pos.coords.longitude;
-                        directAppSend(`https://maps.google.com/?q=${lat},${lng}`);
+                        directSend(`https://maps.google.com/?q=${lat},${lng}`);
                     },
                     () => {
-                        directAppSend('');
+                        directSend('');
                     },
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                 );
             } else {
-                directAppSend('');
+                directSend('');
             }
         }
 
@@ -707,7 +708,7 @@
             const box = document.getElementById('leaderSosNotification');
             if (data) {
                 const s = JSON.parse(data);
-                document.getElementById('leaderSosText').innerText = `👤 ${s.name} (${s.pass}) | Меҳмонхона: ${s.hotel} \vert{} Вақти: ${s.time}`;
+                document.getElementById('leaderSosText').innerText = `👤 ${s.name} (${s.pass}) | Меҳмонхона: ${s.hotel} | Вақти: ${s.time}`;
                 if (s.map) {
                     document.getElementById('leaderSosMapLink').href = s.map;
                     document.getElementById('leaderSosMapLink').classList.remove('hidden');
@@ -741,8 +742,10 @@
                     row.className = "flex justify-between items-center bg-slate-950 p-2 rounded-lg border border-slate-800";
                     row.innerHTML = `
                         <div>
-                            <span class="font-bold text-white">${idx + 1}.${p.name}</span>
-                            <span class="text-[10px] text-slate-400 block font-mono">${p.id}</span>                         </div>                         <span class="text-emerald-400 font-bold">$${p.paid} (Тўланган)</span>
+                            <span class="font-bold text-white">${idx + 1}. ${p.name}</span>
+                            <span class="text-[10px] text-slate-400 block font-mono">${p.id}</span>
+                        </div>
+                        <span class="text-emerald-400 font-bold">$${p.paid} (Тўланган)</span>
                     `;
                     pList.appendChild(row);
                 });
@@ -794,7 +797,7 @@
             excs.unshift({ title, time, bus });
             localStorage.setItem('tawaf_excursions', JSON.stringify(excs));
 
-            const announcement = `⚡ ЯНГИ ЗИЁРАТ: ${title} (${time}) \vert{} Автобус: ${bus}`;
+            const announcement = `⚡ ЯНГИ ЗИЁРАТ: ${title} (${time}) | Автобус: ${bus}`;
             localStorage.setItem('tawaf_active_announcement', announcement);
             document.getElementById('announcementText').innerText = announcement;
 
