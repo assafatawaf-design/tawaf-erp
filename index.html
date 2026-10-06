@@ -43,7 +43,7 @@
 
     <main class="max-w-md mx-auto px-3 pt-3 space-y-3">
 
-        <!-- 6 та Таблар: Зиёратчи | Ҳожибоши | Пакетлар | Зиёрат | Меҳмонхона | Созламалар -->
+        <!-- 6 та Таблар -->
         <div class="grid grid-cols-6 gap-0.5 bg-slate-900 p-1 rounded-xl border border-slate-800 text-[8px] text-center">
             <button type="button" onclick="switchAdminTab('pilgrims')" id="tabPilgrims" class="tab-active py-2 rounded-lg font-bold">
                 <i class="fa-solid fa-users block mb-0.5 text-xs"></i> Зиёратчи
@@ -94,15 +94,15 @@
             <div class="space-y-2" id="pilgrimsList"></div>
         </div>
 
-        <!-- 2: ҲОЖИБОШИЛАР ВА САФАРЛАР БЎЛИМИ -->
+        <!-- 2: ҲОЖИБОШИЛАР БЎЛИМИ -->
         <div id="sectionLeaders" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
-                    <i class="fa-solid fa-user-tie"></i> Янги Ҳожибоши / Етакчи Бириктириш
+                    <i class="fa-solid fa-user-tie"></i> Янги Ҳожибоши Бириктириш
                 </h3>
-                <input type="text" id="lName" placeholder="Ҳожибоши Ф.И.Ш (Масалан: Абдуллоҳ Домла)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
+                <input type="text" id="lName" placeholder="Ҳожибоши Ф.И.Ш (Абдуллоҳ Домла)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white uppercase">
                 <div class="grid grid-cols-2 gap-1.5">
-                    <input type="text" id="lPhone" placeholder="WhatsApp (+996551191191)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
+                    <input type="text" id="lPhone" placeholder="WhatsApp (+996...)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white font-mono">
                     <input type="text" id="lGroup" placeholder="Рейс (15-Ноябрь Ош-Жидда)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 </div>
                 <button type="button" onclick="saveLeader()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs shadow">
@@ -113,14 +113,16 @@
             <div class="space-y-2" id="leadersList"></div>
         </div>
 
-        <!-- 3: УМРА САФАР ПАКЕТЛАРИ БЎЛИМИ -->
+        <!-- 3: УМРА САФАР ПАКЕТЛАРИ (САНА ВА ДАВОМИЙЛИК БИЛАН) -->
         <div id="sectionPackages" class="space-y-3 hidden">
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
                     <i class="fa-solid fa-cube"></i> Янги Сафар Пакетини Қўшиш
                 </h3>
-                <input type="text" id="pkgName" placeholder="Пакет номи (Масалан: Эконом, Стандарт, Комфорт)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
-                <div class="grid grid-cols-2 gap-1.5">
+                <input type="text" id="pkgName" placeholder="Пакет номи (Масалан: Эконом, Стандарт, VIP)" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
+                
+                <div class="grid grid-cols-3 gap-1.5">
+                    <input type="text" id="pkgDate" placeholder="Санаси (15-Ноябрь)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-amber-300 font-bold">
                     <select id="pkgDays" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                         <option value="14 Кунлик">14 Кунлик</option>
                         <option value="21 Кунлик">21 Кунлик</option>
@@ -128,6 +130,7 @@
                     </select>
                     <input type="number" id="pkgPrice" placeholder="Нархи ($1200)" class="bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-emerald-400 font-bold">
                 </div>
+
                 <input type="text" id="pkgService" placeholder="Сервис: 4 кишилик хона, 2 маҳал таом, виза, трансфер" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                 <button type="button" onclick="savePackage()" class="w-full bg-amber-500 text-slate-950 font-black py-2 rounded-lg text-xs shadow">
                     💾 Пакетни Сақлаш
@@ -172,7 +175,7 @@
             <div class="space-y-1.5" id="hotelsList"></div>
         </div>
 
-        <!-- 6: ТИЗИМ СОЗЛАМАЛАРИ (НАСТРОЙКАЛАР - ЯНГИ БЎЛИМ) -->
+        <!-- 6: ТИЗИМ СОЗЛАМАЛАРИ (НАСТРОЙКАЛАР) -->
         <div id="sectionSettings" class="space-y-3 hidden">
             <div class="card-gold p-3.5 rounded-2xl space-y-3">
                 <h3 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
@@ -186,7 +189,7 @@
                 
                 <div class="grid grid-cols-2 gap-1.5">
                     <div>
-                        <label class="text-[10px] text-slate-400 block mb-0.5">Рейс / Йўналиш:</label>
+                        <label class="text-[10px] text-slate-400 block mb-0.5">Рейс / Йўналиш (Санаси):</label>
                         <input type="text" id="setRoute" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white">
                     </div>
                     <div>
@@ -216,12 +219,8 @@
                 </button>
             </div>
 
-            <!-- Базани назорат қилиш ва тозалаш -->
             <div class="card-gold p-3 rounded-2xl space-y-2 border-rose-500/30">
                 <h4 class="text-xs font-bold text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Тизим Базасини Бошқариш</h4>
-                <p class="text-[10px] text-slate-400 leading-relaxed">
-                    Янги сафар бошланганда барча зиёратчилар ва ҳисоб-китобларни тозалаб янгидан бошлаш:
-                </p>
                 <button type="button" onclick="clearAllData()" class="w-full bg-slate-800 hover:bg-rose-900/60 text-rose-400 border border-rose-500/40 font-bold py-2 rounded-xl text-xs">
                     🗑️ Барча Зиёратчилар Базасини Ноллаш
                 </button>
@@ -297,16 +296,16 @@
         </div>
     </div>
 
-    <!-- JavaScript: Бошқарув ва Созламалар -->
+    <!-- JavaScript: Тўлиқ Синхронизация -->
     <script>
         let pilgrims = JSON.parse(localStorage.getItem('tawaf_pilgrims')) || [];
         let leaders = JSON.parse(localStorage.getItem('tawaf_leaders')) || [
             { name: "Абдуллоҳ Домла", phone: "+996551191191", group: "15-Ноябрь Ош-Жидда" }
         ];
         let packages = JSON.parse(localStorage.getItem('tawaf_packages')) || [
-            { name: "14 кунлик Эконом", days: "14 Кунлик", price: 1200, service: "4 кишилик хона, трансфер, виза" },
-            { name: "14 кунлик Стандарт", days: "14 Кунлик", price: 1450, service: "3 кишилик хона, 2 маҳал таом, трансфер" },
-            { name: "21 кунлик Комфорт", days: "21 Кунлик", price: 1800, service: "2 кишилик хона, 3 маҳал таом, тўлиқ сервис" }
+            { name: "Эконом Пакет", date: "15-Ноябрь", days: "14 Кунлик", price: 1200, service: "4 кишилик хона, трансфер, виза" },
+            { name: "Стандарт Пакет", date: "20-Ноябрь", days: "14 Кунлик", price: 1450, service: "3 кишилик хона, 2 маҳал таом, трансфер" },
+            { name: "VIP Comfort", date: "01-Декабрь", days: "21 Кунлик", price: 1800, service: "2 кишилик хона, 3 маҳал таом, тўлиқ сервис" }
         ];
         let excursions = JSON.parse(localStorage.getItem('tawaf_excursions')) || [];
         let hotels = JSON.parse(localStorage.getItem('tawaf_hotels')) || [
@@ -447,6 +446,7 @@
             }
         }
 
+        // САФАР ПАКЕТЛАРИ (САНА ВА МУДДАТ БИЛАН)
         function renderPackages() {
             const list = document.getElementById('packagesList');
             const select = document.getElementById('mPackageSelect');
@@ -457,7 +457,7 @@
                 if (select) {
                     const opt = document.createElement('option');
                     opt.value = pkg.name;
-                    opt.innerText = `${pkg.name} ($${pkg.price})`;
+                    opt.innerText = `${pkg.name} (${pkg.date || ''}) - $${pkg.price}`;
                     select.appendChild(opt);
                 }
 
@@ -465,7 +465,9 @@
                 card.className = "card-gold p-3 rounded-2xl flex justify-between items-center text-xs";
                 card.innerHTML = `
                     <div>
-                        <div class="font-bold text-amber-300">${pkg.name} - <span class="text-emerald-400">$${pkg.price}</span></div>
+                        <div class="font-bold text-amber-300">
+                            ${pkg.name} <span class="text-amber-400/80 text-[11px] font-mono">[${pkg.date || 'Санасиз'}]</span> - <span class="text-emerald-400 font-bold">$${pkg.price}</span>
+                        </div>
                         <div class="text-[10px] text-slate-400 mt-0.5">${pkg.days} | ${pkg.service}</div>
                     </div>
                     <button type="button" onclick="deletePackage(${idx})" class="text-slate-500 hover:text-rose-400 p-1">
@@ -478,6 +480,7 @@
 
         function savePackage() {
             const name = document.getElementById('pkgName').value.trim();
+            const date = document.getElementById('pkgDate').value.trim() || "15-Ноябрь";
             const days = document.getElementById('pkgDays').value;
             const price = document.getElementById('pkgPrice').value;
             const service = document.getElementById('pkgService').value.trim();
@@ -487,13 +490,14 @@
                 return;
             }
 
-            packages.push({ name, days, price: Number(price), service });
+            packages.push({ name, date, days, price: Number(price), service });
             localStorage.setItem('tawaf_packages', JSON.stringify(packages));
             renderPackages();
             document.getElementById('pkgName').value = "";
+            document.getElementById('pkgDate').value = "";
             document.getElementById('pkgPrice').value = "";
             document.getElementById('pkgService').value = "";
-            alert("✅ Янги Сафар Пакети сақланди!");
+            alert("✅ Янги Сафар Пакети санаси билан сақланди!");
         }
 
         function deletePackage(idx) {
@@ -647,7 +651,6 @@
             });
         }
 
-        // СОЗЛАМАЛАРНИ ЮКЛАШ ВА САҚЛАШ (ЯНГИ ФУНКЦИЯ)
         function loadSettings() {
             document.getElementById('setAgency').value = localStorage.getItem('tawaf_setting_agency') || "TAWAF TRAVEL";
             document.getElementById('setRoute').value = localStorage.getItem('tawaf_setting_route') || "15-Ноябрь Ош-Жидда";
@@ -672,12 +675,12 @@
             if (lPin) localStorage.setItem('tawaf_leader_pin', lPin);
             if (aPin) localStorage.setItem('tawaf_admin_pin', aPin);
 
-            alert("✅ Барча тизим созламалари муваффақиятли сақланди! Улар илова ва Ҳожибоши кабинетида дарҳол янгиланди.");
+            alert("✅ Барча тизим созламалари сақланди!");
             window.location.reload();
         }
 
         function clearAllData() {
-            if (confirm("⚠️️ ДИҚҚАТ: Барча зиёратчилар ва ҳисоб-китоблар ўчирилади. Тасдиқлайсизми?")) {
+            if (confirm("⚠ ДИҚҚАТ: Барча зиёратчилар базаси нолланади. Тасдиқлайсизми?")) {
                 localStorage.removeItem('tawaf_pilgrims');
                 localStorage.removeItem('tawaf_active_sos');
                 alert("База тозаланди!");
