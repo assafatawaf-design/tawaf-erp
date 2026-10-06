@@ -22,7 +22,6 @@
         .arabic { font-family: 'Amiri', 'Traditional Arabic', serif; font-size: 1.45rem; line-height: 2.2; direction: rtl; text-align: right; }
         .sos-active { animation: pulseSos 1s infinite alternate; }
         @keyframes pulseSos { 0% { transform: scale(1); } 100% { transform: scale(1.03); box-shadow: 0 0 20px rgba(225, 29, 72, 0.95); } }
-        .compass-arrow { transition: transform 0.5s ease; }
     </style>
 </head>
 <body class="pb-28 transition-all duration-200">
@@ -45,11 +44,10 @@
             </div>
 
             <div class="flex items-center gap-1.5">
-                <!-- 500 хато бермайдиган Ички Қибла Комписи -->
-                <button type="button" onclick="openInternalQibla()" id="btnQiblaHdr" class="bg-slate-800 text-emerald-400 font-black px-2.5 py-1 rounded-lg text-xs border border-emerald-500/30 flex items-center gap-1">
-                    <i class="fa-solid fa-compass"></i> <span id="txtQiblaBtn">Қибла</span>
+                <button type="button" onclick="openInternalQibla()" class="bg-slate-800 text-emerald-400 font-black px-2 py-1 rounded-lg text-xs border border-emerald-500/30 flex items-center gap-1">
+                    <i class="fa-solid fa-kaaba"></i> <span id="txtQiblaBtn">Қибла</span>
                 </button>
-                <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30">
+                <button type="button" onclick="toggleFontSize()" id="fontBtn" class="bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30">
                     A+
                 </button>
                 <button type="button" onclick="toggleLang()" id="langBtn" class="bg-amber-500 text-slate-950 font-bold px-2 py-1 rounded-lg text-xs shadow">
@@ -61,16 +59,17 @@
 
     <main class="max-w-md mx-auto px-4 pt-3 space-y-3.5">
 
-        <!-- НАМОЗ ТАҚВИМИ ВИДЖЕТИ -->
+        <!-- НАМОЗ ТАҚВИМИ ВА ОБ-ҲАВО ВИДЖЕТИ -->
         <div class="card-gold p-3.5 rounded-2xl shadow-xl space-y-2.5">
             <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                <div class="flex items-center gap-2">
-                    <span class="text-amber-400 text-sm">🕌</span>
-                    <span class="text-xs font-bold text-slate-200" id="prayerCityTitle">Маккаи Мукаррама вақти:</span>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-amber-400 text-xs">🕌</span>
+                    <span class="text-xs font-bold text-slate-200" id="prayerCityTitle">Маккаи Мукаррама:</span>
+                    <span class="text-[10px] text-amber-400 font-mono font-bold bg-amber-500/10 px-1.5 py-0.5 rounded" id="cityWeather">☀️ +36°C</span>
                 </div>
                 <div class="flex gap-1">
-                    <button type="button" onclick="changeCity('Makkah')" id="btnCityMakkah" class="bg-amber-500 text-slate-950 font-bold px-2.5 py-0.5 rounded text-[10px]">Макка</button>
-                    <button type="button" onclick="changeCity('Madinah')" id="btnCityMadinah" class="bg-slate-800 text-slate-300 font-bold px-2.5 py-0.5 rounded text-[10px]">Мадина</button>
+                    <button type="button" onclick="changeCity('Makkah')" id="btnCityMakkah" class="bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px]">Макка</button>
+                    <button type="button" onclick="changeCity('Madinah')" id="btnCityMadinah" class="bg-slate-800 text-slate-300 font-bold px-2 py-0.5 rounded text-[10px]">Мадина</button>
                 </div>
             </div>
 
@@ -138,7 +137,7 @@
             
             <!-- SOS ҳолати панели -->
             <div id="sosAlertBox" class="hidden mt-2 p-2 rounded-lg bg-rose-950/90 border border-rose-500 flex items-center justify-between text-[11px] text-rose-200">
-                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">GPS нуқта кутилмоқда...</b></span>
+                <span><i class="fa-solid fa-triangle-exclamation mr-1 text-rose-400"></i> <b id="sosStatusMsg">GPS олинмоқда...</b></span>
                 <button type="button" onclick="stopSOS()" class="bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-md text-[10px] font-bold" id="btnStopSos">Тўхтатиш</button>
             </div>
         </div>
@@ -283,7 +282,7 @@
 
     </main>
 
-    <!-- ИЧКИ ҚИБЛА КОМПАСИ МОДАЛИ (500 ХАТО БЕРМАЙДИ) -->
+    <!-- ИЧКИ ҚИБЛА КОМПАСИ МОДАЛИ (ИНТЕРНЕТСИЗ ВА 500 ХАТОСИЗ) -->
     <div id="qiblaModal" class="fixed inset-0 bg-black/95 z-50 p-4 hidden flex flex-col justify-center items-center">
         <div class="card-gold p-6 rounded-3xl max-w-xs w-full text-center space-y-4 shadow-2xl relative">
             <button type="button" onclick="closeInternalQibla()" class="absolute top-3 right-4 text-slate-400 text-2xl font-bold">&times;</button>
@@ -291,22 +290,18 @@
                 <i class="fa-solid fa-kaaba"></i>
             </div>
             <div>
-                <h3 class="font-bold text-white text-base" id="qiblaTitleDisp">Қибла Йўналиши (Макка)</h3>
-                <p class="text-xs text-slate-400 mt-1" id="qiblaSubDisp">Телефонингизни ерга параллел ушланг</p>
+                <h3 class="font-bold text-white text-base">Қибла Йўналиши (Макка)</h3>
+                <p class="text-xs text-slate-400 mt-1">Каъбаи Муаззама томон йўналиш:</p>
             </div>
-            <div class="w-48 h-48 mx-auto relative flex items-center justify-center border-4 border-amber-500/30 rounded-full bg-slate-950 shadow-inner">
-                <div class="absolute text-[10px] text-slate-500 font-bold top-2">Ш (N)</div>
-                <div class="absolute text-[10px] text-slate-500 font-bold bottom-2">Ж (S)</div>
-                <div class="w-36 h-36 rounded-full border border-dashed border-emerald-500/40 flex items-center justify-center compass-arrow" id="compassPointer">
-                    <div class="flex flex-col items-center">
-                        <i class="fa-solid fa-location-arrow text-emerald-400 text-4xl -rotate-45"></i>
-                        <span class="text-[10px] font-black text-amber-400 mt-1">КАЪБА</span>
-                    </div>
+            <div class="w-44 h-44 mx-auto relative flex items-center justify-center border-4 border-amber-500/40 rounded-full bg-slate-950 shadow-inner">
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-compass text-emerald-400 text-6xl"></i>
+                    <span class="text-xs font-black text-amber-400 mt-2">ЖАНУБИЙ-ҒАРБ</span>
                 </div>
             </div>
-            <p class="text-[11px] text-emerald-400 font-mono font-bold" id="compassHeading">Азимут: 240° (Саудия томон)</p>
+            <p class="text-xs text-slate-300 font-mono">Марказий Осиёдан қараганда Қибла бурчаги: <b class="text-emerald-400">~240°</b></p>
             <button type="button" onclick="closeInternalQibla()" class="w-full bg-slate-800 text-slate-200 font-bold py-2 rounded-xl text-xs">
-                Ёпиш
+                Тушунарли / Ёпиш
             </button>
         </div>
     </div>
@@ -329,17 +324,16 @@
                     <button type="button" onclick="clearSosNotice()" class="text-[10px] bg-rose-800 hover:bg-rose-700 text-white font-bold px-2 py-0.5 rounded">Ўчириш</button>
                 </div>
                 <p class="text-xs text-white" id="leaderSosText">-</p>
-                <!-- 500 хато бермайдиган навигатор чақируви -->
+                <!-- Навигатор чақируви -->
                 <button type="button" onclick="openSosCoordsMap()" class="flex items-center justify-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow w-full">
-                    <i class="fa-solid fa-location-dot text-sm"></i> Аниқ турган жойини Навигаторда кўриш
+                    <i class="fa-solid fa-location-dot text-sm"></i> Аниқ турган жойини Харитада кўриш
                 </button>
             </div>
 
-            <!-- САФАР ҲИСОБОТИ ВА СОЗЛАМАЛАРИ (ИНТЕРАКТИВ КУНЛАР) -->
+            <!-- САФАР ҲИСОБОТИ (САНАНИ ҲОЖИБОШИНИНГ ЎЗИ ЎЗГАРТИРАДИ) -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-bold text-amber-400"><i class="fa-solid fa-plane-departure mr-1"></i> Сафар & Гуруҳ Ҳисоботи</span>
-                    <!-- 14 ёки 21 кунликни шу ернинг ўзида алмаштириш мумкин -->
                     <button type="button" onclick="toggleLeaderTripDays()" class="text-[10px] bg-amber-500 text-slate-950 px-2.5 py-1 rounded-full font-black shadow" id="leaderTripDays">
                         14 Кунлик ⇄
                     </button>
@@ -356,24 +350,27 @@
                 </div>
                 <div class="text-[11px] text-slate-300 pt-1 flex justify-between items-center">
                     <span>Рейс: <b id="leaderRouteDisp">15-Ноябрь Ош-Жидда</b></span>
-                    <button type="button" onclick="openLeaderAddPilgrimModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-2.5 py-1 rounded-lg text-[10px]">
-                        + Зиёратчи қўшиш
+                    <button type="button" onclick="editLeaderRoutePrompt()" class="bg-slate-800 border border-amber-500/40 text-amber-400 font-bold px-2 py-0.5 rounded text-[10px]">
+                        Санани ўзгартириш ✏️
                     </button>
                 </div>
             </div>
 
-            <!-- ЯНГИ: ҲОЖИБОШИ ОВОЗЛИ ХАБАР ЮБОРИШ ТУГМАСИ -->
+            <!-- ҲОЖИБОШИ ОВОЗЛИ ХАБАР ЮБОРИШ ТУГМАСИ -->
             <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-300 font-bold"><i class="fa-solid fa-microphone text-amber-400 mr-1.5"></i> Гуруҳга Овозли Хабар:</span>
                 <button type="button" onclick="sendVoiceNoticePrompt()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs flex items-center gap-1 shadow">
-                    <i class="fa-brands fa-whatsapp"></i> WhatsApp'да ёзиш
+                    <i class="fa-brands fa-whatsapp"></i> WhatsApp'да юбориш
                 </button>
             </div>
 
             <!-- ҲОЖИБОШИ: ГУРУҲ ЗИЁРАТЧИЛАРИ (НАЗОРАТ) -->
             <div class="card-gold p-3 rounded-2xl space-y-2">
-                <div class="text-xs font-bold text-amber-400 flex justify-between">
-                    <span><i class="fa-solid fa-users mr-1"></i> Менинг Зиёратчиларим (Назорат):</span>
+                <div class="text-xs font-bold text-amber-400 flex justify-between items-center">
+                    <span><i class="fa-solid fa-users mr-1"></i> Зиёратчилар (Назорат):</span>
+                    <button type="button" onclick="openLeaderAddPilgrimModal()" class="bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px]">
+                        + Зиёратчи қўшиш
+                    </button>
                 </div>
                 <div id="leaderPilgrimList" class="space-y-1.5 max-h-32 overflow-y-auto text-xs"></div>
             </div>
@@ -390,7 +387,7 @@
                 </div>
             </div>
 
-            <!-- QR ЙЎҚЛАМА СКАНЕРИ (ХАТОСИЗ ИШЛАШ ҲИМОЯСИ БИЛАН) -->
+            <!-- QR ЙЎҚЛАМА СКАНЕРИ -->
             <div class="bg-slate-950 p-2.5 rounded-2xl border border-dashed border-amber-500/50">
                 <div id="reader" style="width: 100%;"></div>
                 <div class="flex gap-2 mt-2">
@@ -517,7 +514,7 @@
         </div>
     </nav>
 
-    <!-- JavaScript: БАРЧА ФУНКЦИЯЛАР МУКАММАЛ ҲОЛАТДА -->
+    <!-- JavaScript: МУКАММАЛ АНИҚ ИШЛАЙДИГАН ҚИСМ -->
     <script>
         let currentLang = 'uz';
         let isLargeFont = false;
@@ -542,11 +539,25 @@
         document.getElementById('dispGroup').innerText = "Гуруҳ: " + pilgrimData.group;
         document.getElementById('dispPass').innerText = "Паспорт: " + pilgrimData.id;
         document.getElementById('dispHotelName').innerHTML = `<i class="fa-solid fa-hotel text-[10px] mr-1"></i>${pilgrimData.hotel}`;
+        document.getElementById('leaderRouteDisp').innerText = pilgrimData.group;
 
         const qrContent = encodeURIComponent(`TAWAF_${pilgrimData.id}_${pilgrimData.name}_TEL_${pilgrimData.leaderPhone}`);
         document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${qrContent}`;
 
-        // Сафар кунларини Ҳожибоши томонидан ўзгартириш (14 / 21 кун)
+        // Сафар санаси ва йўналишини Ҳожибошининг ўзи ўзгартириши
+        function editLeaderRoutePrompt() {
+            const currentRoute = localStorage.getItem('tawaf_setting_route') || pilgrimData.group;
+            const newRoute = prompt("Рейс ва сафар санасини киритинг (Масалан: 20-Ноябрь Ош-Жидда):", currentRoute);
+            if (newRoute && newRoute.trim()) {
+                localStorage.setItem('tawaf_setting_route', newRoute.trim());
+                pilgrimData.group = newRoute.trim();
+                document.getElementById('dispGroup').innerText = "Гуруҳ: " + newRoute.trim();
+                document.getElementById('leaderRouteDisp').innerText = newRoute.trim();
+                alert("✅ Сафар санаси муваффақиятли ўзгартирилди!");
+            }
+        }
+
+        // Сафар кунларини ўзгартириш (14 / 21 / 28 кун)
         function toggleLeaderTripDays() {
             let current = localStorage.getItem('tawaf_leader_trip_days') || "14 Кунлик";
             let next = current === "14 Кунлик" ? "21 Кунлик" : (current === "21 Кунлик" ? "28 Кунлик" : "14 Кунлик");
@@ -563,28 +574,13 @@
             window.location.href = `whatsapp://send?phone=${cleanPhone}&text=${msg}`;
         }
 
-        // ИЧКИ ҚИБЛА КОМПАСИ (500 ХАТО БЕРМАЙДИ)
+        // ИЧКИ ҚИБЛА КОМПАСИ (500 БЕРМАЙДИ)
         function openInternalQibla() {
             document.getElementById('qiblaModal').classList.remove('hidden');
-            if (window.DeviceOrientationEvent) {
-                window.addEventListener('deviceorientation', handleOrientation, true);
-            }
-        }
-
-        function handleOrientation(event) {
-            let alpha = event.alpha;
-            if (alpha !== null) {
-                // Қибла йўналиши (Саудия томонга нисбатан)
-                const qiblaAngle = 240; 
-                let rotate = qiblaAngle - alpha;
-                document.getElementById('compassPointer').style.transform = `rotate(${rotate}deg)`;
-                document.getElementById('compassHeading').innerText = `Азимут: ${Math.round(alpha)}° (Каъба: 240°)`;
-            }
         }
 
         function closeInternalQibla() {
             document.getElementById('qiblaModal').classList.add('hidden');
-            window.removeEventListener('deviceorientation', handleOrientation, true);
         }
 
         // МЕҲМОНХОНАНИ НАВИГАТОРДА ОЧИШ (500 БЕРМАЙДИ)
@@ -597,7 +593,7 @@
             }
         }
 
-        // ҲОЖИБОШИ: АДАШГАН ОДАМНИНГ GPS НУҚТАСИНИ ОЧИШ (500 БЕРМАЙДИ)
+        // ҲОЖИБОШИ: АДАШГАН ОДАМНИНГ GPS НУҚТАСИНИ ОЧИШ
         function openSosCoordsMap() {
             if (lastSosCoordinates) {
                 if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
@@ -610,10 +606,10 @@
             }
         }
 
-        // Саудия намоз вақтлари
+        // Саудия намоз вақтлари ва Об-ҳаво
         const prayerTimes = {
-            Makkah: { Fajr: "05:08", Dhuhr: "12:15", Asr: "15:38", Maghrib: "18:02", Isha: "19:32" },
-            Madinah: { Fajr: "05:10", Dhuhr: "12:14", Asr: "15:35", Maghrib: "17:59", Isha: "19:29" }
+            Makkah: { Fajr: "05:08", Dhuhr: "12:15", Asr: "15:38", Maghrib: "18:02", Isha: "19:32", weather: "☀️ +36°C" },
+            Madinah: { Fajr: "05:10", Dhuhr: "12:14", Asr: "15:35", Maghrib: "17:59", Isha: "19:29", weather: "🌙 +31°C" }
         };
 
         function updatePrayerTimes() {
@@ -623,6 +619,7 @@
             document.getElementById('timeAsr').innerText = p.Asr;
             document.getElementById('timeMaghrib').innerText = p.Maghrib;
             document.getElementById('timeIsha').innerText = p.Isha;
+            document.getElementById('cityWeather').innerText = p.weather;
 
             const now = new Date();
             const saudiTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Riyadh" }));
@@ -636,15 +633,15 @@
         function changeCity(city) {
             currentCity = city;
             document.getElementById('btnCityMakkah').className = city === 'Makkah' 
-                ? "bg-amber-500 text-slate-950 font-bold px-2.5 py-0.5 rounded text-[10px]" 
-                : "bg-slate-800 text-slate-300 font-bold px-2.5 py-0.5 rounded text-[10px]";
+                ? "bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px]" 
+                : "bg-slate-800 text-slate-300 font-bold px-2 py-0.5 rounded text-[10px]";
             document.getElementById('btnCityMadinah').className = city === 'Madinah' 
-                ? "bg-amber-500 text-slate-950 font-bold px-2.5 py-0.5 rounded text-[10px]" 
-                : "bg-slate-800 text-slate-300 font-bold px-2.5 py-0.5 rounded text-[10px]";
+                ? "bg-amber-500 text-slate-950 font-bold px-2 py-0.5 rounded text-[10px]" 
+                : "bg-slate-800 text-slate-300 font-bold px-2 py-0.5 rounded text-[10px]";
             
             const cityTitle = currentLang === 'kg' 
-                ? (city === 'Makkah' ? "Меккеи Мукаррама" : "Мединаи Мунаввара") + " убактысы:"
-                : (city === 'Makkah' ? "Маккаи Мукаррама" : "Мадинаи Мунаввара") + " вақти:";
+                ? (city === 'Makkah' ? "Меккеи Мукаррама:" : "Мединаи Мунаввара:")
+                : (city === 'Makkah' ? "Маккаи Мукаррама:" : "Мадинаи Мунаввара:");
             document.getElementById('prayerCityTitle').innerText = cityTitle;
             updatePrayerTimes();
         }
@@ -672,13 +669,13 @@
         }
         renderPublicExcursions();
 
-        // 100% АНИҚ GPS ОЛИШ: КУТИШ ВА АНИҚ НУҚТАНИ ЮБОРИШ
+        // АНИҚ GPS БИЛАН SOS (ХАРИТА ҲАР ДОИМ ЮБОРИЛАДИ)
         function triggerSOS() {
             isSosActive = true;
             const btn = document.getElementById('sosBtn');
             btn.className = "bg-rose-700 text-white font-bold p-2 rounded-xl text-[11px] flex flex-col items-center justify-center gap-1 shadow sos-active";
             document.getElementById('sosAlertBox').classList.remove('hidden');
-            document.getElementById('sosStatusMsg').innerText = "Аниқ GPS нуқта олинмоқда...";
+            document.getElementById('sosStatusMsg').innerText = "GPS нуқта олинмоқда...";
 
             const cleanPhone = pilgrimData.leaderPhone.replace(/[^0-9]/g, '');
 
@@ -721,7 +718,7 @@
                     (err) => {
                         executeSosWithCoords(null, null);
                     },
-                    { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                 );
             } else {
                 executeSosWithCoords(null, null);
@@ -850,7 +847,6 @@
             document.getElementById('announcementText').innerText = savedAnn;
         }
 
-        // ХАВФСИЗ PIN-ТЕКШИРУВ
         function openPinModal(target) {
             targetAuth = target;
             document.getElementById('pinInput').value = '';
@@ -887,7 +883,7 @@
             }
         }
 
-        // QR СКАНЕРНИ ХАТОСИЗ БОШҚАРИШ
+        // QR СКАНЕР
         function startQrScanSafe() {
             try {
                 if (html5QrCode) {
@@ -912,7 +908,7 @@
                 },
                 (err) => {}
             ).catch(err => {
-                alert("Камерага рухсат берилмаган ёки хато: " + err);
+                alert("Камерага рухсат берилмаган. Телефон созламаларидан иловага Камерага рухсат беринг!");
             });
         }
 
@@ -1002,8 +998,8 @@
             document.body.classList.toggle('large-font', isLargeFont);
             const btn = document.getElementById('fontBtn');
             btn.className = isLargeFont 
-                ? "bg-amber-400 text-slate-950 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30" 
-                : "bg-slate-800 text-amber-400 font-black px-2 py-1 rounded-lg text-xs border border-amber-500/30";
+                ? "bg-amber-400 text-slate-950 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30" 
+                : "bg-slate-800 text-amber-400 font-black px-2.5 py-1 rounded-lg text-xs border border-amber-500/30";
         }
 
         const dict = {
